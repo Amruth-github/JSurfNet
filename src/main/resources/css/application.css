@@ -1,0 +1,28 @@
+#backButton, #reloadButton, #searchButton, #newTabButton{
+    -fx-background-color: #FFF;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-color: #AAA;
+    -fx-border-width: 1px;
+    -fx-padding: 5px 10px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 5, 0, 0, 0);
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-text-fill: #333;
+    -fx-background-insets: 0 0 0 5px, 0 0 2px 0;
+    -fx-border-insets: 0 0 0 5px, 0 0 2px 0;
+}
+
+#backButton:hover, #reloadButton:hover, #searchButton:hover, #newTabButton:hover{
+    -fx-background-color: #EEE;
+}
+
+#backButton:pressed, #reloadButton:pressed, #searchButton:pressed, #newTabButton:pressed{
+    -fx-background-color: #DDD;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 3, 0, 0, 0);
+}
+
+#tabPane {
+    -fx-background-color: rgb(0,0,17);
+}
