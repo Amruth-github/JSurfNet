@@ -19,7 +19,7 @@ public class WebBrowser extends Application {
     private final int screenMinWidth = 800 , screenMinHeight = 600;
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/Tabs.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/Browser.fxml")));
         primaryStage.setTitle("JSurfNet");
         primaryStage.setScene(new Scene(root, 800, 600));
         primaryStage.show();
