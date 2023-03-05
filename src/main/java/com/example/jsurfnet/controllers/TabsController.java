@@ -46,7 +46,10 @@ public class TabsController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        addTab();
+    }
 
+    private void addTab(){
         Platform.runLater(() -> {
             newTabButton.fire();
         });
@@ -62,7 +65,7 @@ public class TabsController implements Initializable {
 
             tabPane.getTabs().add(tab);
             tabPane.getSelectionModel().select(tab);
-            
+
             webEngine.locationProperty().addListener((observable, oldValue, newValue) -> {
                 urlField.setText(newValue);
             });
@@ -78,10 +81,7 @@ public class TabsController implements Initializable {
                 engine = ((WebView) currentTab.getContent()).getEngine();
             }
         });
-
-
     }
-
     @FXML
     private void loadURL() {
         String url = urlField.getText();
