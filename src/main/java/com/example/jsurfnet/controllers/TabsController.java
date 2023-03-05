@@ -54,15 +54,9 @@ public class TabsController implements Initializable {
 
             tabPane.getTabs().add(tab);
             tabPane.getSelectionModel().select(tab);
-            WebHistory history = engine.getHistory();
-
-            history.getEntries().addListener((ListChangeListener<WebHistory.Entry>) change -> {
-                while (change.next()) {
-                    if (change.wasAdded()) {
-                        WebHistory.Entry entry = change.getAddedSubList().get(0);
-                        urlField.setText(entry.getUrl());
-                    }
-                }
+            
+            webEngine.locationProperty().addListener((observable, oldValue, newValue) -> {
+                urlField.setText(newValue);
             });
         });
 
