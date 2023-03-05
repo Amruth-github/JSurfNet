@@ -1,4 +1,5 @@
 package com.example.jsurfnet.controllers;
+import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Worker;
@@ -46,10 +47,8 @@ public class TabsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        webView.getEngine().load("https://www.google.com/");
-
-        webView.getEngine().locationProperty().addListener((observable, oldValue, newValue) -> {
-            urlField.setText(newValue);
+        Platform.runLater(() -> {
+            newTabButton.fire();
         });
 
         newTabButton.setOnAction(event -> {
