@@ -32,6 +32,9 @@ public class TabsController implements Initializable {
     @FXML
     private Button newTabButton;
 
+    @FXML
+    private WebView webView;
+
     @FXML private Button backButton;
     @FXML private Button forwardButton;
     @FXML private Button reloadButton;
@@ -42,6 +45,8 @@ public class TabsController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        webView.getEngine().load("https://www.google.com/");
 
         newTabButton.setOnAction(event -> {
 

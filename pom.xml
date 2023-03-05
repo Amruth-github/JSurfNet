@@ -38,12 +38,6 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
-
-        <dependency>
-            <groupId>com.github.goxr3plus</groupId>
-            <artifactId>FX-BorderlessScene</artifactId>
-            <version>V3.1.0</version>
-        </dependency>
     </dependencies>
 
     <build>
