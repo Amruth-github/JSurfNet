@@ -48,6 +48,10 @@ public class TabsController implements Initializable {
 
         webView.getEngine().load("https://www.google.com/");
 
+        webView.getEngine().locationProperty().addListener((observable, oldValue, newValue) -> {
+            urlField.setText(newValue);
+        });
+
         newTabButton.setOnAction(event -> {
 
             Tab tab = new Tab("New Tab");
