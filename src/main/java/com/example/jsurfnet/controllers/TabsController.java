@@ -1,11 +1,8 @@
 package com.example.jsurfnet.controllers;
 import javafx.application.Platform;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -17,7 +14,8 @@ import javafx.scene.web.WebView;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.SimpleTimeZone;
+
+import com.example.jsurfnet.utils.TabSelection;
 
 public class TabsController implements Initializable {
 
@@ -43,6 +41,8 @@ public class TabsController implements Initializable {
 
     private WebEngine engine;
     private Tab currentTab;
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -79,16 +79,24 @@ public class TabsController implements Initializable {
                 urlField.setText(getURL(webView));
                 currentTab = newTab;
                 engine = ((WebView) currentTab.getContent()).getEngine();
+                TabSelection x = new TabSelection(newTab);
+                System.out.println("Set the tab");
             }
         });
     }
     @FXML
-    private void loadURL() {
+    private void loadURL(){
         String url = urlField.getText();
         Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
         WebView webView = (WebView) selectedTab.getContent();
         WebEngine webEngine = webView.getEngine();
         webEngine.load(url);
+    }
+
+    public void loadURL(String url_from_bookmark, Tab tab){
+        WebView webView = (WebView) tab.getContent();
+        WebEngine webEngine = webView.getEngine();
+        webEngine.load(url_from_bookmark);
     }
 
     @FXML
