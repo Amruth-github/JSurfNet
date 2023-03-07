@@ -1,11 +1,8 @@
 package com.example.jsurfnet.controllers;
 import javafx.application.Platform;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -21,6 +18,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.awt.image.BufferedImage;
@@ -34,6 +32,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import java.io.File;
 
+import com.example.jsurfnet.utils.TabSelection;
 
 public class TabsController implements Initializable {
 
@@ -59,6 +58,8 @@ public class TabsController implements Initializable {
 
     private WebEngine engine;
     private Tab currentTab;
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -115,6 +116,8 @@ public class TabsController implements Initializable {
                 urlField.setText(getURL(webView));
                 currentTab = newTab;
                 engine = ((WebView) currentTab.getContent()).getEngine();
+                TabSelection x = new TabSelection(newTab);
+                System.out.println("Set the tab");
             }
         });
     }
@@ -147,6 +150,7 @@ public class TabsController implements Initializable {
         selectedTab.setGraphic(iv);
         return selectedTab;
     }
+    
     @FXML
     private void loadURL() throws MalformedURLException, IOException {
         String url = urlField.getText();
@@ -177,6 +181,12 @@ public class TabsController implements Initializable {
         catch (Exception e) {
             return null;
         }
+    }
+
+    public void loadURL(String url_from_bookmark, Tab tab){
+        WebView webView = (WebView) tab.getContent();
+        WebEngine webEngine = webView.getEngine();
+        webEngine.load(url_from_bookmark);
     }
 
     @FXML

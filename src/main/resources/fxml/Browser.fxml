@@ -18,7 +18,7 @@
 
     <TabPane fx:id="tabPane" VBox.vgrow="ALWAYS" />
 
-    <fx:include source="Bookmarks.fxml" />
+    <fx:include source="Bookmarks.fxml"/>
     <fx:include source="Tabs.fxml" />
 
 </VBox>
