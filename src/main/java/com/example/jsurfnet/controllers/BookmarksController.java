@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.FlowPane;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,11 @@ public class BookmarksController implements Initializable {
                 System.out.println("Hmm here");
             }
             TabsController tc = new TabsController();
-            tc.loadURL(url, tab);
+            try {
+                tc.loadURL(url, tab);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
 
         bookmarkPane.getChildren().add(bookmarkButton);

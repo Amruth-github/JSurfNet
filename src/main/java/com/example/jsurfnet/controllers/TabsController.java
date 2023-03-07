@@ -155,15 +155,15 @@ public class TabsController implements Initializable {
     private void loadURL() throws MalformedURLException, IOException {
         String url = urlField.getText();
         Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
-            List<BufferedImage> img = readImage(url);
-            selectedTab.setText(gethost(url));
-            if (img == null) {
+        List<BufferedImage> img = readImage(url);
+        selectedTab.setText(gethost(url));
+        if (img == null) {
                 setIc(selectedTab, true);
-            }
+        }
 
-            WebView webView = (WebView) selectedTab.getContent();
-            WebEngine webEngine = webView.getEngine();
-            webEngine.load(url);
+        WebView webView = (WebView) selectedTab.getContent();
+        WebEngine webEngine = webView.getEngine();
+        webEngine.load(url);
 
     }
 
@@ -183,7 +183,12 @@ public class TabsController implements Initializable {
         }
     }
 
-    public void loadURL(String url_from_bookmark, Tab tab){
+    public void loadURL(String url_from_bookmark, Tab tab) throws IOException {
+        List<BufferedImage> img = readImage(url_from_bookmark);
+        tab.setText(gethost(url_from_bookmark));
+        if (img == null) {
+            setIc(tab, true);
+        }
         WebView webView = (WebView) tab.getContent();
         WebEngine webEngine = webView.getEngine();
         webEngine.load(url_from_bookmark);
