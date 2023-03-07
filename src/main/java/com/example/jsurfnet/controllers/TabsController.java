@@ -14,10 +14,26 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebHistory;
 import javafx.scene.web.WebView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.SimpleTimeZone;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.awt.image.BufferedImage;
+import net.sf.image4j.codec.ico.ICODecoder;
+
+import javax.imageio.stream.ImageInputStream;
+import javax.swing.*;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import java.io.File;
+
 
 public class TabsController implements Initializable {
 
@@ -56,10 +72,17 @@ public class TabsController implements Initializable {
 
         newTabButton.setOnAction(event -> {
 
-            Tab tab = new Tab("New Tab");
+            Tab tab = new Tab(gethost("https://www.google.com"));
             WebView newWebView = new WebView();
+            try {
+                readImage("https://www.google.com");
+                setIc(tab);
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             WebEngine webEngine = newWebView.getEngine();
-            webEngine.load("https://www.google.com/");
+            webEngine.load("https://www.google.com");
             newWebView.setPrefSize(800, 600);
             tab.setContent(newWebView);
 
@@ -68,6 +91,19 @@ public class TabsController implements Initializable {
 
             webEngine.locationProperty().addListener((observable, oldValue, newValue) -> {
                 urlField.setText(newValue);
+                tabPane.getSelectionModel().getSelectedItem().setText(gethost(newValue));
+                try {
+                    List<BufferedImage> img = readImage(newValue);
+                    if (img != null) {
+                        setIc(tabPane.getSelectionModel().getSelectedItem());
+                    }
+                    else {
+                        setIc(tabPane.getSelectionModel().getSelectedItem(), true);
+                    }
+                }
+                catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             });
         });
 
@@ -82,13 +118,65 @@ public class TabsController implements Initializable {
             }
         });
     }
+
+    private String gethost(String url) {
+        URL u = null;
+        try {
+            u = new URL(url);
+        }
+        catch (MalformedURLException e) {
+            System.out.println(e);
+        }
+        return u.getHost();
+    }
+    private Tab setIc(Tab selectedTab) {
+        Image i = new Image(new File("favicon.png").toURI().toString());
+        ImageView iv = new ImageView();
+        iv.setFitHeight(16);
+        iv.setFitWidth(16);
+        iv.setImage(i);
+        selectedTab.setGraphic(iv);
+        return selectedTab;
+    }
+    private Tab setIc(Tab selectedTab, boolean flag) {
+        Image i = new Image(new File("favicon-standard.png").toURI().toString());
+        ImageView iv = new ImageView();
+        iv.setFitHeight(16);
+        iv.setFitWidth(16);
+        iv.setImage(i);
+        selectedTab.setGraphic(iv);
+        return selectedTab;
+    }
     @FXML
-    private void loadURL() {
+    private void loadURL() throws MalformedURLException, IOException {
         String url = urlField.getText();
         Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
-        WebView webView = (WebView) selectedTab.getContent();
-        WebEngine webEngine = webView.getEngine();
-        webEngine.load(url);
+            List<BufferedImage> img = readImage(url);
+            selectedTab.setText(gethost(url));
+            if (img == null) {
+                setIc(selectedTab, true);
+            }
+
+            WebView webView = (WebView) selectedTab.getContent();
+            WebEngine webEngine = webView.getEngine();
+            webEngine.load(url);
+
+    }
+
+    private List<BufferedImage> readImage(String u) throws IOException {
+
+        List<BufferedImage> images = null;
+        URL url = new URL(u);
+        String path = "https://" + url.getHost() + "/favicon.ico";
+        try {
+            InputStream istr = new URL(path).openStream();
+            images = ICODecoder.read(istr);
+            ImageIO.write(images.get(0), "png", new File("favicon.png"));
+            return images;
+        }
+        catch (Exception e) {
+            return null;
+        }
     }
 
     @FXML
