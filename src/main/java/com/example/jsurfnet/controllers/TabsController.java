@@ -13,6 +13,7 @@ import javafx.scene.web.WebHistory;
 import javafx.scene.web.WebView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import com.example.jsurfnet.controllers.BookmarksController;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -23,12 +24,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.awt.image.BufferedImage;
 import net.sf.image4j.codec.ico.ICODecoder;
-
-import javax.imageio.stream.ImageInputStream;
-import javax.swing.*;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import java.io.File;
 
@@ -51,6 +47,9 @@ public class TabsController implements Initializable {
     @FXML
     private WebView webView;
 
+    @FXML
+    private Button newBookmarkButton;
+
     @FXML private Button backButton;
     @FXML private Button forwardButton;
     @FXML private Button reloadButton;
@@ -59,13 +58,27 @@ public class TabsController implements Initializable {
     private WebEngine engine;
     private Tab currentTab;
 
+    BookmarksController bc = new BookmarksController();
+
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         addTab();
+        addBoookmark();
     }
 
+    private void addBoookmark(){
+        newBookmarkButton.setOnAction(event->{
+            try {
+                bc.addBookmark(tabPane.getSelectionModel().getSelectedItem().getText(), urlField.getText());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+    }
     private void addTab(){
         Platform.runLater(() -> {
             newTabButton.fire();
@@ -122,7 +135,7 @@ public class TabsController implements Initializable {
         });
     }
 
-    private String gethost(String url) {
+    static public  String gethost(String url) {
         URL u = null;
         try {
             u = new URL(url);
@@ -133,7 +146,7 @@ public class TabsController implements Initializable {
         return u.getHost();
     }
     private Tab setIc(Tab selectedTab) {
-        Image i = new Image(new File("favicon.png").toURI().toString());
+        Image i = new Image(new File("./icons/" + selectedTab.getText() + ".png").toURI().toString());
         ImageView iv = new ImageView();
         iv.setFitHeight(16);
         iv.setFitWidth(16);
@@ -142,7 +155,7 @@ public class TabsController implements Initializable {
         return selectedTab;
     }
     private Tab setIc(Tab selectedTab, boolean flag) {
-        Image i = new Image(new File("favicon-standard.png").toURI().toString());
+        Image i = new Image(new File("./icons/favicon-standard.png").toURI().toString());
         ImageView iv = new ImageView();
         iv.setFitHeight(16);
         iv.setFitWidth(16);
@@ -167,7 +180,7 @@ public class TabsController implements Initializable {
 
     }
 
-    private List<BufferedImage> readImage(String u) throws IOException {
+    static public List<BufferedImage> readImage(String u) throws IOException {
 
         List<BufferedImage> images = null;
         URL url = new URL(u);
@@ -175,7 +188,7 @@ public class TabsController implements Initializable {
         try {
             InputStream istr = new URL(path).openStream();
             images = ICODecoder.read(istr);
-            ImageIO.write(images.get(0), "png", new File("favicon.png"));
+            ImageIO.write(images.get(0), "png", new File("./icons/" + url.getHost() + ".png"));
             return images;
         }
         catch (Exception e) {

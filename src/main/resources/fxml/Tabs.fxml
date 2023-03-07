@@ -28,6 +28,7 @@
            <TextField fx:id="urlField" onAction="#loadURL" prefHeight="26.0" prefWidth="473.0" />
            <Button fx:id="searchButton" onAction="#loadURL" text="🔍" />
            <Button fx:id="newTabButton" mnemonicParsing="false" text="+" />
+           <Button fx:id="newBookmarkButton" text = "🔖" stylesheets="@../css/application.css"/>
        </ToolBar>
    </bottom>
 </BorderPane>

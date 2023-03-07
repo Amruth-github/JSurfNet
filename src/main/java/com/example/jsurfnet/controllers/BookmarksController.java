@@ -7,28 +7,39 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.FlowPane;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import com.example.jsurfnet.utils.TabSelection;
+import com.example.jsurfnet.controllers.TabsController.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class BookmarksController implements Initializable {
 
     @FXML
-    private FlowPane bookmarkPane;
+    private FlowPane bookmarkPane = new FlowPane();
 
     private List<Bookmark> bookmarks = new ArrayList<>();
 
-
-
-    public void addBookmark(String name, String url) {
+    public void addBookmark(String name, String url) throws IOException {
         Bookmark bookmark = new Bookmark(name, url);
         bookmarks.add(bookmark);
 
         Button bookmarkButton = new Button(name);
+        List<BufferedImage> img = TabsController.readImage(url);
+        if (img != null) {
+            setIC(bookmarkButton, url);
+        } else {
+            setIC(bookmarkButton, true);
+        }
 
         bookmarkButton.setOnAction(event -> {
             Tab tab = TabSelection.getSelectedTab();
@@ -53,11 +64,32 @@ public class BookmarksController implements Initializable {
             return button.getText().equals(bookmark.getName());
         });
     }
+    private void setIC(Button bookmarkbutton, String u) throws MalformedURLException {
+        URL url = new URL(u);
+        Image i = new Image(new File("./icons/" + url.getHost() + ".png").toURI().toString());
+        ImageView iv = new ImageView();
+        iv.setFitWidth(16);
+        iv.setFitHeight(16);
+        iv.setImage(i);
+        bookmarkbutton.setGraphic(iv);
+    }
+    private void setIC(Button bookmarkbutton, boolean flag) {
+        Image i = new Image(new File("./icons/favicon-standard.png").toURI().toString());
+        ImageView iv = new ImageView();
+        iv.setFitWidth(16);
+        iv.setFitHeight(16);
+        iv.setImage(i);
+        bookmarkbutton.setGraphic(iv);
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        addBookmark("Google", "https://www.google.com/");
-        addBookmark("Github", "https://www.github.com/");
+        try {
+            addBookmark("Google", "https://www.google.com/");
+            addBookmark("Github", "https://www.github.com/");
 
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

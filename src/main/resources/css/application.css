@@ -1,4 +1,4 @@
-#backButton, #reloadButton, #searchButton, #newTabButton{
+#backButton, #reloadButton, #searchButton, #newTabButton, #newBookmarkButton{
     -fx-background-color: #FFF;
     -fx-background-radius: 5px;
     -fx-border-radius: 5px;
@@ -18,7 +18,7 @@
     -fx-background-color: #EEE;
 }
 
-#backButton:pressed, #reloadButton:pressed, #searchButton:pressed, #newTabButton:pressed{
+#backButton:pressed, #reloadButton:pressed, #searchButton:pressed, #newTabButton:pressed, #newBookmarkButton:pressed{
     -fx-background-color: #DDD;
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 3, 0, 0, 0);
 }
