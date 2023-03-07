@@ -56,7 +56,6 @@ public class BookmarksController implements Initializable {
                 throw new RuntimeException(e);
             }
         });
-        System.out.println("Length of bookmaeks list: "+ bookmarks.size());
     }
 
     public void removeBookmark(Bookmark bookmark) {
@@ -117,7 +116,6 @@ public class BookmarksController implements Initializable {
                                 }
                             });
                             bookmarkPane.getChildren().add(newBookmarkButton);
-                            System.out.println("Number of bookmarks: " + bookmarkPane.getChildren().size());
 
                         }
                     }
