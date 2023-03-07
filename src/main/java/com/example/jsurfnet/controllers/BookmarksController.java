@@ -1,6 +1,9 @@
 package com.example.jsurfnet.controllers;
 
 import com.example.jsurfnet.utils.Bookmark;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -21,13 +24,16 @@ import com.example.jsurfnet.utils.TabSelection;
 import com.example.jsurfnet.controllers.TabsController.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 
 public class BookmarksController implements Initializable {
 
+    public VBox bookmarksBox;
+    public VBox bookmarkContainer;
     @FXML
     private FlowPane bookmarkPane = new FlowPane();
 
-    private List<Bookmark> bookmarks = new ArrayList<>();
+    private static ObservableList<Bookmark> bookmarks = FXCollections.observableArrayList();
 
     public void addBookmark(String name, String url) throws IOException {
         Bookmark bookmark = new Bookmark(name, url);
@@ -43,9 +49,6 @@ public class BookmarksController implements Initializable {
 
         bookmarkButton.setOnAction(event -> {
             Tab tab = TabSelection.getSelectedTab();
-            if (tab==null){
-                System.out.println("Hmm here");
-            }
             TabsController tc = new TabsController();
             try {
                 tc.loadURL(url, tab);
@@ -53,8 +56,7 @@ public class BookmarksController implements Initializable {
                 throw new RuntimeException(e);
             }
         });
-
-        bookmarkPane.getChildren().add(bookmarkButton);
+        System.out.println("Length of bookmaeks list: "+ bookmarks.size());
     }
 
     public void removeBookmark(Bookmark bookmark) {
@@ -85,6 +87,43 @@ public class BookmarksController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
+            bookmarks.addListener((ListChangeListener<Bookmark>) change -> {
+                while (change.next()) {
+                    if (change.wasAdded()) {
+                        for (Bookmark newBookmark : change.getAddedSubList()) {
+                            Button newBookmarkButton = new Button(newBookmark.getName());
+                            List<BufferedImage> img = null;
+                            try {
+                                img = TabsController.readImage(newBookmark.getUrl());
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            if (img != null) {
+                                try {
+                                    setIC(newBookmarkButton, newBookmark.getUrl());
+                                } catch (MalformedURLException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            } else {
+                                setIC(newBookmarkButton, true);
+                            }
+                            newBookmarkButton.setOnAction(event -> {
+                                Tab tab = TabSelection.getSelectedTab();
+                                TabsController tc = new TabsController();
+                                try {
+                                    tc.loadURL(newBookmark.getUrl(), tab);
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            });
+                            bookmarkPane.getChildren().add(newBookmarkButton);
+                            System.out.println("Number of bookmarks: " + bookmarkPane.getChildren().size());
+
+                        }
+                    }
+                }
+            });
+
             addBookmark("Google", "https://www.google.com/");
             addBookmark("Github", "https://www.github.com/");
 
