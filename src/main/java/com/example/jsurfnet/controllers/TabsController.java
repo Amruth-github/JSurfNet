@@ -61,43 +61,13 @@ public class TabsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-//        ArrayList<Tab> savedTabs = new ArrayList<>();
-        List<Tab> savedTabs = null;
-        FileInputStream fileIn = null;
-        try {
-            fileIn = new FileInputStream("TabInfo.ser");
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        ObjectInputStream in = null;
-        try {
-            in = new ObjectInputStream(fileIn);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        try {
-//            savedTabs = (ArrayList) in.readObject();
-            savedTabs = (List<Tab>) in.readObject();
-        } catch (IOException | ClassNotFoundException e) {
+        List<Tab> savedTabs = loadTabs();
+        if (savedTabs != null) {
+            tabPane.getTabs().addAll(savedTabs);
+        } else {
             addTab();
         }
 
-        try {
-            in.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            fileIn.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        for (Tab tab: savedTabs){
-            tabPane.getTabs().add(tab);
-        }
-        addTab();
         addBoookmark();
     }
 
@@ -152,29 +122,8 @@ public class TabsController implements Initializable {
                 }
             });
 
-            FileOutputStream fileout = null;
-            try {
-                fileout = new FileOutputStream("TabInfo.ser");
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-            ObjectOutputStream out = null;
-            try {
-                out = new ObjectOutputStream(fileout);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            try {
-                out.writeObject(new ArrayList<Tab>(tabPane.getTabs()));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            try {
-                fileout.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            System.out.println("Object info saved");
+            List<Tab> tabsToSave = new ArrayList<>(tabPane.getTabs());
+            saveTabs(tabsToSave);
 
         });
 
@@ -190,6 +139,22 @@ public class TabsController implements Initializable {
                 System.out.println("Set the tab");
             }
         });
+    }
+
+    private void saveTabs(List<Tab> tabs) {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("TabInfo.ser"))) {
+            out.writeObject(tabs);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private List<Tab> loadTabs() {
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("TabInfo.ser"))) {
+            return (List<Tab>) in.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            return null;
+        }
     }
 
     static public  String gethost(String url) {
