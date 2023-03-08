@@ -1,9 +1,7 @@
 package com.example.jsurfnet.controllers;
 
 import com.example.jsurfnet.utils.Bookmark;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
+import javafx.collections.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -12,6 +10,7 @@ import javafx.scene.layout.FlowPane;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.print.Book;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -33,29 +32,40 @@ public class BookmarksController implements Initializable {
     @FXML
     private FlowPane bookmarkPane = new FlowPane();
 
-    private static ObservableList<Bookmark> bookmarks = FXCollections.observableArrayList();
+    private static ObservableSet<Bookmark> bookmarks = FXCollections.observableSet();
 
     public void addBookmark(String name, String url) throws IOException {
-        Bookmark bookmark = new Bookmark(name, url);
-        bookmarks.add(bookmark);
+        if (search(url)) {
+            Bookmark bookmark = new Bookmark(name, url);
+            bookmarks.add(bookmark);
 
-        Button bookmarkButton = new Button(name);
-        List<BufferedImage> img = TabsController.readImage(url);
-        if (img != null) {
-            setIC(bookmarkButton, url);
-        } else {
-            setIC(bookmarkButton, true);
-        }
-
-        bookmarkButton.setOnAction(event -> {
-            Tab tab = TabSelection.getSelectedTab();
-            TabsController tc = new TabsController();
-            try {
-                tc.loadURL(url, tab);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            Button bookmarkButton = new Button(name);
+            List<BufferedImage> img = TabsController.readImage(url);
+            if (img != null) {
+                setIC(bookmarkButton, url);
+            } else {
+                setIC(bookmarkButton, true);
             }
-        });
+
+            bookmarkButton.setOnAction(event -> {
+                Tab tab = TabSelection.getSelectedTab();
+                TabsController tc = new TabsController();
+                try {
+                    tc.loadURL(url, tab);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        }
+    }
+
+    private boolean search(String url) {
+        for (Bookmark i : bookmarks) {
+            if (i.getUrl().equals(url)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void removeBookmark(Bookmark bookmark) {
@@ -86,40 +96,37 @@ public class BookmarksController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            bookmarks.addListener((ListChangeListener<Bookmark>) change -> {
-                while (change.next()) {
+            bookmarks.addListener((SetChangeListener<Bookmark>) change -> {
+                Bookmark newBookmark = change.getElementAdded();
                     if (change.wasAdded()) {
-                        for (Bookmark newBookmark : change.getAddedSubList()) {
-                            Button newBookmarkButton = new Button(newBookmark.getName());
-                            List<BufferedImage> img = null;
+                        Button newBookmarkButton = new Button(newBookmark.getName());
+                        List<BufferedImage> img = null;
+                        try {
+                            img = TabsController.readImage(newBookmark.getUrl());
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        if (img != null) {
                             try {
-                                img = TabsController.readImage(newBookmark.getUrl());
+                                setIC(newBookmarkButton, newBookmark.getUrl());
+                            } catch (MalformedURLException e) {
+                                throw new RuntimeException(e);
+                            }
+                        } else {
+                            setIC(newBookmarkButton, true);
+                        }
+                        newBookmarkButton.setOnAction(event -> {
+                            Tab tab = TabSelection.getSelectedTab();
+                            TabsController tc = new TabsController();
+                            try {
+                                tc.loadURL(newBookmark.getUrl(), tab);
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
-                            if (img != null) {
-                                try {
-                                    setIC(newBookmarkButton, newBookmark.getUrl());
-                                } catch (MalformedURLException e) {
-                                    throw new RuntimeException(e);
-                                }
-                            } else {
-                                setIC(newBookmarkButton, true);
-                            }
-                            newBookmarkButton.setOnAction(event -> {
-                                Tab tab = TabSelection.getSelectedTab();
-                                TabsController tc = new TabsController();
-                                try {
-                                    tc.loadURL(newBookmark.getUrl(), tab);
-                                } catch (IOException e) {
-                                    throw new RuntimeException(e);
-                                }
-                            });
-                            bookmarkPane.getChildren().add(newBookmarkButton);
+                        });
+                        bookmarkPane.getChildren().add(newBookmarkButton);
 
-                        }
                     }
-                }
             });
 
             addBookmark("Google", "https://www.google.com/");

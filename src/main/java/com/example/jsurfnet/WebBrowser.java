@@ -1,6 +1,6 @@
 package com.example.jsurfnet;
 
-import com.example.jsurfnet.controllers.TabsController;
+import com.example.jsurfnet.controllers.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,6 +23,7 @@ public class WebBrowser extends Application {
         primaryStage.setTitle("JSurfNet");
         primaryStage.setScene(new Scene(root, 800, 600));
         primaryStage.show();
+        //rn
     }
 
     public static double getVisualScreenWidth() {
