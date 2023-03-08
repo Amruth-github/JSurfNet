@@ -218,6 +218,10 @@ public class TabsController implements Initializable {
         }
     }
 
+    public Button getNewBookmarkButton(){
+        return newBookmarkButton;
+    }
+
     public void loadURL(String url_from_bookmark, Tab tab) throws IOException {
         List<BufferedImage> img = readImage(url_from_bookmark);
         tab.setText(gethost(url_from_bookmark));
