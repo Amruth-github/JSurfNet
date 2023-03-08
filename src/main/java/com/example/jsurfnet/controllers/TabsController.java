@@ -15,18 +15,16 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import com.example.jsurfnet.controllers.BookmarksController;
 
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.awt.image.BufferedImage;
 import net.sf.image4j.codec.ico.ICODecoder;
 import java.util.List;
 import javax.imageio.ImageIO;
-import java.io.File;
 
 import com.example.jsurfnet.utils.TabSelection;
 
@@ -60,11 +58,45 @@ public class TabsController implements Initializable {
 
     BookmarksController bc = new BookmarksController();
 
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+//        ArrayList<Tab> savedTabs = new ArrayList<>();
+        List<Tab> savedTabs = null;
+        FileInputStream fileIn = null;
+        try {
+            fileIn = new FileInputStream("TabInfo.ser");
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        ObjectInputStream in = null;
+        try {
+            in = new ObjectInputStream(fileIn);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+//            savedTabs = (ArrayList) in.readObject();
+            savedTabs = (List<Tab>) in.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            addTab();
+        }
+
+        try {
+            in.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            fileIn.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        for (Tab tab: savedTabs){
+            tabPane.getTabs().add(tab);
+        }
         addTab();
         addBoookmark();
     }
@@ -119,6 +151,31 @@ public class TabsController implements Initializable {
                     throw new RuntimeException(e);
                 }
             });
+
+            FileOutputStream fileout = null;
+            try {
+                fileout = new FileOutputStream("TabInfo.ser");
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+            ObjectOutputStream out = null;
+            try {
+                out = new ObjectOutputStream(fileout);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                out.writeObject(new ArrayList<Tab>(tabPane.getTabs()));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                fileout.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            System.out.println("Object info saved");
+
         });
 
         engine = new WebView().getEngine();
