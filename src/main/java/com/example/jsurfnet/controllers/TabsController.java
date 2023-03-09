@@ -64,7 +64,7 @@ public class TabsController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        setupListeners();
         addTab();
         addBoookmark();
     }
@@ -83,9 +83,10 @@ public class TabsController implements Initializable {
         Platform.runLater(() -> {
             newTabButton.fire();
         });
+    }
 
+    private void setupListeners(){
         newTabButton.setOnAction(event -> {
-
             Tab tab = new Tab(gethost("https://www.google.com"));
             WebView newWebView = new WebView();
             try {
