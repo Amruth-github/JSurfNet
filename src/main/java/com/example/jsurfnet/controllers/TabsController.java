@@ -221,7 +221,7 @@ public class TabsController implements Initializable {
     private void handleForwardButton() {
         ObservableList<WebHistory.Entry> history = engine.getHistory().getEntries();
         int currentIndex = engine.getHistory().getCurrentIndex();
-
+        System.out.println(history);
         if (currentIndex < history.size() - 1) {
             engine.load(history.get(currentIndex + 1).getUrl());
         }
