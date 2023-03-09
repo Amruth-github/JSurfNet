@@ -5,6 +5,8 @@ import javafx.collections.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.FlowPane;
 
@@ -100,6 +102,14 @@ public class BookmarksController implements Initializable {
                 Bookmark newBookmark = change.getElementAdded();
                     if (change.wasAdded()) {
                         Button newBookmarkButton = new Button(newBookmark.getName());
+                        ContextMenu c = new ContextMenu();
+                        MenuItem m1 = new MenuItem("Rename Bookmark");
+                        MenuItem m2 = new MenuItem("Remove Bookmark");
+                        c.getItems().addAll(m1, m2);
+                        m2.setOnAction(actionEvent -> {
+                            removeBookmark((newBookmark));
+                        });
+                        newBookmarkButton.setContextMenu(c);
                         List<BufferedImage> img = null;
                         try {
                             img = TabsController.readImage(newBookmark.getUrl());

@@ -130,7 +130,6 @@ public class TabsController implements Initializable {
                 currentTab = newTab;
                 engine = ((WebView) currentTab.getContent()).getEngine();
                 TabSelection x = new TabSelection(newTab);
-                System.out.println("Set the tab");
             }
         });
     }
