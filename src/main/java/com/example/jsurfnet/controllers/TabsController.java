@@ -23,6 +23,8 @@ import java.util.ResourceBundle;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.awt.image.BufferedImage;
+
+import javafx.stage.FileChooser;
 import net.sf.image4j.codec.ico.ICODecoder;
 import java.util.List;
 import javax.imageio.ImageIO;
@@ -85,6 +87,7 @@ public class TabsController implements Initializable {
         });
     }
 
+
     private void setupListeners(){
         newTabButton.setOnAction(event -> {
             Tab tab = new Tab(gethost("https://www.google.com"));
@@ -100,10 +103,25 @@ public class TabsController implements Initializable {
             webEngine.load("https://www.google.com");
             newWebView.setPrefSize(800, 600);
             tab.setContent(newWebView);
+//            webEngine.setPromptHandler(prompt -> {
+//                if (prompt.getMessage().startsWith("save")) {
+//                    String suggestedFileName = prompt.getMessage().substring(5);
+//                    FileChooser fileChooser = new FileChooser();
+//                    fileChooser.setTitle("Save file");
+//                    fileChooser.setInitialFileName(suggestedFileName);
+//                    File file = fileChooser.showSaveDialog(webView.getScene().getWindow());
+//                    if (file != null) {
+//                        return file.toURI().toString();
+//                    }
+//                }
+//                return null;
+//            });
+
 
             tabPane.getTabs().add(tab);
             tabPane.getSelectionModel().select(tab);
 
+            
             webEngine.locationProperty().addListener((observable, oldValue, newValue) -> {
                 urlField.setText(newValue);
                 tabPane.getSelectionModel().getSelectedItem().setText(gethost(newValue));
@@ -122,7 +140,6 @@ public class TabsController implements Initializable {
             });
         });
 
-        engine = new WebView().getEngine();
 
         tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
             if (newTab != null) {
@@ -167,6 +184,9 @@ public class TabsController implements Initializable {
     @FXML
     private void loadURL() throws MalformedURLException, IOException {
         String url = urlField.getText();
+        if (!url.startsWith("http")) {
+            url = "https://google.com/search?q=" + url;
+        }
         Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
         List<BufferedImage> img = readImage(url);
         selectedTab.setText(gethost(url));
