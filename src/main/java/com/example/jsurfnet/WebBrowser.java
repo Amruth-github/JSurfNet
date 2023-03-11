@@ -16,24 +16,13 @@ import javafx.scene.web.WebView;
 
 public class WebBrowser extends Application {
 
-    private final int screenMinWidth = 800 , screenMinHeight = 600;
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/Browser.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/WebBrowser.fxml")));
         primaryStage.setTitle("JSurfNet");
-        primaryStage.setScene(new Scene(root, 800, 600));
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
-        //rn
     }
-
-    public static double getVisualScreenWidth() {
-        return Screen.getPrimary().getVisualBounds().getWidth();
-    }
-
-    public static double getVisualScreenHeight() {
-        return Screen.getPrimary().getVisualBounds().getHeight();
-    }
-
     public static void main(String[] args) {
         System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
         //Finally works

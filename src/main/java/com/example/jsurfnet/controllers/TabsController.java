@@ -13,13 +13,9 @@ import javafx.scene.web.WebHistory;
 import javafx.scene.web.WebView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import com.example.jsurfnet.controllers.BookmarksController;
-
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.awt.image.BufferedImage;
@@ -241,7 +237,7 @@ public class TabsController implements Initializable {
     private void handleForwardButton() {
         ObservableList<WebHistory.Entry> history = engine.getHistory().getEntries();
         int currentIndex = engine.getHistory().getCurrentIndex();
-
+        System.out.println(history);
         if (currentIndex < history.size() - 1) {
             engine.load(history.get(currentIndex + 1).getUrl());
         }
