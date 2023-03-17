@@ -32,14 +32,11 @@ public class TabsController implements Initializable {
 
     @FXML
     private BorderPane root;
-
     @FXML
     private TextField urlField;
-
     @FXML
     private TabPane tabPane;
 
-    @FXML
     private WebView webView;
 
     private WebEngine engine;
