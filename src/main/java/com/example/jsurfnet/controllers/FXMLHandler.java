@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -23,8 +24,11 @@ public class FXMLHandler implements Initializable {
         BrowserController object = new BrowserController();
         Pane tabsview = object.getPage("Tabs");
         Pane bmview = object.getPage("Bookmarks");
+        Pane tbview = object.getPage("ToolBar");
         TabAndWebView.getChildren().add(setAnchorDim(tabsview));
         Bookmarks.getChildren().add(setAnchorDim(bmview));
+        Toolbar.getChildren().add(setAnchorDim(tbview));
+
     }
     public Node setAnchorDim(Node view){
         AnchorPane.setTopAnchor(view, 0.0);
