@@ -15,6 +15,9 @@ public class FXMLHandler implements Initializable {
 
     public AnchorPane TabAndWebView;
     public AnchorPane Bookmarks;
+    public AnchorPane Toolbar;
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         BrowserController object = new BrowserController();
