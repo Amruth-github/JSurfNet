@@ -8,24 +8,22 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.print.Book;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import com.example.jsurfnet.utils.TabSelection;
-import com.example.jsurfnet.controllers.TabsController.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.stage.Popup;
 
 public class BookmarksController implements Initializable {
 
@@ -106,6 +104,20 @@ public class BookmarksController implements Initializable {
                         MenuItem m1 = new MenuItem("Rename Bookmark");
                         MenuItem m2 = new MenuItem("Remove Bookmark");
                         c.getItems().addAll(m1, m2);
+                        TextField textField = new TextField();
+                        Popup popup = new Popup();
+                        popup.getContent().add(textField);
+                        textField.setOnAction(actionEvent -> {
+                            newBookmarkButton.setText(textField.getText());
+                            popup.hide();
+                        });
+                        m1.setOnAction(actionEvent -> {
+                            textField.setText(newBookmarkButton.getText());
+                            double x = newBookmarkButton.localToScreen(newBookmarkButton.getLayoutBounds().getMaxX(), 0).getX();
+                            double y = newBookmarkButton.localToScreen(0, newBookmarkButton.getLayoutBounds().getMaxY()).getY();
+                            popup.show(newBookmarkButton, x, y);
+                            textField.requestFocus();
+                        });
                         m2.setOnAction(actionEvent -> {
                             removeBookmark((newBookmark));
                         });
