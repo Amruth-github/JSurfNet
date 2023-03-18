@@ -37,8 +37,6 @@ public class TabsController implements Initializable {
     @FXML
     private TabPane tabPane;
 
-    private WebView webView;
-
     private WebEngine engine;
     private Tab currentTab;
 
@@ -56,12 +54,7 @@ public class TabsController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        TabsAndWv TabsAndWvInstance;
-        TabsAndWvInstance = TabsAndWv.getInstance();
-        TabsAndWvInstance.setWebView(webView);
         System.out.println("Set tab pane");
-
         setupListeners();
         addTab();
     }
