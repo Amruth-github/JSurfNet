@@ -4,8 +4,9 @@
 <?import javafx.scene.layout.VBox?>
 
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.jsurfnet.controllers.FXMLHandler">
-   <children>
-          <AnchorPane fx:id="Bookmarks" minHeight="0.0" minWidth="0.0" prefHeight="50.0" prefWidth="800.0" stylesheets="@../css/application.css" />
-          <AnchorPane fx:id="TabAndWebView" minHeight="0.0" minWidth="0.0" prefHeight="576.0" prefWidth="800.0" VBox.vgrow="ALWAYS" stylesheets="@../css/application.css"/>
-   </children>
+    <children>
+        <AnchorPane fx:id="Bookmarks" minHeight="0.0" minWidth="0.0" prefHeight="50.0" prefWidth="800.0" stylesheets="@../css/application.css" />
+        <AnchorPane fx:id="TabAndWebView" minHeight="0.0" minWidth="0.0" prefHeight="558.0" prefWidth="807.0" stylesheets="@../css/application.css" VBox.vgrow="ALWAYS" />
+        <AnchorPane fx:id="Toolbar" minHeight="0.0" minWidth="0.0" prefHeight="70.0" prefWidth="800.0" />
+    </children>
 </VBox>

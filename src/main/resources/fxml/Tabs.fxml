@@ -1,28 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.effect.Reflection?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.web.WebView?>
 
 <BorderPane fx:id="root" prefHeight="600" prefWidth="800" stylesheets="@../css/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.jsurfnet.controllers.TabsController">
     <center>
         <TabPane fx:id="tabPane" stylesheets="@../css/application.css" tabClosingPolicy="ALL_TABS" BorderPane.alignment="CENTER">
         </TabPane>
     </center>
-   <bottom>
-       <ToolBar prefHeight="17.0" prefWidth="800.0" BorderPane.alignment="CENTER">
-           <Button fx:id="backButton" mnemonicParsing="false" onAction="#handleBackButton" stylesheets="@../css/application.css" text="◁" />
-           <Button fx:id="forwardButton" mnemonicParsing="false" onAction="#handleForwardButton" stylesheets="@../css/application.css" text="▷" />
-           <Button fx:id="reloadButton" mnemonicParsing="false" onAction="#handleReloadButton" stylesheets="@../css/application.css" text="⟳" />
-           <TextField fx:id="urlField" onAction="#loadURL" prefHeight="26.0" prefWidth="473.0" />
-           <Button fx:id="searchButton" onAction="#loadURL" text="🔍" />
-           <Button fx:id="newTabButton" mnemonicParsing="false" text="+" />
-           <Button fx:id="newBookmarkButton" text = "🔖" stylesheets="@../css/application.css"/>
-       </ToolBar>
-   </bottom>
 </BorderPane>

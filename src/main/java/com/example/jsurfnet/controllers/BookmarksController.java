@@ -50,8 +50,9 @@ public class BookmarksController implements Initializable {
             bookmarkButton.setOnAction(event -> {
                 Tab tab = TabSelection.getSelectedTab();
                 TabsController tc = new TabsController();
+                ToolBarController tbc = new ToolBarController();
                 try {
-                    tc.loadURL(url, tab);
+                    tbc.loadURL(url, tab);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -139,9 +140,10 @@ public class BookmarksController implements Initializable {
                         }
                         newBookmarkButton.setOnAction(event -> {
                             Tab tab = TabSelection.getSelectedTab();
-                            TabsController tc = new TabsController();
+                            ToolBarController tbc = new ToolBarController();
+
                             try {
-                                tc.loadURL(newBookmark.getUrl(), tab);
+                                tbc.loadURL(newBookmark.getUrl(), tab);
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }

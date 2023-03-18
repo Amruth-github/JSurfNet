@@ -1,4 +1,6 @@
 package com.example.jsurfnet.controllers;
+import com.example.jsurfnet.utils.TabsAndWv;
+import com.example.jsurfnet.utils.ToolBar;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -33,59 +35,39 @@ public class TabsController implements Initializable {
 
     @FXML
     private BorderPane root;
-
-    @FXML
-    private TextField urlField;
-
     @FXML
     private TabPane tabPane;
-
-    @FXML
-    private Button newTabButton;
-
-    @FXML
-    private WebView webView;
-
-    @FXML
-    private Button newBookmarkButton;
-
-    @FXML private Button backButton;
-    @FXML private Button forwardButton;
-    @FXML private Button reloadButton;
-    @FXML private Button searchButton;
 
     private WebEngine engine;
     private Tab currentTab;
 
-    BookmarksController bc = new BookmarksController();
+    private final Button newTabButton;
 
+    private TextField urlField;
 
+    public TabsController(){
+        ToolBar ToolBarInstance;
+        ToolBarInstance = ToolBar.getInstance();
+        newTabButton = ToolBarInstance.getNewTabButton();
+        urlField = ToolBarInstance.getUrlField();
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setupListeners();
         addTab();
-        addBoookmark();
     }
 
-    private void addBoookmark(){
-        newBookmarkButton.setOnAction(event->{
-            try {
-                bc.addBookmark(tabPane.getSelectionModel().getSelectedItem().getText(), urlField.getText());
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
 
-    }
     private void addTab(){
-        Platform.runLater(() -> {
-            newTabButton.fire();
-        });
+        Platform.runLater(newTabButton::fire);
     }
-
 
     private void setupListeners(){
+
+        TabsAndWv TabsAndWvInstance;
+        TabsAndWvInstance = TabsAndWv.getInstance();
+
         newTabButton.setOnAction(event -> {
             Tab tab = new Tab(gethost("https://www.google.com"));
             WebView newWebView = new WebView();
@@ -100,28 +82,18 @@ public class TabsController implements Initializable {
             webEngine.load("https://www.google.com");
             newWebView.setPrefSize(800, 600);
             tab.setContent(newWebView);
-//            webEngine.setPromptHandler(prompt -> {
-//                if (prompt.getMessage().startsWith("save")) {
-//                    String suggestedFileName = prompt.getMessage().substring(5);
-//                    FileChooser fileChooser = new FileChooser();
-//                    fileChooser.setTitle("Save file");
-//                    fileChooser.setInitialFileName(suggestedFileName);
-//                    File file = fileChooser.showSaveDialog(webView.getScene().getWindow());
-//                    if (file != null) {
-//                        return file.toURI().toString();
-//                    }
-//                }
-//                return null;
-//            });
-
-
+            System.out.println("I've reached here");
             tabPane.getTabs().add(tab);
             tabPane.getSelectionModel().select(tab);
 
+            System.out.println(tabPane.getTabs());
+            TabsAndWvInstance.setTabPane(tabPane);
             
             webEngine.locationProperty().addListener((observable, oldValue, newValue) -> {
+
                 urlField.setText(newValue);
                 tabPane.getSelectionModel().getSelectedItem().setText(gethost(newValue));
+                TabsAndWvInstance.setTabPane(tabPane);
                 try {
                     List<BufferedImage> img = readImage(newValue);
                     if (img != null) {
@@ -137,13 +109,14 @@ public class TabsController implements Initializable {
             });
         });
 
-
         tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
             if (newTab != null) {
                 WebView webView = (WebView) newTab.getContent();
                 urlField.setText(getURL(webView));
                 currentTab = newTab;
                 engine = ((WebView) currentTab.getContent()).getEngine();
+                System.out.println(engine);
+                TabsAndWvInstance.setWebEngine(engine);
                 TabSelection x = new TabSelection(newTab);
             }
         });
@@ -159,7 +132,7 @@ public class TabsController implements Initializable {
         }
         return u.getHost();
     }
-    private Tab setIc(Tab selectedTab) {
+    static public Tab setIc(Tab selectedTab) {
         Image i = new Image(new File("./icons/" + selectedTab.getText() + ".png").toURI().toString());
         ImageView iv = new ImageView();
         iv.setFitHeight(16);
@@ -168,7 +141,7 @@ public class TabsController implements Initializable {
         selectedTab.setGraphic(iv);
         return selectedTab;
     }
-    private Tab setIc(Tab selectedTab, boolean flag) {
+    static public Tab setIc(Tab selectedTab, boolean flag) {
         Image i = new Image(new File("./icons/favicon-standard.png").toURI().toString());
         ImageView iv = new ImageView();
         iv.setFitHeight(16);
@@ -176,25 +149,6 @@ public class TabsController implements Initializable {
         iv.setImage(i);
         selectedTab.setGraphic(iv);
         return selectedTab;
-    }
-    
-    @FXML
-    private void loadURL() throws MalformedURLException, IOException {
-        String url = urlField.getText();
-        if (!url.startsWith("http")) {
-            url = "https://google.com/search?q=" + url;
-        }
-        Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
-        List<BufferedImage> img = readImage(url);
-        selectedTab.setText(gethost(url));
-        if (img == null) {
-                setIc(selectedTab, true);
-        }
-
-        WebView webView = (WebView) selectedTab.getContent();
-        WebEngine webEngine = webView.getEngine();
-        webEngine.load(url);
-
     }
 
     static public List<BufferedImage> readImage(String u) throws IOException {
@@ -216,55 +170,6 @@ public class TabsController implements Initializable {
             return null;
         }
     }
-
-    public void loadURL(String url_from_bookmark, Tab tab) throws IOException {
-        List<BufferedImage> img = readImage(url_from_bookmark);
-        tab.setText(gethost(url_from_bookmark));
-        if (img == null) {
-            setIc(tab, true);
-        }
-        WebView webView = (WebView) tab.getContent();
-        WebEngine webEngine = webView.getEngine();
-        webEngine.load(url_from_bookmark);
-    }
-
-    @FXML
-    private void handleBackButton() {
-        ObservableList<WebHistory.Entry> history = engine.getHistory().getEntries();
-        int currentIndex = engine.getHistory().getCurrentIndex();
-
-        if (currentIndex > 0) {
-            engine.load(history.get(currentIndex - 1).getUrl());
-        }
-    }
-
-    @FXML
-    private void handleForwardButton() {
-        ObservableList<WebHistory.Entry> history = engine.getHistory().getEntries();
-        int currentIndex = engine.getHistory().getCurrentIndex();
-        System.out.println(history);
-        if (currentIndex < history.size() - 1) {
-            engine.load(history.get(currentIndex + 1).getUrl());
-        }
-    }
-
-    @FXML
-    private void handleReloadButton() {
-        WebView webView = getSelectedWebView();
-        if (webView != null) {
-            WebEngine webEngine = webView.getEngine();
-            webEngine.reload();
-        }
-    }
-
-    private WebView getSelectedWebView() {
-        Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
-        if (selectedTab != null) {
-            return (WebView) selectedTab.getContent();
-        }
-        return null;
-    }
-
     public String getURL(WebView webView) {
         return webView.getEngine().getLocation();
     }
