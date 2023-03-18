@@ -50,6 +50,7 @@ public class ToolBarController implements Initializable {
     private void addBoookmark(){
         newBookmarkButton.setOnAction(event->{
             try {
+                System.out.println("ress");
                 TabsAndWv TabsAndWvInstance;
                 TabsAndWvInstance = TabsAndWv.getInstance();
                 tabPane = TabsAndWvInstance.getTabPane();
