@@ -15,6 +15,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -201,6 +202,10 @@ public class TabsController implements Initializable {
         List<BufferedImage> images = null;
         URL url = new URL(u);
         String path = "https://" + url.getHost() + "/favicon.ico";
+        if (new File("./icons/" + url.getHost() + ".png").exists()) {
+            images = new ArrayList<>();
+            return images;
+        }
         try {
             InputStream istr = new URL(path).openStream();
             images = ICODecoder.read(istr);
