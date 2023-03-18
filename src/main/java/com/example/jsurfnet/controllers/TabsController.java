@@ -90,7 +90,7 @@ public class TabsController implements Initializable {
             webEngine.load("https://www.google.com");
             newWebView.setPrefSize(800, 600);
             tab.setContent(newWebView);
-            System.out.println("Ive reached here");
+            System.out.println("I've reached here");
             tabPane.getTabs().add(tab);
             tabPane.getSelectionModel().select(tab);
 
@@ -101,6 +101,7 @@ public class TabsController implements Initializable {
 
                 urlField.setText(newValue);
                 tabPane.getSelectionModel().getSelectedItem().setText(gethost(newValue));
+                TabsAndWvInstance.setTabPane(tabPane);
                 try {
                     List<BufferedImage> img = readImage(newValue);
                     if (img != null) {

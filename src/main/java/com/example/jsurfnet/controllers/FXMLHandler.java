@@ -26,10 +26,10 @@ public class FXMLHandler implements Initializable {
         Pane tbview = object.getPage("ToolBar");
         Pane tabsview = object.getPage("Tabs");
         Bookmarks.getChildren().add(setAnchorDim(bmview));
-        Toolbar.getChildren().add(setAnchorDim(tbview));
         TabAndWebView.getChildren().add(setAnchorDim(tabsview));
-
+        Toolbar.getChildren().add(setAnchorDim(tbview));
     }
+
     public Node setAnchorDim(Node view){
         AnchorPane.setTopAnchor(view, 0.0);
         AnchorPane.setBottomAnchor(view, 0.0);
