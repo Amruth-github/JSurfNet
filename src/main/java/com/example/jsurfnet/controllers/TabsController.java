@@ -91,9 +91,11 @@ public class TabsController implements Initializable {
             newWebView.setPrefSize(800, 600);
             tab.setContent(newWebView);
             System.out.println("Ive reached here");
-            System.out.println(tabPane);
             tabPane.getTabs().add(tab);
             tabPane.getSelectionModel().select(tab);
+
+            System.out.println(tabPane.getTabs());
+            TabsAndWvInstance.setTabPane(tabPane);
             
             webEngine.locationProperty().addListener((observable, oldValue, newValue) -> {
 
@@ -112,7 +114,6 @@ public class TabsController implements Initializable {
                     throw new RuntimeException(e);
                 }
             });
-            TabsAndWvInstance.setTabPane(tabPane);
         });
 
         tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
@@ -171,9 +172,6 @@ public class TabsController implements Initializable {
             return null;
         }
     }
-
-
-
     public String getURL(WebView webView) {
         return webView.getEngine().getLocation();
     }

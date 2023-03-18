@@ -4,11 +4,5 @@
 
 <BorderPane fx:id="root" prefHeight="600" prefWidth="800" stylesheets="@../css/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.jsurfnet.controllers.TabsController">
     <TabPane fx:id="tabPane" stylesheets="@../css/application.css" tabClosingPolicy="ALL_TABS" BorderPane.alignment="CENTER">
-        <!--            <Tab text="New Tab">-->
-        <!--                <WebView fx:id="webView" prefHeight="200.0" prefWidth="200.0" />-->
-        <!--            </Tab>-->
-<!--        <effect>-->
-<!--            <Reflection />-->
-<!--        </effect>-->
     </TabPane>
 </BorderPane>
