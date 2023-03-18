@@ -1,4 +1,6 @@
 package com.example.jsurfnet.controllers;
+import com.example.jsurfnet.utils.TabsAndWv;
+import com.example.jsurfnet.utils.ToolBar;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -33,8 +35,6 @@ public class TabsController implements Initializable {
     @FXML
     private BorderPane root;
     @FXML
-    private TextField urlField;
-    @FXML
     private TabPane tabPane;
 
     private WebView webView;
@@ -42,35 +42,40 @@ public class TabsController implements Initializable {
     private WebEngine engine;
     private Tab currentTab;
 
-    BookmarksController bc = new BookmarksController();
+    private final Button newTabButton;
 
+    private TextField urlField;
 
+    public TabsController(){
+        ToolBar ToolBarInstance;
+        ToolBarInstance = ToolBar.getInstance();
+        newTabButton = ToolBarInstance.getNewTabButton();
+        urlField = ToolBarInstance.getUrlField();
+        System.out.println("Got new tab button");
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        TabsAndWv TabsAndWvInstance;
+        TabsAndWvInstance = TabsAndWv.getInstance();
+        TabsAndWvInstance.setWebView(webView);
+        System.out.println("Set tab pane");
+
         setupListeners();
         addTab();
-        addBoookmark();
     }
 
-    private void addBoookmark(){
-        newBookmarkButton.setOnAction(event->{
-            try {
-                bc.addBookmark(tabPane.getSelectionModel().getSelectedItem().getText(), urlField.getText());
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
 
-    }
     private void addTab(){
-        Platform.runLater(() -> {
-            newTabButton.fire();
-        });
+        Platform.runLater(newTabButton::fire);
     }
-
 
     private void setupListeners(){
+
+        TabsAndWv TabsAndWvInstance;
+        TabsAndWvInstance = TabsAndWv.getInstance();
+
         newTabButton.setOnAction(event -> {
             Tab tab = new Tab(gethost("https://www.google.com"));
             WebView newWebView = new WebView();
@@ -85,26 +90,13 @@ public class TabsController implements Initializable {
             webEngine.load("https://www.google.com");
             newWebView.setPrefSize(800, 600);
             tab.setContent(newWebView);
-//            webEngine.setPromptHandler(prompt -> {
-//                if (prompt.getMessage().startsWith("save")) {
-//                    String suggestedFileName = prompt.getMessage().substring(5);
-//                    FileChooser fileChooser = new FileChooser();
-//                    fileChooser.setTitle("Save file");
-//                    fileChooser.setInitialFileName(suggestedFileName);
-//                    File file = fileChooser.showSaveDialog(webView.getScene().getWindow());
-//                    if (file != null) {
-//                        return file.toURI().toString();
-//                    }
-//                }
-//                return null;
-//            });
-
-
+            System.out.println("Ive reached here");
+            System.out.println(tabPane);
             tabPane.getTabs().add(tab);
             tabPane.getSelectionModel().select(tab);
-
             
             webEngine.locationProperty().addListener((observable, oldValue, newValue) -> {
+
                 urlField.setText(newValue);
                 tabPane.getSelectionModel().getSelectedItem().setText(gethost(newValue));
                 try {
@@ -120,8 +112,8 @@ public class TabsController implements Initializable {
                     throw new RuntimeException(e);
                 }
             });
+            TabsAndWvInstance.setTabPane(tabPane);
         });
-
 
         tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
             if (newTab != null) {
@@ -129,6 +121,7 @@ public class TabsController implements Initializable {
                 urlField.setText(getURL(webView));
                 currentTab = newTab;
                 engine = ((WebView) currentTab.getContent()).getEngine();
+                TabsAndWvInstance.setWebEngine(engine);
                 TabSelection x = new TabSelection(newTab);
             }
         });
@@ -162,8 +155,6 @@ public class TabsController implements Initializable {
         selectedTab.setGraphic(iv);
         return selectedTab;
     }
-    
-
 
     static public List<BufferedImage> readImage(String u) throws IOException {
 
@@ -181,13 +172,7 @@ public class TabsController implements Initializable {
         }
     }
 
-    private WebView getSelectedWebView() {
-        Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
-        if (selectedTab != null) {
-            return (WebView) selectedTab.getContent();
-        }
-        return null;
-    }
+
 
     public String getURL(WebView webView) {
         return webView.getEngine().getLocation();

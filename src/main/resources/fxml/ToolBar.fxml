@@ -5,7 +5,8 @@
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="73.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.jsurfnet.controllers.ToolBarController">
+<?import javafx.scene.layout.VBox?>
+<VBox prefHeight="73.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.jsurfnet.controllers.ToolBarController">
     <ToolBar prefHeight="73.0" prefWidth="800.0">
         <Button fx:id="backButton" mnemonicParsing="false" onAction="#handleBackButton" stylesheets="@../css/application.css" text="◁" />
         <Button fx:id="forwardButton" mnemonicParsing="false" onAction="#handleForwardButton" stylesheets="@../css/application.css" text="▷" />
@@ -15,4 +16,4 @@
         <Button fx:id="newTabButton" mnemonicParsing="false" text="+" />
         <Button fx:id="newBookmarkButton" stylesheets="@../css/application.css" text="🔖" />
     </ToolBar>
-</AnchorPane>
+</VBox>

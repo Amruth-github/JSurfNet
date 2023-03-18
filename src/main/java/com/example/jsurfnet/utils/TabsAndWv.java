@@ -10,30 +10,37 @@ public final class TabsAndWv {
     static private WebView webView;
     static private WebEngine engine;
 
-    private TabsAndWv(){
-        TabsAndWv tabsAndWv = new TabsAndWv();
+    private static TabsAndWv instance = null;
+
+    private TabsAndWv(){}
+
+    public static synchronized TabsAndWv getInstance() {
+        if (instance == null) {
+            instance = new TabsAndWv();
+        }
+        return instance;
     }
 
-    public static TabPane getTabPane(){
+    public TabPane getTabPane(){
         return tabPane;
     }
 
-    public static WebView getWebView(){
+    public WebView getWebView(){
         return webView;
     }
 
-    public static WebEngine getWebEngine(){
+    public WebEngine getWebEngine(){
         return engine;
     }
 
-    public static void setWebEngine(WebEngine we){
+    public void setWebEngine(WebEngine we){
         engine = we;
     }
 
-    public static void setWebView(WebView wv){
+    public void setWebView(WebView wv){
         webView = wv;
     }
-    public static void setTabPane(TabPane tp){
+    public void setTabPane(TabPane tp){
         tabPane = tp;
     }
 

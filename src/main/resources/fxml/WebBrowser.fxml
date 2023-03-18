@@ -7,6 +7,6 @@
     <children>
         <AnchorPane fx:id="Bookmarks" minHeight="0.0" minWidth="0.0" prefHeight="50.0" prefWidth="800.0" stylesheets="@../css/application.css" />
         <AnchorPane fx:id="TabAndWebView" minHeight="0.0" minWidth="0.0" prefHeight="558.0" prefWidth="807.0" stylesheets="@../css/application.css" VBox.vgrow="ALWAYS" />
-        <AnchorPane fx:id="Toolbar" prefHeight="86.0" minHeight="0.0" minWidth="0.0" prefWidth="800.0" />
+        <AnchorPane fx:id="Toolbar" minHeight="0.0" minWidth="0.0" prefHeight="62.0" prefWidth="800.0" VBox.vgrow="ALWAYS" />
     </children>
 </VBox>

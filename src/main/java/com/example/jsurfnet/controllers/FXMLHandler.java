@@ -22,12 +22,12 @@ public class FXMLHandler implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         BrowserController object = new BrowserController();
-        Pane tabsview = object.getPage("Tabs");
         Pane bmview = object.getPage("Bookmarks");
         Pane tbview = object.getPage("ToolBar");
-        TabAndWebView.getChildren().add(setAnchorDim(tabsview));
+        Pane tabsview = object.getPage("Tabs");
         Bookmarks.getChildren().add(setAnchorDim(bmview));
         Toolbar.getChildren().add(setAnchorDim(tbview));
+        TabAndWebView.getChildren().add(setAnchorDim(tabsview));
 
     }
     public Node setAnchorDim(Node view){
