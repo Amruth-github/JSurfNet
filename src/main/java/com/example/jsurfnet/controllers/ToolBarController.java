@@ -162,7 +162,6 @@ public class ToolBarController implements Initializable {
         ToolBarInstance.setSearchButton(searchButton);
         ToolBarInstance.setNewTabButton(newTabButton);
         ToolBarInstance.setNewBookmarkButton(newBookmarkButton);
-        System.out.println("Set new tab button");
 
         addBoookmark();
     }

@@ -49,12 +49,10 @@ public class TabsController implements Initializable {
         ToolBarInstance = ToolBar.getInstance();
         newTabButton = ToolBarInstance.getNewTabButton();
         urlField = ToolBarInstance.getUrlField();
-        System.out.println("Got new tab button");
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println("Set tab pane");
         setupListeners();
         addTab();
     }
