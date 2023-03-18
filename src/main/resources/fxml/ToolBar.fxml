@@ -3,8 +3,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.layout.VBox?>
 <VBox xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.jsurfnet.controllers.ToolBarController">
    <children>
       <ToolBar prefHeight="40.0" prefWidth="800.0">
