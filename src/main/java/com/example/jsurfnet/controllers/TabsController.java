@@ -123,6 +123,7 @@ public class TabsController implements Initializable {
                 urlField.setText(getURL(webView));
                 currentTab = newTab;
                 engine = ((WebView) currentTab.getContent()).getEngine();
+                System.out.println(engine);
                 TabsAndWvInstance.setWebEngine(engine);
                 TabSelection x = new TabSelection(newTab);
             }
