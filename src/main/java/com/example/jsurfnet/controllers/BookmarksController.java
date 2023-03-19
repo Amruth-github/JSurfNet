@@ -68,6 +68,14 @@ public class BookmarksController implements Initializable {
         }
         return true;
     }
+    public void renameBookmark(Button newBookmarkButton,TextField textField,Popup popup)
+    {
+        textField.setText(newBookmarkButton.getText());
+        double x = newBookmarkButton.localToScreen(newBookmarkButton.getLayoutBounds().getMaxX(), 0).getX();
+        double y = newBookmarkButton.localToScreen(0, newBookmarkButton.getLayoutBounds().getMaxY()).getY();
+        popup.show(newBookmarkButton, x, y);
+        textField.requestFocus();
+    }
 
     public void removeBookmark(Bookmark bookmark) {
         bookmarks.remove(bookmark);
@@ -113,11 +121,7 @@ public class BookmarksController implements Initializable {
                             popup.hide();
                         });
                         m1.setOnAction(actionEvent -> {
-                            textField.setText(newBookmarkButton.getText());
-                            double x = newBookmarkButton.localToScreen(newBookmarkButton.getLayoutBounds().getMaxX(), 0).getX();
-                            double y = newBookmarkButton.localToScreen(0, newBookmarkButton.getLayoutBounds().getMaxY()).getY();
-                            popup.show(newBookmarkButton, x, y);
-                            textField.requestFocus();
+                            renameBookmark(newBookmarkButton,textField,popup);
                         });
                         m2.setOnAction(actionEvent -> {
                             removeBookmark((newBookmark));
