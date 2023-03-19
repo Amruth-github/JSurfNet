@@ -21,10 +21,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-
-import static com.example.jsurfnet.controllers.TabsController.readImage;
-import static com.example.jsurfnet.controllers.TabsController.setIc;
-
 public class ToolBarController implements Initializable {
     @FXML
     public Button backButton;
@@ -108,11 +104,8 @@ public class ToolBarController implements Initializable {
     }
 
     public void loadURL(String url_from_bookmark, Tab tab) throws IOException {
-        List<BufferedImage> img = readImage(url_from_bookmark);
         tab.setText(gethost(url_from_bookmark));
-        if (img == null) {
-            setIc(tab, true);
-        }
+        tab.setGraphic(new Icon(url_from_bookmark).getImage());
         WebView webView = (WebView) tab.getContent();
         WebEngine webEngine = webView.getEngine();
         webEngine.load(url_from_bookmark);
@@ -139,11 +132,8 @@ public class ToolBarController implements Initializable {
         TabsAndWvInstance = TabsAndWv.getInstance();
         tabPane = TabsAndWvInstance.getTabPane();
         Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
-        List<BufferedImage> img = readImage(url);
         selectedTab.setText(gethost(url));
-        if (img == null) {
-            setIc(selectedTab, true);
-        }
+        selectedTab.setGraphic(new Icon(url).getImage());
 
         WebView webView = (WebView) selectedTab.getContent();
         WebEngine webEngine = webView.getEngine();

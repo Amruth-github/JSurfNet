@@ -71,41 +71,23 @@ public class TabsController implements Initializable {
         newTabButton.setOnAction(event -> {
             Tab tab = new Tab(gethost("https://www.google.com"));
             WebView newWebView = new WebView();
-            try {
-                readImage("https://www.google.com");
-                setIc(tab);
-
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            tab.setGraphic(new Icon("https://www.google.com").getImage());
             WebEngine webEngine = newWebView.getEngine();
             webEngine.load("https://www.google.com");
             newWebView.setPrefSize(800, 600);
             tab.setContent(newWebView);
-            System.out.println("I've reached here");
             tabPane.getTabs().add(tab);
             tabPane.getSelectionModel().select(tab);
 
             System.out.println(tabPane.getTabs());
             TabsAndWvInstance.setTabPane(tabPane);
-            
+
             webEngine.locationProperty().addListener((observable, oldValue, newValue) -> {
 
                 urlField.setText(newValue);
                 tabPane.getSelectionModel().getSelectedItem().setText(gethost(newValue));
                 TabsAndWvInstance.setTabPane(tabPane);
-                try {
-                    List<BufferedImage> img = readImage(newValue);
-                    if (img != null) {
-                        setIc(tabPane.getSelectionModel().getSelectedItem());
-                    }
-                    else {
-                        setIc(tabPane.getSelectionModel().getSelectedItem(), true);
-                    }
-                }
-                catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                tabPane.getSelectionModel().getSelectedItem().setGraphic(new Icon(urlField.getText()).getImage());
             });
         });
 
@@ -131,44 +113,6 @@ public class TabsController implements Initializable {
             System.out.println(e);
         }
         return u.getHost();
-    }
-    static public Tab setIc(Tab selectedTab) {
-        Image i = new Image(new File("./icons/" + selectedTab.getText() + ".png").toURI().toString());
-        ImageView iv = new ImageView();
-        iv.setFitHeight(16);
-        iv.setFitWidth(16);
-        iv.setImage(i);
-        selectedTab.setGraphic(iv);
-        return selectedTab;
-    }
-    static public Tab setIc(Tab selectedTab, boolean flag) {
-        Image i = new Image(new File("./icons/favicon-standard.png").toURI().toString());
-        ImageView iv = new ImageView();
-        iv.setFitHeight(16);
-        iv.setFitWidth(16);
-        iv.setImage(i);
-        selectedTab.setGraphic(iv);
-        return selectedTab;
-    }
-
-    static public List<BufferedImage> readImage(String u) throws IOException {
-
-        List<BufferedImage> images = null;
-        URL url = new URL(u);
-        String path = "https://" + url.getHost() + "/favicon.ico";
-        if (new File("./icons/" + url.getHost() + ".png").exists()) {
-            images = new ArrayList<>();
-            return images;
-        }
-        try {
-            InputStream istr = new URL(path).openStream();
-            images = ICODecoder.read(istr);
-            ImageIO.write(images.get(0), "png", new File("./icons/" + url.getHost() + ".png"));
-            return images;
-        }
-        catch (Exception e) {
-            return null;
-        }
     }
     public String getURL(WebView webView) {
         return webView.getEngine().getLocation();

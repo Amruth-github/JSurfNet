@@ -25,6 +25,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 
+
 public class BookmarksController implements Initializable {
 
     public VBox bookmarksBox;
@@ -40,12 +41,7 @@ public class BookmarksController implements Initializable {
             bookmarks.add(bookmark);
 
             Button bookmarkButton = new Button(name);
-            List<BufferedImage> img = TabsController.readImage(url);
-            if (img != null) {
-                setIC(bookmarkButton, url);
-            } else {
-                setIC(bookmarkButton, true);
-            }
+            bookmarkButton.setGraphic(new Icon(url).getImage());
 
             bookmarkButton.setOnAction(event -> {
                 Tab tab = TabSelection.getSelectedTab();
@@ -75,23 +71,6 @@ public class BookmarksController implements Initializable {
             Button button = (Button) node;
             return button.getText().equals(bookmark.getName());
         });
-    }
-    private void setIC(Button bookmarkbutton, String u) throws MalformedURLException {
-        URL url = new URL(u);
-        Image i = new Image(new File("./icons/" + url.getHost() + ".png").toURI().toString());
-        ImageView iv = new ImageView();
-        iv.setFitWidth(16);
-        iv.setFitHeight(16);
-        iv.setImage(i);
-        bookmarkbutton.setGraphic(iv);
-    }
-    private void setIC(Button bookmarkbutton, boolean flag) {
-        Image i = new Image(new File("./icons/favicon-standard.png").toURI().toString());
-        ImageView iv = new ImageView();
-        iv.setFitWidth(16);
-        iv.setFitHeight(16);
-        iv.setImage(i);
-        bookmarkbutton.setGraphic(iv);
     }
 
     @Override
@@ -123,25 +102,10 @@ public class BookmarksController implements Initializable {
                             removeBookmark((newBookmark));
                         });
                         newBookmarkButton.setContextMenu(c);
-                        List<BufferedImage> img = null;
-                        try {
-                            img = TabsController.readImage(newBookmark.getUrl());
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                        if (img != null) {
-                            try {
-                                setIC(newBookmarkButton, newBookmark.getUrl());
-                            } catch (MalformedURLException e) {
-                                throw new RuntimeException(e);
-                            }
-                        } else {
-                            setIC(newBookmarkButton, true);
-                        }
+                        newBookmarkButton.setGraphic(new Icon(newBookmark.getUrl()).getImage());
                         newBookmarkButton.setOnAction(event -> {
                             Tab tab = TabSelection.getSelectedTab();
                             ToolBarController tbc = new ToolBarController();
-
                             try {
                                 tbc.loadURL(newBookmark.getUrl(), tab);
                             } catch (IOException e) {
