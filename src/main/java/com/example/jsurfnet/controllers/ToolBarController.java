@@ -1,10 +1,8 @@
 package com.example.jsurfnet.controllers;
-
+import com.example.jsurfnet.utils.Icon;
 import com.example.jsurfnet.utils.TabsAndWv;
 import com.example.jsurfnet.utils.ToolBar;
-import javafx.application.Platform;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -15,11 +13,9 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebHistory;
 import javafx.scene.web.WebView;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 public class ToolBarController implements Initializable {
     @FXML

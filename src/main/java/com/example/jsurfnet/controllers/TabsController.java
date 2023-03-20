@@ -2,35 +2,24 @@ package com.example.jsurfnet.controllers;
 import com.example.jsurfnet.utils.TabsAndWv;
 import com.example.jsurfnet.utils.ToolBar;
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
+import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebHistory;
-import javafx.scene.web.WebView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import java.io.IOException;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.io.InputStream;
 import java.net.MalformedURLException;
-import java.awt.image.BufferedImage;
-
-import javafx.stage.FileChooser;
-import net.sf.image4j.codec.ico.ICODecoder;
-import java.util.List;
-import javax.imageio.ImageIO;
+import com.example.jsurfnet.utils.Icon;
 import java.io.File;
-
 import com.example.jsurfnet.utils.TabSelection;
-
 public class TabsController implements Initializable {
 
     @FXML
@@ -44,6 +33,8 @@ public class TabsController implements Initializable {
     private final Button newTabButton;
 
     private TextField urlField;
+
+    private ImageView iv = new ImageView(new Image(new File("./icons/spinner.gif").toURI().toString()));
 
     public TabsController(){
         ToolBar ToolBarInstance;
@@ -68,19 +59,33 @@ public class TabsController implements Initializable {
         TabsAndWv TabsAndWvInstance;
         TabsAndWvInstance = TabsAndWv.getInstance();
 
+
+
         newTabButton.setOnAction(event -> {
             Tab tab = new Tab(gethost("https://www.google.com"));
             WebView newWebView = new WebView();
-            tab.setGraphic(new Icon("https://www.google.com").getImage());
+
             WebEngine webEngine = newWebView.getEngine();
             webEngine.load("https://www.google.com");
+            webEngine.getLoadWorker().stateProperty().addListener(((observable, oldValue, newValue) -> {
+                if (newValue == Worker.State.RUNNING) {
+                    iv.setFitHeight(20);
+                    iv.setFitWidth(20);
+                    tab.setGraphic(iv);
+                } else {
+                    tab.setGraphic(new Icon(urlField.getText()).getImage());
+                }
+            }));
             newWebView.setPrefSize(800, 600);
             tab.setContent(newWebView);
             tabPane.getTabs().add(tab);
             tabPane.getSelectionModel().select(tab);
 
+
             System.out.println(tabPane.getTabs());
             TabsAndWvInstance.setTabPane(tabPane);
+
+
 
             webEngine.locationProperty().addListener((observable, oldValue, newValue) -> {
 
@@ -102,6 +107,8 @@ public class TabsController implements Initializable {
                 TabSelection x = new TabSelection(newTab);
             }
         });
+
+
     }
 
     static public  String gethost(String url) {

@@ -1,21 +1,14 @@
 package com.example.jsurfnet;
-
-import com.example.jsurfnet.controllers.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.web.WebEngine;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 import java.io.File;
 
-import javafx.scene.control.Tab;
-import javafx.scene.web.WebView;
 
 public class WebBrowser extends Application {
 

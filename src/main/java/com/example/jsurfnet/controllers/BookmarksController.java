@@ -1,5 +1,5 @@
 package com.example.jsurfnet.controllers;
-
+import com.example.jsurfnet.utils.Icon;
 import com.example.jsurfnet.utils.Bookmark;
 import javafx.collections.*;
 import javafx.fxml.FXML;
@@ -11,17 +11,11 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import com.example.jsurfnet.utils.TabSelection;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 

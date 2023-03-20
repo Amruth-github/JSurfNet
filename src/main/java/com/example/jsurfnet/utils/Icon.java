@@ -1,4 +1,4 @@
-package com.example.jsurfnet.controllers;
+package com.example.jsurfnet.utils;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -14,9 +14,6 @@ import javax.imageio.ImageIO;
 import java.io.File;
 
 
-
-
-
 public class Icon {
     private URL url;
     private Image i;
@@ -24,7 +21,7 @@ public class Icon {
     private ImageView iv;
 
 
-    Icon(String u) {
+    public Icon(String u) {
         List<BufferedImage> images = null;
         try {
             url = new URL(u);
@@ -53,7 +50,7 @@ public class Icon {
         iv.setFitHeight(16);
         iv.setFitWidth(16);
     }
-    ImageView getImage() {
+    public ImageView getImage() {
         return iv;
     }
 
