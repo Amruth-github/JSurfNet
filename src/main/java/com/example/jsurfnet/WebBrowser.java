@@ -22,15 +22,17 @@ public class WebBrowser extends Application {
         Parent loginRoot = loginLoader.load();
         Scene loginScene = new Scene(loginRoot);
 
+        primaryStage.setTitle("JSurfNet");
+        Image i = new Image(new File("./icons/JSurfNet.png").toURI().toString());
+        primaryStage.getIcons().add(i);
+
         primaryStage.setScene(loginScene);
         primaryStage.show();
 
         LoginController loginController = loginLoader.getController();
 
         loginController.setLoginListener(event -> {
-            // Authenticate user
-            if (authenticateUser()) {
-                // Load browser screen
+            if (loginController.authenticateUser()) {
                 Parent browserRoot = null;
                 try {
                     browserRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/WebBrowser.fxml")));
@@ -45,15 +47,8 @@ public class WebBrowser extends Application {
             }
         });
     }
-
-    private boolean authenticateUser() {
-        return true;
-    }
-
     public static void main(String[] args) {
         System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
-        //Finally works
-        //Try this lads
         launch(args);
     }
 }
