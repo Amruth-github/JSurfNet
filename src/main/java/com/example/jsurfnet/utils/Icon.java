@@ -27,7 +27,14 @@ public class Icon {
             url = new URL(u);
         }
         catch (MalformedURLException e) {
-
+            try {
+                url =  new URL("https://google.com/search?q=" + u);
+            } catch (MalformedURLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
         String path = "https://" + url.getHost() + "/favicon.ico";

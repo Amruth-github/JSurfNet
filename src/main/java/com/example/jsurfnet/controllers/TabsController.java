@@ -64,18 +64,20 @@ public class TabsController implements Initializable {
         newTabButton.setOnAction(event -> {
             Tab tab = new Tab(gethost("https://www.google.com"));
             WebView newWebView = new WebView();
-
             WebEngine webEngine = newWebView.getEngine();
             webEngine.load("https://www.google.com");
+            iv.setFitHeight(16);
+            iv.setFitWidth(16);
+            tab.setGraphic(iv);
+
             webEngine.getLoadWorker().stateProperty().addListener(((observable, oldValue, newValue) -> {
                 if (newValue == Worker.State.RUNNING) {
-                    iv.setFitHeight(20);
-                    iv.setFitWidth(20);
                     tab.setGraphic(iv);
                 } else {
                     tab.setGraphic(new Icon(urlField.getText()).getImage());
                 }
             }));
+
             newWebView.setPrefSize(800, 600);
             tab.setContent(newWebView);
             tabPane.getTabs().add(tab);
@@ -92,7 +94,7 @@ public class TabsController implements Initializable {
                 urlField.setText(newValue);
                 tabPane.getSelectionModel().getSelectedItem().setText(gethost(newValue));
                 TabsAndWvInstance.setTabPane(tabPane);
-                tabPane.getSelectionModel().getSelectedItem().setGraphic(new Icon(urlField.getText()).getImage());
+                //tabPane.getSelectionModel().getSelectedItem().setGraphic(new Icon(urlField.getText()).getImage());
             });
         });
 

@@ -113,7 +113,7 @@ public class ToolBarController implements Initializable {
             u = new URL(url);
         }
         catch (MalformedURLException e) {
-            System.out.println(e);
+
         }
         return u.getHost();
     }
@@ -129,7 +129,6 @@ public class ToolBarController implements Initializable {
         tabPane = TabsAndWvInstance.getTabPane();
         Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
         selectedTab.setText(gethost(url));
-        selectedTab.setGraphic(new Icon(url).getImage());
 
         WebView webView = (WebView) selectedTab.getContent();
         WebEngine webEngine = webView.getEngine();
