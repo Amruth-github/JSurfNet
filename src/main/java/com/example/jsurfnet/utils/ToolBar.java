@@ -12,6 +12,8 @@ public final class ToolBar {
     static private Button newTabButton;
     static private Button newBookmarkButton;
 
+    static private Button logoutButton;
+
     private static ToolBar instance = null;
 
     private ToolBar(){
@@ -45,6 +47,9 @@ public final class ToolBar {
     public Button getNewBookmarkButton(){
         return newBookmarkButton;
     }
+    public Button getLogoutButton(){
+        return logoutButton;
+    }
 
     public void setBackButton(Button bb){
         backButton = bb;
@@ -67,5 +72,7 @@ public final class ToolBar {
     public void setNewBookmarkButton(Button nbb){
         newBookmarkButton = nbb;
     }
-
+    public void setLogoutButton(Button lb) {
+        logoutButton = lb;
+    }
 }

@@ -3,6 +3,7 @@ import com.example.jsurfnet.utils.Icon;
 import com.example.jsurfnet.utils.TabsAndWv;
 import com.example.jsurfnet.utils.ToolBar;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -17,6 +18,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
+
 public class ToolBarController implements Initializable {
     @FXML
     public Button backButton;
@@ -32,12 +35,15 @@ public class ToolBarController implements Initializable {
     public Button newTabButton;
     @FXML
     public Button newBookmarkButton;
+    @FXML
+    public Button logoutButton;
 
     private TabPane tabPane;
 
     private WebEngine engine;
 
     BookmarksController bc = new BookmarksController();
+
 
     private void addBoookmark(){
         newBookmarkButton.setOnAction(event->{
@@ -137,6 +143,11 @@ public class ToolBarController implements Initializable {
 
     }
 
+    public void setLogoutListener(Consumer<ActionEvent> logoutListener) throws IOException {
+        logoutButton.setOnAction(logoutListener::accept);
+    }
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ToolBar ToolBarInstance;
@@ -148,6 +159,8 @@ public class ToolBarController implements Initializable {
         ToolBarInstance.setSearchButton(searchButton);
         ToolBarInstance.setNewTabButton(newTabButton);
         ToolBarInstance.setNewBookmarkButton(newBookmarkButton);
+        System.out.println("Set logout button");
+        ToolBarInstance.setLogoutButton(logoutButton);
 
         addBoookmark();
     }
