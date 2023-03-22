@@ -5,9 +5,9 @@
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.HBox?>
 
-<HBox xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.jsurfnet.controllers.ToolBarController" HBox.hgrow="ALWAYS">
+<HBox HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.jsurfnet.controllers.ToolBarController">
    <children>
-      <ToolBar prefHeight="40.0" prefWidth="800.0">
+      <ToolBar prefHeight="40.0" prefWidth="858.0">
          <items>
             <Button fx:id="backButton" mnemonicParsing="false" onAction="#handleBackButton" stylesheets="@../css/application.css" text="◁" />
             <Button fx:id="forwardButton" mnemonicParsing="false" onAction="#handleForwardButton" stylesheets="@../css/application.css" text="▷" />
@@ -16,6 +16,7 @@
             <Button fx:id="searchButton" onAction="#loadURL" text="🔍" />
             <Button fx:id="newTabButton" mnemonicParsing="false" text="+" />
             <Button fx:id="newBookmarkButton" stylesheets="@../css/application.css" text="🔖" />
+            <Button fx:id="logoutButton" mnemonicParsing="false" text="Logout" />
          </items>
       </ToolBar>
    </children>
