@@ -1,7 +1,6 @@
 
 package com.example.jsurfnet.controllers;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
@@ -11,24 +10,20 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.bson.Document;
-
-import javafx.scene.control.ToolBar;
-import javafx.scene.layout.HBox;
-
-
-import javax.swing.*;
+import javax.swing.JOptionPane;
 
 public class LoginController implements Initializable {
 
     @FXML
     public Button signupButton;
+    @FXML
+    public Button guestButton;
     @FXML
     private TextField usernameField;
 
@@ -59,9 +54,27 @@ public class LoginController implements Initializable {
         signupButton.setOnAction(signupListener::accept);
     }
 
+    public void setGuestListener(Consumer<ActionEvent> guestListener) {
+        guestButton.setOnAction(guestListener::accept);
+    }
+
 
     public boolean authenticateUser() {
-        return true;
+        Document document = new Document();
+        Document user = usersCollection.find(new Document("username", usernameField.getText())).first();
+        if (user != null) {
+            if (passwordField.getText().equals(user.getString("password"))){
+                return true;
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "Wrong Password", "Error", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Account does not exits, please Sign Up instead", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
     }
 
     public boolean signup() {
@@ -74,15 +87,12 @@ public class LoginController implements Initializable {
             document.append("username", usernameField.getText());
             document.append("password", passwordField.getText());
             usersCollection.insertOne(document);
+            JOptionPane.showMessageDialog(null, "Signup successful!");
             return true;
         }
-//        mongoClient.close();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        Button logoutButton = new Button("Logout");
-//        logoutButton.setOnAction(logoutListener);
-//        toolBar.getItems().add(logoutButton);
     }
 }

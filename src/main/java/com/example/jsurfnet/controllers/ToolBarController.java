@@ -1,4 +1,5 @@
 package com.example.jsurfnet.controllers;
+import com.example.jsurfnet.WebBrowser;
 import com.example.jsurfnet.utils.Icon;
 import com.example.jsurfnet.utils.TabsAndWv;
 import com.example.jsurfnet.utils.ToolBar;
@@ -19,6 +20,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
+import javafx.application.Platform;
+import javafx.stage.Stage;
 
 public class ToolBarController implements Initializable {
     @FXML
@@ -143,9 +146,9 @@ public class ToolBarController implements Initializable {
 
     }
 
-    public void setLogoutListener(Consumer<ActionEvent> logoutListener) throws IOException {
-        logoutButton.setOnAction(logoutListener::accept);
-    }
+//    public void setLogoutListener(Consumer<ActionEvent> logoutListener) throws IOException {
+//        logoutButton.setOnAction(logoutListener::accept);
+//    }
 
 
     @Override
@@ -159,8 +162,20 @@ public class ToolBarController implements Initializable {
         ToolBarInstance.setSearchButton(searchButton);
         ToolBarInstance.setNewTabButton(newTabButton);
         ToolBarInstance.setNewBookmarkButton(newBookmarkButton);
-        System.out.println("Set logout button");
         ToolBarInstance.setLogoutButton(logoutButton);
+
+        logoutButton.setOnAction(event->{
+            Platform.runLater(() -> {
+                try {
+                    Stage stage = (Stage) logoutButton.getScene().getWindow();
+                    stage.close();
+                    new WebBrowser().start(new Stage());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+
+        });
 
         addBoookmark();
     }
