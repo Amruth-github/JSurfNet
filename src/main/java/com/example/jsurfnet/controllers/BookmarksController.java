@@ -38,14 +38,7 @@ public class BookmarksController implements Initializable {
             bookmarkButton.setGraphic(new Icon(url).getImage());
 
             bookmarkButton.setOnAction(event -> {
-                Tab tab = TabSelection.getSelectedTab();
-                TabsController tc = new TabsController();
-                ToolBarController tbc = new ToolBarController();
-                try {
-                    tbc.loadURL(url, tab);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                loadBookmark(url);
             });
         }
     }
@@ -57,6 +50,16 @@ public class BookmarksController implements Initializable {
             }
         }
         return true;
+    }
+    public void loadBookmark(String url)
+    {
+        Tab tab = TabSelection.getSelectedTab();
+        ToolBarController tbc = new ToolBarController();
+        try {
+            tbc.loadURL(url, tab);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
     public void renameBookmark(Button newBookmarkButton,TextField textField,Popup popup)
     {
@@ -102,13 +105,7 @@ public class BookmarksController implements Initializable {
                         newBookmarkButton.setContextMenu(c);
                         newBookmarkButton.setGraphic(new Icon(newBookmark.getUrl()).getImage());
                         newBookmarkButton.setOnAction(event -> {
-                            Tab tab = TabSelection.getSelectedTab();
-                            ToolBarController tbc = new ToolBarController();
-                            try {
-                                tbc.loadURL(newBookmark.getUrl(), tab);
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
+                            loadBookmark(newBookmark.getUrl());
                         });
                         bookmarkPane.getChildren().add(newBookmarkButton);
 
