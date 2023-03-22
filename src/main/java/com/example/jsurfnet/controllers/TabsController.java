@@ -1,14 +1,11 @@
 package com.example.jsurfnet.controllers;
-import com.example.jsurfnet.utils.TabsAndWv;
+import com.example.jsurfnet.utils.*;
 import com.example.jsurfnet.utils.ToolBar;
 import javafx.application.Platform;
 import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -17,9 +14,10 @@ import javafx.scene.web.WebView;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.net.MalformedURLException;
-import com.example.jsurfnet.utils.Icon;
 import java.io.File;
-import com.example.jsurfnet.utils.TabSelection;
+
+import javafx.stage.Popup;
+
 public class TabsController implements Initializable {
 
     @FXML
@@ -35,6 +33,8 @@ public class TabsController implements Initializable {
     private TextField urlField;
 
     private ImageView iv = new ImageView(new Image(new File("./icons/spinner.gif").toURI().toString()));
+
+    private PasswordManager pwm = new PasswordManager();
 
     public TabsController(){
         ToolBar ToolBarInstance;
@@ -75,6 +75,31 @@ public class TabsController implements Initializable {
                     tab.setGraphic(iv);
                 } else {
                     tab.setGraphic(new Icon(urlField.getText()).getImage());
+                }
+                if (newValue == Worker.State.SUCCEEDED) {
+                    try {
+                        boolean hasField = (boolean) webEngine.executeScript("function checkFeilds() {" +
+                                "    var fields = document.querySelectorAll('input');" +
+                                "    for (let i = 0; i < fields.length; i++) {" +
+                                "        if (fields[i].type == 'password' || fields[i].name == 'password' || fields[i].name == 'username') {" +
+                                "            return true;" +
+                                "        }" +
+                                "    }" +
+                                "    return false;" +
+                                "}" +
+                                "" +
+                                "checkFeilds()");
+                        if (hasField) {
+                            if (pwm.exists(urlField.getText())) {
+                                //need to implement autofill
+                            } else {
+                                //need to implement offer to save;
+                            }
+                        }
+                    }
+                    catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }));
 
