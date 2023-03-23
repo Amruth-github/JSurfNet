@@ -1,4 +1,10 @@
 package com.example.jsurfnet.controllers;
+<<<<<<< Updated upstream
+=======
+import com.example.jsurfnet.WebBrowser;
+import com.example.jsurfnet.utils.*;
+import com.example.jsurfnet.utils.ToolBar;
+>>>>>>> Stashed changes
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -11,11 +17,16 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebHistory;
 import javafx.scene.web.WebView;
+<<<<<<< Updated upstream
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+=======
+import javafx.stage.Screen;
+
+>>>>>>> Stashed changes
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -84,6 +95,51 @@ public class TabsController implements Initializable {
             }
             WebEngine webEngine = newWebView.getEngine();
             webEngine.load("https://www.google.com");
+<<<<<<< Updated upstream
+=======
+            iv.setFitHeight(16);
+            iv.setFitWidth(16);
+            tab.setGraphic(iv);
+
+            webEngine.getLoadWorker().stateProperty().addListener(((observable, oldValue, newValue) -> {
+                if (newValue == Worker.State.RUNNING) {
+                    tab.setGraphic(iv);
+                } else {
+                    tab.setGraphic(new Icon(urlField.getText()).getImage());
+                }
+                if (newValue == Worker.State.SUCCEEDED) {
+                    try {
+                        boolean hasField = (boolean) webEngine.executeScript("function checkFeilds() {" +
+                                "    var fields = document.querySelectorAll('input');" +
+                                "    for (let i = 0; i < fields.length; i++) {" +
+                                "        if (fields[i].type == 'password' || fields[i].name == 'password' || fields[i].name == 'username') {" +
+                                "            return true;" +
+                                "        }" +
+                                "    }" +
+                                "    return false;" +
+                                "}" +
+                                "" +
+                                "checkFeilds()");
+                        if (hasField) {
+                            pwm.addCreds("https://www.pesuacademy.com", "PES1UG20CS038", "OIEHF");
+                            if (pwm.exists(urlField.getText())) {
+                                PasswordPopup pp = new PasswordPopup(false);
+                                pp.setPassword(pwm.getCreds(urlField.getText()).getPassword());
+                                pp.setUsername(pwm.getCreds(urlField.getText()).getUsername());
+                                pp.show(WebBrowser.getScene().getWindow(), WebBrowser.getScene().getWidth() - pp.getWidth() - 10, 100);
+                            } else {
+                                PasswordPopup pp = new PasswordPopup(true);
+                                pp.show(WebBrowser.getScene().getWindow(), WebBrowser.getScene().getWidth() - pp.getWidth() - 10, 100);
+                            }
+                        }
+                    }
+                    catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }));
+
+>>>>>>> Stashed changes
             newWebView.setPrefSize(800, 600);
             tab.setContent(newWebView);
 
