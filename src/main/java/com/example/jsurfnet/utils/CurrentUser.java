@@ -1,6 +1,6 @@
 package com.example.jsurfnet.utils;
 
-public class CurrentUser {
+public final class CurrentUser {
 
     private static CurrentUser instance;
     private String username;
