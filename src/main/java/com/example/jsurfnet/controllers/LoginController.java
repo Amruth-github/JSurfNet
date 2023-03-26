@@ -4,6 +4,8 @@ package com.example.jsurfnet.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
+
+import com.example.jsurfnet.utils.CurrentUser;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -60,11 +62,13 @@ public class LoginController implements Initializable {
 
 
     public boolean authenticateUser() {
-        Document document = new Document();
         Document user = usersCollection.find(new Document("username", usernameField.getText())).first();
         if (user != null) {
             if (passwordField.getText().equals(user.getString("password"))){
+                CurrentUser currentUser = CurrentUser.getInstance();
+                currentUser.setUsername(usernameField.getText());
                 return true;
+
             }
             else {
                 JOptionPane.showMessageDialog(null, "Wrong Password", "Error", JOptionPane.ERROR_MESSAGE);
@@ -88,6 +92,8 @@ public class LoginController implements Initializable {
             document.append("password", passwordField.getText());
             usersCollection.insertOne(document);
             JOptionPane.showMessageDialog(null, "Signup successful!");
+            CurrentUser currentUser = CurrentUser.getInstance();
+            currentUser.setUsername(usernameField.getText());
             return true;
         }
     }

@@ -1,5 +1,6 @@
 package com.example.jsurfnet;
 import com.example.jsurfnet.controllers.LoginController;
+import com.example.jsurfnet.utils.CurrentUser;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -45,6 +46,8 @@ public class WebBrowser extends Application {
         });
 
         loginController.setGuestListener(event->{
+            CurrentUser currentUser = CurrentUser.getInstance();
+            currentUser.setUsername("guest");
             goToBrowser();
         });
     }
