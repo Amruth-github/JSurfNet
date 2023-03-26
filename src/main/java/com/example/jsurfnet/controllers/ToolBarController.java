@@ -45,6 +45,8 @@ public class ToolBarController implements Initializable {
 
     private WebEngine engine;
 
+    private int curr_index;
+
     BookmarksController bc = new BookmarksController();
 
 
@@ -68,10 +70,12 @@ public class ToolBarController implements Initializable {
         TabsAndWvInstance = TabsAndWv.getInstance();
         engine = TabsAndWvInstance.getWebEngine();
         ObservableList<WebHistory.Entry> history = engine.getHistory().getEntries();
+        WebHistory webHistory;
+        webHistory = engine.getHistory();
         int currentIndex = engine.getHistory().getCurrentIndex();
 
         if (currentIndex > 0) {
-            engine.load(history.get(currentIndex - 1).getUrl());
+            webHistory.go(-1);
         }
     }
 
@@ -80,12 +84,21 @@ public class ToolBarController implements Initializable {
         TabsAndWv TabsAndWvInstance;
         TabsAndWvInstance = TabsAndWv.getInstance();
         engine = TabsAndWvInstance.getWebEngine();
-        ObservableList<WebHistory.Entry> history = engine.getHistory().getEntries();
-        int currentIndex = engine.getHistory().getCurrentIndex();
-        System.out.println(history);
-        if (currentIndex < history.size() - 1) {
-            engine.load(history.get(currentIndex + 1).getUrl());
+        //ObservableList<WebHistory.Entry> history = engine.getHistory().getEntries();
+        //int currentIndex = engine.getHistory().getCurrentIndex();
+        //System.out.println(history);
+        //if (currentIndex < history.size() - 1) {
+            //engine.load(history.get(currentIndex + 1).getUrl());
+        //}
+        WebHistory webHistory;
+        webHistory = engine.getHistory();
+        int currentIndex = webHistory.getCurrentIndex();
+        int maxIndex = webHistory.getEntries().size() - 1;
+        if (currentIndex < maxIndex) {
+            // Go forward
+            webHistory.go(1);
         }
+
     }
 
     @FXML
