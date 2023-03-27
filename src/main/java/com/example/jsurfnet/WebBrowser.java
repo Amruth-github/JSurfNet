@@ -14,6 +14,7 @@ import java.io.File;
 public class WebBrowser extends Application {
 
     private Stage primaryStage;
+    private static Scene scene;
     @Override
     public void start(Stage primaryStage) throws IOException {
 
@@ -49,6 +50,9 @@ public class WebBrowser extends Application {
         });
     }
 
+    public static  Scene getScene() {
+        return scene;
+    }
     void goToBrowser(){
         Parent browserRoot = null;
         try {
@@ -57,6 +61,7 @@ public class WebBrowser extends Application {
             throw new RuntimeException(e);
         }
         Scene browserScene = new Scene(browserRoot);
+        scene = browserScene;
         primaryStage.setScene(browserScene);
         primaryStage.show();
     }

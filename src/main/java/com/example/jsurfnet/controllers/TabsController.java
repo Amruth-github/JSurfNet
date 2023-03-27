@@ -15,6 +15,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.net.MalformedURLException;
 import java.io.File;
+import com.example.jsurfnet.WebBrowser;
 
 
 public class TabsController implements Initializable {
@@ -91,11 +92,6 @@ public class TabsController implements Initializable {
                         if (hasField) {
                             PasswordPopup pp = null;
                             if (pwm.exists(urlField.getText())) {
-<<<<<<< Updated upstream
-                                //need to implement autofill
-                            } else {
-                                //need to implement offer to save;
-=======
                                 pp = new PasswordPopup(false);
                                 pp.setPassword(pwm.getCreds(urlField.getText()).getPassword());
                                 pp.setUsername(pwm.getCreds(urlField.getText()).getUsername());
@@ -103,7 +99,6 @@ public class TabsController implements Initializable {
                             } else {
                                 pp = new PasswordPopup(true);
                                 pp.show(WebBrowser.getScene().getWindow(), WebBrowser.getScene().getWidth() - pp.getWidth() - 10, 100);
->>>>>>> Stashed changes
                             }
                         }
                     }
