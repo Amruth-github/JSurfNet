@@ -89,10 +89,21 @@ public class TabsController implements Initializable {
                                 "" +
                                 "checkFeilds()");
                         if (hasField) {
+                            PasswordPopup pp = null;
                             if (pwm.exists(urlField.getText())) {
+<<<<<<< Updated upstream
                                 //need to implement autofill
                             } else {
                                 //need to implement offer to save;
+=======
+                                pp = new PasswordPopup(false);
+                                pp.setPassword(pwm.getCreds(urlField.getText()).getPassword());
+                                pp.setUsername(pwm.getCreds(urlField.getText()).getUsername());
+                                pp.show(WebBrowser.getScene().getWindow(), WebBrowser.getScene().getWidth() - pp.getWidth() - 10, 100);
+                            } else {
+                                pp = new PasswordPopup(true);
+                                pp.show(WebBrowser.getScene().getWindow(), WebBrowser.getScene().getWidth() - pp.getWidth() - 10, 100);
+>>>>>>> Stashed changes
                             }
                         }
                     }

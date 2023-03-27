@@ -114,6 +114,7 @@ public class BookmarksController implements Initializable {
 
             addBookmark("Google", "https://www.google.com/");
             addBookmark("Github", "https://www.github.com/");
+            addBookmark("Pesu", "https://www.pesuacademy.com");
 
         } catch (IOException e) {
             throw new RuntimeException(e);
