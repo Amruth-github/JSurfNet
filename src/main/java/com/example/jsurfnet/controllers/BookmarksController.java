@@ -51,7 +51,7 @@ public class BookmarksController implements Initializable {
         this.username = currentUser.getUsername();
     }
 
-    public void addBookmark(String name, String url) throws IOException {
+    public void addBookmark(String name, String url, boolean from_ui) throws IOException {
         if (search(url)) {
             Bookmark bookmark = new Bookmark(name, url);
             bookmarks.add(bookmark);
@@ -62,12 +62,13 @@ public class BookmarksController implements Initializable {
             bookmarkButton.setOnAction(event -> {
                 loadBookmark(url);
             });
-
-            Document document = new Document()
-                    .append("user", username)
-                    .append("name", bookmark.getName())
-                    .append("url", bookmark.getUrl());
-            collection.insertOne(document);
+            if (from_ui) {
+                Document document = new Document()
+                        .append("user", username)
+                        .append("name", bookmark.getName())
+                        .append("url", bookmark.getUrl());
+                collection.insertOne(document);
+            }
 
         }
     }
@@ -154,7 +155,7 @@ public class BookmarksController implements Initializable {
             for (Document document : iterable) {
                 String name = document.getString("name");
                 String bookmarksurl = document.getString("url");
-                addBookmark(name, bookmarksurl);
+                addBookmark(name, bookmarksurl, false);
             }
 
         } catch (IOException e) {

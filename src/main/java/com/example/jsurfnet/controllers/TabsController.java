@@ -1,5 +1,6 @@
 package com.example.jsurfnet.controllers;
 import com.example.jsurfnet.utils.*;
+import com.example.jsurfnet.utils.Icon;
 import com.example.jsurfnet.utils.ToolBar;
 import javafx.application.Platform;
 import javafx.concurrent.Worker;
@@ -16,6 +17,9 @@ import java.util.ResourceBundle;
 import java.net.MalformedURLException;
 import java.io.File;
 import com.example.jsurfnet.WebBrowser;
+import javafx.stage.Popup;
+
+import javax.swing.*;
 
 
 public class TabsController implements Initializable {
@@ -34,13 +38,18 @@ public class TabsController implements Initializable {
 
     private ImageView iv = new ImageView(new Image(new File("./icons/spinner.gif").toURI().toString()));
 
-    private PasswordManager pwm = new PasswordManager();
+    private PasswordManager pwm = null;
 
     public TabsController(){
         ToolBar ToolBarInstance;
         ToolBarInstance = ToolBar.getInstance();
         newTabButton = ToolBarInstance.getNewTabButton();
         urlField = ToolBarInstance.getUrlField();
+        try {
+            pwm = PasswordManager.getUserPassword();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -58,7 +67,6 @@ public class TabsController implements Initializable {
 
         TabsAndWv TabsAndWvInstance;
         TabsAndWvInstance = TabsAndWv.getInstance();
-
 
 
         newTabButton.setOnAction(event -> {
@@ -100,7 +108,14 @@ public class TabsController implements Initializable {
                                 pp = new PasswordPopup(true);
                                 pp.show(WebBrowser.getScene().getWindow(), WebBrowser.getScene().getWidth() - pp.getWidth() - 10, 100);
                             }
+                            PasswordPopup finalPp = pp;
+                            pp.getSaveButton().setOnAction(actionEvent -> {
+                                pwm.addCreds(urlField.getText(), finalPp.getUsername(), finalPp.getPassword());
+                                finalPp.hide();
+                                JOptionPane.showMessageDialog(null, "Saved!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                            });
                         }
+
                     }
                     catch (Exception e) {
                         throw new RuntimeException(e);

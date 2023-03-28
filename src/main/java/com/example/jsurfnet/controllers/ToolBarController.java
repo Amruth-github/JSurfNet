@@ -56,7 +56,7 @@ public class ToolBarController implements Initializable {
                 TabsAndWv TabsAndWvInstance;
                 TabsAndWvInstance = TabsAndWv.getInstance();
                 tabPane = TabsAndWvInstance.getTabPane();
-                bc.addBookmark(tabPane.getSelectionModel().getSelectedItem().getText(), urlField.getText());
+                bc.addBookmark(tabPane.getSelectionModel().getSelectedItem().getText(), urlField.getText(), true);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -176,18 +176,6 @@ public class ToolBarController implements Initializable {
         ToolBarInstance.setNewBookmarkButton(newBookmarkButton);
         ToolBarInstance.setLogoutButton(logoutButton);
 
-        logoutButton.setOnAction(event->{
-            Platform.runLater(() -> {
-                try {
-                    Stage stage = (Stage) logoutButton.getScene().getWindow();
-                    stage.close();
-                    new WebBrowser().start(new Stage());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
-
-        });
 
         addBoookmark();
     }
