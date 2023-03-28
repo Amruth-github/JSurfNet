@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
 import com.example.jsurfnet.utils.CurrentUser;
+import com.example.jsurfnet.utils.MongoDriver;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -43,8 +44,7 @@ public class LoginController implements Initializable {
 
 
     public LoginController() {
-        this.mongoClient = new MongoClient("localhost", 27017);
-        MongoDatabase database = mongoClient.getDatabase("JSurNet");
+        MongoDatabase database = MongoDriver.getMongo();
         this.usersCollection = database.getCollection("users");
     }
 
@@ -64,7 +64,7 @@ public class LoginController implements Initializable {
     public boolean authenticateUser() {
         Document user = usersCollection.find(new Document("username", usernameField.getText())).first();
         if (user != null) {
-            if (passwordField.getText().equals(user.getString("password"))){
+            if (passwordField.getText().strip().equals(user.getString("password"))){
                 CurrentUser currentUser = CurrentUser.getInstance();
                 currentUser.setUsername(usernameField.getText());
                 return true;
@@ -88,8 +88,16 @@ public class LoginController implements Initializable {
             JOptionPane.showMessageDialog(null, "User already exists", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         } else {
-            document.append("username", usernameField.getText());
-            document.append("password", passwordField.getText());
+            if (usernameField.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Username field empty!", "Error", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+            document.append("username", usernameField.getText().strip());
+            if (passwordField.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Password field empty!", "Error", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+            document.append("password", passwordField.getText().strip());
             usersCollection.insertOne(document);
             JOptionPane.showMessageDialog(null, "Signup successful!");
             CurrentUser currentUser = CurrentUser.getInstance();

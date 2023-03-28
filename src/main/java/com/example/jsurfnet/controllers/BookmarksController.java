@@ -1,8 +1,7 @@
 package com.example.jsurfnet.controllers;
-import com.example.jsurfnet.utils.CurrentUser;
-import com.example.jsurfnet.utils.Icon;
-import com.example.jsurfnet.utils.Bookmark;
+import com.example.jsurfnet.utils.*;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
 import javafx.collections.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,7 +21,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.example.jsurfnet.utils.TabSelection;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import org.bson.Document;
@@ -33,6 +31,8 @@ public class BookmarksController implements Initializable {
     private MongoClient mongoClient;
     private MongoDatabase database;
     private MongoCollection<Document> collection;
+
+    private String oldbookmark_name = "";
 
     public VBox bookmarksBox;
     public VBox bookmarkContainer;
@@ -45,8 +45,7 @@ public class BookmarksController implements Initializable {
 
     public BookmarksController() {
         // Initialize the MongoDB connection
-        mongoClient = new MongoClient("localhost", 27017);
-        database = mongoClient.getDatabase("JSurNet");
+        database = MongoDriver.getMongo();
         collection = database.getCollection("bookmarks");
         CurrentUser currentUser = CurrentUser.getInstance();
         this.username = currentUser.getUsername();
@@ -93,12 +92,12 @@ public class BookmarksController implements Initializable {
     }
     public void renameBookmark(Button newBookmarkButton,TextField textField,Popup popup)
     {
-        textField.setText(newBookmarkButton.getText());
+        oldbookmark_name = newBookmarkButton.getText();
+        textField.setText(oldbookmark_name);
         double x = newBookmarkButton.localToScreen(newBookmarkButton.getLayoutBounds().getMaxX(), 0).getX();
         double y = newBookmarkButton.localToScreen(0, newBookmarkButton.getLayoutBounds().getMaxY()).getY();
         popup.show(newBookmarkButton, x, y);
         textField.requestFocus();
-
     }
 
     public void removeBookmark(Bookmark bookmark) {
@@ -129,6 +128,10 @@ public class BookmarksController implements Initializable {
                         popup.getContent().add(textField);
                         textField.setOnAction(actionEvent -> {
                             newBookmarkButton.setText(textField.getText());
+                            collection.updateOne(Filters.and(
+                                    Filters.eq("user", username),
+                                    Filters.eq("name", oldbookmark_name)
+                            ), Updates.set("name", newBookmarkButton.getText()));
                             popup.hide();
                         });
                         m1.setOnAction(actionEvent -> {
