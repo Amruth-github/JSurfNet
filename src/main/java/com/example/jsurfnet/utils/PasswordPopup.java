@@ -3,7 +3,10 @@ import javafx.animation.ParallelTransition;
 import javafx.animation.ScaleTransition;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -20,7 +23,7 @@ public class PasswordPopup extends Popup {
     private PasswordField password = new PasswordField();
     private Button Save = new Button("Save");
 
-    private PasswordManager pwm = null;
+    private Button done = new Button("Done");
 
     private Button cancel = new Button("Cancel");
 
@@ -41,20 +44,68 @@ public class PasswordPopup extends Popup {
     }
 
     public PasswordPopup(boolean saving) {
-        this.setAutoHide(true);
         BorderPane bp = new BorderPane();
         bp.setStyle("-fx-background-color: #292929; -fx-padding: 20px;");
 
         username_txt.setStyle("-fx-text-fill: white; -fx-font-size: 14px;");
         password_txt.setStyle("-fx-text-fill: white; -fx-font-size: 14px;");
 
+        ImageView copyIcon = new ImageView(new Image(getClass().getResourceAsStream("/icons/copy.png")));
+        copyIcon.setFitWidth(16);
+        copyIcon.setFitHeight(16);
+        ImageView copyIcon1 = new ImageView(new Image(getClass().getResourceAsStream("/icons/copy.png")));
+        copyIcon1.setFitWidth(16);
+        copyIcon1.setFitHeight(16);
+
+
+        Button copyItemUsername = new Button();
+        Button copyItemPassword = new Button();
+
+        copyItemUsername.setGraphic(copyIcon1);
+        copyItemPassword.setGraphic(copyIcon);
+
+        copyItemUsername.setOnAction(e -> {
+            Clipboard clipboard = Clipboard.getSystemClipboard();
+            ClipboardContent content = new ClipboardContent();
+            content.putString(username.getText());
+            clipboard.setContent(content);
+        });
+
+        copyItemUsername.setOnMouseEntered(e -> {
+            copyItemUsername.setText("Copy Username");
+        });
+
+        copyItemUsername.setOnMouseExited(e -> {
+            copyItemUsername.setText("");
+        });
+
+        copyItemPassword.setOnMouseEntered(e -> {
+            copyItemPassword.setText("Copy Password");
+        });
+
+        copyItemPassword.setOnMouseExited(e -> {
+            copyItemPassword.setText("");
+        });
+
+
+        copyItemPassword.setOnAction(e -> {
+            Clipboard clipboard = Clipboard.getSystemClipboard();
+            ClipboardContent content = new ClipboardContent();
+            content.putString(password.getText());
+            clipboard.setContent(content);
+        });
+
+        done.setOnAction(actionEvent -> {
+            this.hide();
+        });
+
         VBox vBox = new VBox(20);
         HBox buttons = new HBox(20);
-        vBox.getChildren().addAll(username_txt, username, password_txt, password);
+        vBox.getChildren().addAll(username_txt, username, copyItemUsername ,password_txt, password, copyItemPassword);
         if (saving) {
             buttons.getChildren().addAll(Save, cancel);
         } else {
-            buttons.getChildren().add(cancel);
+            buttons.getChildren().addAll(done, cancel);
         }
         vBox.getChildren().add(buttons);
         vBox.setStyle("-fx-background-color: #3F3F3F; -fx-padding: 20px; -fx-spacing: 15px; -fx-border-radius: 10px;");
