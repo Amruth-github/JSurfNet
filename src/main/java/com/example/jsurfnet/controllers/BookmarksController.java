@@ -62,7 +62,7 @@ public class BookmarksController implements Initializable {
             bookmarkButton.setOnAction(event -> {
                 loadBookmark(url);
             });
-            if (from_ui) {
+            if (from_ui && !CurrentUser.getInstance().getUsername().equals("guest")) {
                 Document document = new Document()
                         .append("user", username)
                         .append("name", bookmark.getName())
@@ -107,10 +107,12 @@ public class BookmarksController implements Initializable {
             Button button = (Button) node;
             return button.getText().equals(bookmark.getName());
         });
-        collection.deleteOne(Filters.and(
-                Filters.eq("user", username),
-                Filters.eq("url", bookmark.getUrl())
-        ));
+        if (!CurrentUser.getInstance().getUsername().equals("guest")) {
+            collection.deleteOne(Filters.and(
+                    Filters.eq("user", username),
+                    Filters.eq("url", bookmark.getUrl())
+            ));
+        }
     }
 
     @Override
@@ -129,10 +131,12 @@ public class BookmarksController implements Initializable {
                         popup.getContent().add(textField);
                         textField.setOnAction(actionEvent -> {
                             newBookmarkButton.setText(textField.getText());
-                            collection.updateOne(Filters.and(
-                                    Filters.eq("user", username),
-                                    Filters.eq("name", oldbookmark_name)
-                            ), Updates.set("name", newBookmarkButton.getText()));
+                            if (!CurrentUser.getInstance().getUsername().equals("guest")) {
+                                collection.updateOne(Filters.and(
+                                        Filters.eq("user", username),
+                                        Filters.eq("name", oldbookmark_name)
+                                ), Updates.set("name", newBookmarkButton.getText()));
+                            }
                             popup.hide();
                         });
                         m1.setOnAction(actionEvent -> {

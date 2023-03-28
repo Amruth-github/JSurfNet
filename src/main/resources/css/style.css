@@ -15,3 +15,7 @@
     -fx-background-color: #3498db;
     -fx-text-fill: white;
 }
+
+.context-menu {
+    -fx-background-color: #292929;
+}

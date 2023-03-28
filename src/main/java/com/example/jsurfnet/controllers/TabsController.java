@@ -48,7 +48,7 @@ public class TabsController implements Initializable {
         try {
             pwm = PasswordManager.getUserPassword();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            pwm = null;
         }
     }
 
@@ -97,7 +97,7 @@ public class TabsController implements Initializable {
                                 "}" +
                                 "" +
                                 "checkFeilds()");
-                        if (hasField) {
+                        if (pwm != null && hasField) {
                             PasswordPopup pp = null;
                             if (pwm.exists(urlField.getText())) {
                                 pp = new PasswordPopup(false);
