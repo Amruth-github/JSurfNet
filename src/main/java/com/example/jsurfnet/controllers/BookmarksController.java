@@ -11,6 +11,8 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.FlowPane;
 
 import com.mongodb.MongoClient;
@@ -126,7 +128,8 @@ public class BookmarksController implements Initializable {
                         ContextMenu c = new ContextMenu();
                         MenuItem m1 = new MenuItem("Rename Bookmark");
                         MenuItem m2 = new MenuItem("Remove Bookmark");
-                        c.getItems().addAll(m1, m2);
+                        MenuItem m3 = new MenuItem("Copy URL");
+                        c.getItems().addAll(m1, m2, m3);
                         TextField textField = new TextField();
                         Popup popup = new Popup();
                         popup.getContent().add(textField);
@@ -145,6 +148,12 @@ public class BookmarksController implements Initializable {
                         });
                         m2.setOnAction(actionEvent -> {
                             removeBookmark((newBookmark));
+                        });
+                        m3.setOnAction(actionEvent -> {
+                            Clipboard clipboard = Clipboard.getSystemClipboard();
+                            ClipboardContent content = new ClipboardContent();
+                            content.putString(newBookmark.getUrl());
+                            clipboard.setContent(content);
                         });
                         newBookmarkButton.setContextMenu(c);
                         newBookmarkButton.setGraphic(new Icon(newBookmark.getUrl()).getImage());
