@@ -1,5 +1,6 @@
 package com.example.jsurfnet.controllers;
 import com.example.jsurfnet.utils.*;
+import com.example.jsurfnet.utils.Icon;
 import com.example.jsurfnet.utils.ToolBar;
 import javafx.application.Platform;
 import javafx.concurrent.Worker;
@@ -16,6 +17,9 @@ import java.util.ResourceBundle;
 import java.net.MalformedURLException;
 import java.io.File;
 import com.example.jsurfnet.WebBrowser;
+import javafx.stage.Popup;
+
+import javax.swing.*;
 
 
 public class TabsController implements Initializable {
@@ -34,13 +38,18 @@ public class TabsController implements Initializable {
 
     private ImageView iv = new ImageView(new Image(new File("./icons/spinner.gif").toURI().toString()));
 
-    private PasswordManager pwm = new PasswordManager();
+    private PasswordManager pwm = null;
 
     public TabsController(){
         ToolBar ToolBarInstance;
         ToolBarInstance = ToolBar.getInstance();
         newTabButton = ToolBarInstance.getNewTabButton();
         urlField = ToolBarInstance.getUrlField();
+        try {
+            pwm = PasswordManager.getUserPassword();
+        } catch (Exception e) {
+            pwm = null;
+        }
     }
 
     @Override
@@ -60,7 +69,6 @@ public class TabsController implements Initializable {
         TabsAndWvInstance = TabsAndWv.getInstance();
 
 
-
         newTabButton.setOnAction(event -> {
             Tab tab = new Tab(gethost("https://www.google.com"));
             WebView newWebView = new WebView();
@@ -71,6 +79,61 @@ public class TabsController implements Initializable {
             tab.setGraphic(iv);
 
             webEngine.getLoadWorker().stateProperty().addListener(((observable, oldValue, newValue) -> {
+                if (newValue == Worker.State.FAILED || newValue == Worker.State.CANCELLED) {
+                    webEngine.loadContent("<!DOCTYPE html>\n" +
+                            "<html>\n" +
+                            "<head>\n" +
+                            "\t<title>Offline</title>\n" +
+                            "\t<style>\n" +
+                            "\t\tbody {\n" +
+                            "\t\t\tbackground-color: #f8f8f8;\n" +
+                            "\t\t\tfont-family: Arial, sans-serif;\n" +
+                            "\t\t\ttext-align: center;\n" +
+                            "\t\t}\n" +
+                            "\n" +
+                            "\t\th1 {\n" +
+                            "\t\t\tcolor: #333;\n" +
+                            "\t\t\tfont-size: 2.5em;\n" +
+                            "\t\t\tmargin-top: 40px;\n" +
+                            "\t\t\tmargin-bottom: 20px;\n" +
+                            "\t\t\tletter-spacing: 2px;\n" +
+                            "\t\t}\n" +
+                            "\n" +
+                            "\t\tp {\n" +
+                            "\t\t\tcolor: #666;\n" +
+                            "\t\t\tfont-size: 1.2em;\n" +
+                            "\t\t\tmargin-bottom: 40px;\n" +
+                            "\t\t\tline-height: 1.5;\n" +
+                            "\t\t}\n" +
+                            "\n" +
+                            "\t\timg {\n" +
+                            "\t\t\tmax-width: 100%;\n" +
+                            "\t\t\theight: auto;\n" +
+                            "\t\t}\n" +
+                            "\n" +
+                            "\t\t@keyframes slide-in {\n" +
+                            "\t\t\tfrom {\n" +
+                            "\t\t\t\topacity: 0;\n" +
+                            "\t\t\t\ttransform: translateX(-50%);\n" +
+                            "\t\t\t}\n" +
+                            "\t\t\tto {\n" +
+                            "\t\t\t\topacity: 1;\n" +
+                            "\t\t\t\ttransform: translateX(0);\n" +
+                            "\t\t\t}\n" +
+                            "\t\t}\n" +
+                            "\n" +
+                            "\t\t.offline-icon {\n" +
+                            "\t\t\tanimation: slide-in 1s ease-out;\n" +
+                            "\t\t}\n" +
+                            "\t</style>\n" +
+                            "</head>\n" +
+                            "<body>\n" +
+                            "\t<h1>Oops! You're Offline</h1>\n" +
+                            "\t<img class='offline-icon' src=\"" + new File("./src/main/resources/html/no.png").toURI() +  "\" alt=\"Offline Icon\">\n" +
+                            "\t<p>Sorry, it looks like you're not connected to the internet. Please check your connection and try again.</p>\n" +
+                            "</body>\n" +
+                            "</html>\n");
+                }
                 if (newValue == Worker.State.RUNNING) {
                     tab.setGraphic(iv);
                 } else {
@@ -89,7 +152,7 @@ public class TabsController implements Initializable {
                                 "}" +
                                 "" +
                                 "checkFeilds()");
-                        if (hasField) {
+                        if (pwm != null && hasField) {
                             PasswordPopup pp = null;
                             if (pwm.exists(urlField.getText())) {
                                 pp = new PasswordPopup(false);
@@ -100,7 +163,14 @@ public class TabsController implements Initializable {
                                 pp = new PasswordPopup(true);
                                 pp.show(WebBrowser.getScene().getWindow(), WebBrowser.getScene().getWidth() - pp.getWidth() - 10, 100);
                             }
+                            PasswordPopup finalPp = pp;
+                            pp.getSaveButton().setOnAction(actionEvent -> {
+                                pwm.addCreds(urlField.getText(), finalPp.getUsername(), finalPp.getPassword());
+                                finalPp.hide();
+                                JOptionPane.showMessageDialog(null, "Saved!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                            });
                         }
+
                     }
                     catch (Exception e) {
                         throw new RuntimeException(e);

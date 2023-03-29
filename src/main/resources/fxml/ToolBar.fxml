@@ -5,7 +5,8 @@
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.HBox?>
 
-<HBox HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.jsurfnet.controllers.ToolBarController">
+<?import javafx.scene.layout.VBox?>
+<VBox VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.jsurfnet.controllers.ToolBarController" alignment="BOTTOM_CENTER">
    <children>
       <ToolBar prefHeight="40.0" prefWidth="858.0">
          <items>
@@ -20,4 +21,4 @@
          </items>
       </ToolBar>
    </children>
-</HBox>
+</VBox>

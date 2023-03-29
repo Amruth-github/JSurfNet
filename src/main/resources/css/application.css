@@ -23,3 +23,118 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 3, 0, 0, 0);
 }
 
+#root {
+    -fx-background-color: #1c1c1c;
+}
+
+.tab-header-area {
+    -fx-background-color: #141414;
+}
+
+.tab {
+    -fx-background-color: #141414;
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-background-radius: 0px;
+    -fx-padding: 0.75em 1em 0.75em 1em;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-pref-height: 30px;
+}
+
+.tab:hover {
+    -fx-background-color: #2e2e2e;
+}
+
+.tab:selected {
+    -fx-background-color: #ADD8E6;
+}
+
+.tab:disabled {
+    -fx-opacity: 0.5;
+}
+
+.tab-close-button {
+    -fx-background-color: transparent;
+}
+
+.tab-close-button:hover {
+    -fx-background-color: #333333;
+}
+
+.tab-close-button:selected:hover {
+    -fx-background-color: #b22222;
+}
+
+.tab-close-button:selected {
+    -fx-background-color: #ff0000;
+}
+
+.tab-pane *.tab:selected .tab-label {
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+.tab-pane .tab {
+    -fx-background-color: #BBDEFB;
+    -fx-border-color: #2196F3;
+    -fx-border-width: 0 0 2 0;
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color: #2196F3;
+    -fx-text-fill: white;
+}
+
+/* Styles for the toolbar */
+.tool-bar {
+    -fx-background-color: #f2f2f2;
+}
+
+/* Styles for the buttons in the toolbar */
+.tool-bar .button {
+    -fx-background-color: #f2f2f2;
+    -fx-background-radius: 0;
+    -fx-border-width: 0;
+    -fx-padding: 0.5em;
+    -fx-font-size: 1.5em;
+    -fx-text-fill: #444;
+}
+
+/* Styles for the selected button in the toolbar */
+.tool-bar .button:pressed {
+    -fx-background-color: #ddd;
+    -fx-text-fill: #222;
+}
+
+/* Styles for the text field in the toolbar */
+.tool-bar .text-field {
+    -fx-background-color: #ffffff;
+        -fx-background-radius: 3;
+        -fx-border-color: #cccccc;
+        -fx-border-radius: 3;
+        -fx-border-width: 1;
+        -fx-padding: 5;
+}
+
+/* Styles for the logout button in the toolbar */
+.tool-bar .button#logoutButton {
+    -fx-background-color: #d11;
+    -fx-background-radius: 0;
+    -fx-border-width: 0;
+    -fx-padding: 0.5em;
+    -fx-font-size: 1.5em;
+    -fx-text-fill: #fff;
+}
+
+/* Styles for the new bookmark button in the toolbar */
+.tool-bar .button#newBookmarkButton {
+    -fx-background-color: #666;
+    -fx-background-radius: 0;
+    -fx-border-width: 0;
+    -fx-padding: 0.5em;
+    -fx-font-size: 1.5em;
+    -fx-text-fill: #fff;
+}
+
+
+

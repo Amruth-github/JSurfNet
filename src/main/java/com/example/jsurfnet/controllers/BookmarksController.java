@@ -5,6 +5,7 @@ import com.mongodb.client.model.Updates;
 import javafx.collections.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
@@ -51,7 +52,7 @@ public class BookmarksController implements Initializable {
         this.username = currentUser.getUsername();
     }
 
-    public void addBookmark(String name, String url) throws IOException {
+    public void addBookmark(String name, String url, boolean from_ui) throws IOException {
         if (search(url)) {
             Bookmark bookmark = new Bookmark(name, url);
             bookmarks.add(bookmark);
@@ -62,12 +63,13 @@ public class BookmarksController implements Initializable {
             bookmarkButton.setOnAction(event -> {
                 loadBookmark(url);
             });
-
-            Document document = new Document()
-                    .append("user", username)
-                    .append("name", bookmark.getName())
-                    .append("url", bookmark.getUrl());
-            collection.insertOne(document);
+            if (from_ui && !CurrentUser.getInstance().getUsername().equals("guest")) {
+                Document document = new Document()
+                        .append("user", username)
+                        .append("name", bookmark.getName())
+                        .append("url", bookmark.getUrl());
+                collection.insertOne(document);
+            }
 
         }
     }
@@ -106,10 +108,12 @@ public class BookmarksController implements Initializable {
             Button button = (Button) node;
             return button.getText().equals(bookmark.getName());
         });
-        collection.deleteOne(Filters.and(
-                Filters.eq("user", username),
-                Filters.eq("url", bookmark.getUrl())
-        ));
+        if (!CurrentUser.getInstance().getUsername().equals("guest")) {
+            collection.deleteOne(Filters.and(
+                    Filters.eq("user", username),
+                    Filters.eq("url", bookmark.getUrl())
+            ));
+        }
     }
 
     @Override
@@ -128,10 +132,12 @@ public class BookmarksController implements Initializable {
                         popup.getContent().add(textField);
                         textField.setOnAction(actionEvent -> {
                             newBookmarkButton.setText(textField.getText());
-                            collection.updateOne(Filters.and(
-                                    Filters.eq("user", username),
-                                    Filters.eq("name", oldbookmark_name)
-                            ), Updates.set("name", newBookmarkButton.getText()));
+                            if (!CurrentUser.getInstance().getUsername().equals("guest")) {
+                                collection.updateOne(Filters.and(
+                                        Filters.eq("user", username),
+                                        Filters.eq("name", oldbookmark_name)
+                                ), Updates.set("name", newBookmarkButton.getText()));
+                            }
                             popup.hide();
                         });
                         m1.setOnAction(actionEvent -> {
@@ -145,6 +151,8 @@ public class BookmarksController implements Initializable {
                         newBookmarkButton.setOnAction(event -> {
                             loadBookmark(newBookmark.getUrl());
                         });
+                        FlowPane.setMargin(newBookmarkButton, new Insets(0, 10, 0, 0)); // right padding of 10 pixels
+
                         bookmarkPane.getChildren().add(newBookmarkButton);
 
                     }
@@ -154,7 +162,7 @@ public class BookmarksController implements Initializable {
             for (Document document : iterable) {
                 String name = document.getString("name");
                 String bookmarksurl = document.getString("url");
-                addBookmark(name, bookmarksurl);
+                addBookmark(name, bookmarksurl, false);
             }
 
         } catch (IOException e) {

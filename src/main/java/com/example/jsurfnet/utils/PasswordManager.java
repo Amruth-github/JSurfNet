@@ -1,31 +1,64 @@
 package com.example.jsurfnet.utils;
 
 import com.example.jsurfnet.controllers.TabsController;
+import com.example.jsurfnet.utils.MongoDriver;
+import com.mongodb.MongoClient;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
+import org.bson.Document;
+import org.bson.types.Binary;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 
-public class PasswordManager {
-    private HashMap<String, Credential> url_to_passwords = null;
+public class PasswordManager implements java.io.Serializable {
+
+    private HashMap<String, Credential> url_to_passwords = new HashMap<>();
+
 
     public void addCreds(String url, String username, String password) {
-        if (url_to_passwords == null) {
-            url_to_passwords = new HashMap<>();
-        }
         url_to_passwords.put(TabsController.gethost(url), new Credential(username, password));
+        MongoDriver.getMongo().getCollection("password").updateOne(Filters.eq("user", CurrentUser.getInstance().getUsername()), Updates.set("passwords", this.getSerialized()));
     }
 
     public boolean exists(String url) {
-        try{
-            Credential pwd = url_to_passwords.get(TabsController.gethost(url));
-            System.out.println("Password exists");
-            return true;
-        } catch (Exception e) {
-            System.out.println("Password does not exist");
-            return false;
-        }
+        Credential pwd = url_to_passwords.get(TabsController.gethost(url));
+        return pwd != null;
     }
 
     public Credential getCreds(String url) {
         return url_to_passwords.get(TabsController.gethost(url));
+    }
+
+    public static PasswordManager getUserPassword() throws Exception {
+        MongoCollection<Document> collection = MongoDriver.getMongo().getCollection("password");
+        FindIterable<Document> iterable = collection.find(Filters.and(
+                Filters.eq("user", CurrentUser.getInstance().getUsername())));
+        byte[] data = iterable.first().get("passwords", Binary.class).getData();
+        ByteArrayInputStream bais = new ByteArrayInputStream(data);
+        ObjectInputStream ois = new ObjectInputStream(bais);
+        PasswordManager pm = (PasswordManager) ois.readObject();
+        return pm;
+    }
+
+    public byte[] getSerialized() {
+        try {
+            // Serialize the PasswordManager object to a byte array
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(baos);
+            oos.writeObject(this);
+            oos.close();
+            baos.close();
+            return baos.toByteArray();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

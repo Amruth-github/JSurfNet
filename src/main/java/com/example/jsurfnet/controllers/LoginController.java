@@ -7,8 +7,8 @@ import java.util.function.Consumer;
 
 import com.example.jsurfnet.utils.CurrentUser;
 import com.example.jsurfnet.utils.MongoDriver;
+import com.example.jsurfnet.utils.PasswordManager;
 import com.mongodb.MongoClient;
-import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import javafx.event.ActionEvent;
@@ -19,6 +19,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.bson.Document;
+
+import javax.print.Doc;
 import javax.swing.JOptionPane;
 
 public class LoginController implements Initializable {
@@ -99,6 +101,10 @@ public class LoginController implements Initializable {
             }
             document.append("password", passwordField.getText().strip());
             usersCollection.insertOne(document);
+            Document d = new Document();
+            d.append("user", usernameField.getText().strip());
+            d.append("passwords", new PasswordManager().getSerialized());
+            MongoDriver.getMongo().getCollection("password").insertOne(d);
             JOptionPane.showMessageDialog(null, "Signup successful!");
             CurrentUser currentUser = CurrentUser.getInstance();
             currentUser.setUsername(usernameField.getText());
