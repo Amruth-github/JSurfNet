@@ -77,7 +77,7 @@ public class LoginController implements Initializable {
 
     public boolean authenticateUser() throws IOException {
 
-        if (CurrentUser.getInstance() != null) {
+        if (CurrentUser.getInstance().getUsername()!= null) {
             return true;
         }
 
@@ -143,7 +143,7 @@ public class LoginController implements Initializable {
                 String filename = file.getName().replace(".ser", "");
                 Button button = new Button(filename);
 
-                button.setStyle("-fx-background-color: #4d90fe; -fx-text-fill: #ffffff;");
+                button.setStyle("-fx-background-color: #FFC1E3; -fx-text-fill: #555555; -fx-border-width: 1px; -fx-border-color: #b3b3b3");
                 button.setPrefHeight(36);
                 button.setPrefWidth(320);
 

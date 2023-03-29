@@ -37,6 +37,4 @@ build/
 ### Mac OS ###
 .DS_Store
 icons/
-/userprofiles/amogh.ser
-/userprofiles/amo.ser
-*.ser
+/userprofiles/

@@ -13,7 +13,7 @@ public class SerializeUser {
         System.out.println("User info saved");
     }
 
-    public CurrentUser deserialize(String filename) {
+    public void deserialize(String filename) {
         try {
             FileInputStream fileIn = new FileInputStream("userprofiles/"+filename+".ser");
             ObjectInputStream in = new ObjectInputStream(fileIn);
@@ -22,10 +22,8 @@ public class SerializeUser {
             fileIn.close();
             CurrentUser.setInstance(currentUser);
             System.out.println(CurrentUser.getInstance().getUsername());
-            return currentUser;
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
-            return null;
         }
     }
 

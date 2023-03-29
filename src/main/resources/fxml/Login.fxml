@@ -4,20 +4,17 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.InnerShadow?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.paint.Color?>
 
-<?import javafx.scene.image.Image?>
-<AnchorPane fx:id = "anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #f1f1f1;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.jsurfnet.controllers.LoginController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #f1f1f1;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.jsurfnet.controllers.LoginController">
 <!--    <ImageView fitHeight="65.0" fitWidth="230.0" layoutX="285.0" layoutY="94.0" pickOnBounds="true" preserveRatio="true">-->
 <!--        <image>-->
 <!--            <Image url="/icons/JSurfNet.png" />-->
 <!--        </image>-->
 <!--    </ImageView>-->
-    <Label layoutX="300.0" layoutY="20.0" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #555555;" text="Sign in to JSurfNet" />
+    <Label layoutX="275.0" layoutY="14.0" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #555555;" text="Sign in to JSurfNet" />
     <Label layoutX="242.0" layoutY="71.0" style="-fx-font-size: 20px; -fx-text-fill: #555555;" text="Existing Profiles: " />
+    <Label layoutX="390.0" layoutY="241.0" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #555555;" text="OR" />
     <Label layoutX="242.0" layoutY="251.0" style="-fx-font-size: 14px; -fx-text-fill: #555555;" text="Username" />
     <TextField fx:id="usernameField" layoutX="242.0" layoutY="272.0" prefWidth="320.0" style="-fx-background-color: #ffffff; -fx-border-width: 1px; -fx-border-color: #b3b3b3;" />
     <Label layoutX="242.0" layoutY="320.0" style="-fx-font-size: 14px; -fx-text-fill: #555555;" text="Password" />
@@ -25,5 +22,5 @@
     <Button fx:id="loginButton" layoutX="242.0" layoutY="404.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="150.0" style="-fx-background-color: #4d90fe; -fx-text-fill: #ffffff;" text="Sign in" />
     <Button fx:id="signupButton" layoutX="412.0" layoutY="404.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="150.0" style="-fx-background-color: #f1f1f1; -fx-text-fill: #555555; -fx-border-width: 1px; -fx-border-color: #b3b3b3;" text="Create account" />
     <Label layoutX="242.0" layoutY="464.0" style="-fx-font-size: 14px; -fx-text-fill: #555555;" text="or" />
-    <Button fx:id="guestButton" layoutX="242.0" layoutY="497.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="320.0" style="-fx-background-color: #f1f1f1; -fx-text-fill: #555555; -fx-border-width: 1px; -fx-border-color: #b3b3b3;" text="Continue as Guest"/>
+    <Button fx:id="guestButton" layoutX="242.0" layoutY="497.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="320.0" style="-fx-background-color: #f1f1f1; -fx-text-fill: #555555; -fx-border-width: 1px; -fx-border-color: #b3b3b3;" text="Continue as Guest" />
     </AnchorPane>
