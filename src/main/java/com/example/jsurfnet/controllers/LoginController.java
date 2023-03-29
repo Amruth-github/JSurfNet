@@ -1,13 +1,18 @@
 
 package com.example.jsurfnet.controllers;
 
+import java.io.File;
+import java.io.FilenameFilter;
+import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
 import com.example.jsurfnet.utils.CurrentUser;
 import com.example.jsurfnet.utils.MongoDriver;
 import com.example.jsurfnet.utils.PasswordManager;
+import com.example.jsurfnet.utils.SerializeUser;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -18,6 +23,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import org.bson.Document;
 
 import javax.print.Doc;
@@ -29,6 +35,8 @@ public class LoginController implements Initializable {
     public Button signupButton;
     @FXML
     public Button guestButton;
+    @FXML
+    public AnchorPane anchorPane;
     @FXML
     private TextField usernameField;
 
@@ -62,13 +70,19 @@ public class LoginController implements Initializable {
         guestButton.setOnAction(guestListener::accept);
     }
 
+//    public void setLocalUser(Consumer<ActionEvent> loginListener) {
+//        loginButton.setOnAction(loginListener::accept);
+//    }
 
-    public boolean authenticateUser() {
+
+    public boolean authenticateUser() throws IOException {
         Document user = usersCollection.find(new Document("username", usernameField.getText())).first();
         if (user != null) {
             if (passwordField.getText().strip().equals(user.getString("password"))){
                 CurrentUser currentUser = CurrentUser.getInstance();
-                currentUser.setUsername(usernameField.getText());
+                currentUser.setUsername(usernameField.getText(), passwordField.getText());
+                SerializeUser su = new SerializeUser();
+                su.Serialize();
                 return true;
 
             }
@@ -83,7 +97,7 @@ public class LoginController implements Initializable {
         }
     }
 
-    public boolean signup() {
+    public boolean signup() throws IOException {
         Document document = new Document();
         Document existingUser = usersCollection.find(new Document("username", usernameField.getText())).first();
         if (existingUser != null) {
@@ -107,12 +121,34 @@ public class LoginController implements Initializable {
             MongoDriver.getMongo().getCollection("password").insertOne(d);
             JOptionPane.showMessageDialog(null, "Signup successful!");
             CurrentUser currentUser = CurrentUser.getInstance();
-            currentUser.setUsername(usernameField.getText());
+            currentUser.setUsername(usernameField.getText(), passwordField.getText());
+            SerializeUser su = new SerializeUser();
+            su.Serialize();
             return true;
         }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        File dir = new File("userprofiles");
+
+        double y = 100.0;
+
+        for (File file : Objects.requireNonNull(dir.listFiles())) {
+            if (file.isFile() && file.getName().endsWith(".ser")) {
+                String filename = file.getName().replace(".ser", "");
+                Button button = new Button(filename);
+
+                button.setOnAction(event -> {
+                    SerializeUser su = new SerializeUser();
+                    su.deserialize(filename);
+                });
+
+                button.setLayoutX(450.0);
+                button.setLayoutY(y);
+                y += 50.0;
+                anchorPane.getChildren().add(button);
+            }
+        }
     }
 }
