@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Offline</title>
+	<style>
+		body {
+			background-color: #f8f8f8;
+			font-family: Arial, sans-serif;
+			text-align: center;
+		}
+
+		h1 {
+			color: #333;
+			font-size: 2.5em;
+			margin-top: 40px;
+			margin-bottom: 20px;
+			letter-spacing: 2px;
+		}
+
+		p {
+			color: #666;
+			font-size: 1.2em;
+			margin-bottom: 40px;
+			line-height: 1.5;
+		}
+
+		img {
+			max-width: 100%;
+			height: auto;
+		}
+
+		@keyframes slide-in {
+			from {
+				opacity: 0;
+				transform: translateX(-50%);
+			}
+			to {
+				opacity: 1;
+				transform: translateX(0);
+			}
+		}
+
+		.offline-icon {
+			animation: slide-in 1s ease-out;
+		}
+	</style>
+</head>
+<body>
+	<h1>Oops! You're Offline</h1>
+	<img class="offline-icon" src="./no.png" alt="Offline Icon">
+	<p>Sorry, it looks like you're not connected to the internet. Please check your connection and try again.</p>
+</body>
+</html>
