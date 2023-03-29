@@ -1,7 +1,7 @@
 package com.example.jsurfnet.utils;
 
 import javafx.scene.control.TabPane;
-import javafx.scene.web.WebEngine;
+import  javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
 public final class TabsAndWv {

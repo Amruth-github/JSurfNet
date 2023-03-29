@@ -5,6 +5,7 @@ import com.mongodb.client.model.Updates;
 import javafx.collections.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
@@ -150,6 +151,8 @@ public class BookmarksController implements Initializable {
                         newBookmarkButton.setOnAction(event -> {
                             loadBookmark(newBookmark.getUrl());
                         });
+                        FlowPane.setMargin(newBookmarkButton, new Insets(0, 10, 0, 0)); // right padding of 10 pixels
+
                         bookmarkPane.getChildren().add(newBookmarkButton);
 
                     }
