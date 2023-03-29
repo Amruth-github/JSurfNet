@@ -11,12 +11,13 @@
 
 <?import javafx.scene.image.Image?>
 <AnchorPane fx:id = "anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #f1f1f1;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.jsurfnet.controllers.LoginController">
-    <ImageView fitHeight="65.0" fitWidth="230.0" layoutX="285.0" layoutY="94.0" pickOnBounds="true" preserveRatio="true">
-        <image>
-            <Image url="/icons/JSurfNet.png" />
-        </image>
-    </ImageView>
-    <Label layoutX="312.0" layoutY="178.0" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #555555;" text="Sign in to JSurfNet" />
+<!--    <ImageView fitHeight="65.0" fitWidth="230.0" layoutX="285.0" layoutY="94.0" pickOnBounds="true" preserveRatio="true">-->
+<!--        <image>-->
+<!--            <Image url="/icons/JSurfNet.png" />-->
+<!--        </image>-->
+<!--    </ImageView>-->
+    <Label layoutX="300.0" layoutY="20.0" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #555555;" text="Sign in to JSurfNet" />
+    <Label layoutX="242.0" layoutY="71.0" style="-fx-font-size: 20px; -fx-text-fill: #555555;" text="Existing Profiles: " />
     <Label layoutX="242.0" layoutY="251.0" style="-fx-font-size: 14px; -fx-text-fill: #555555;" text="Username" />
     <TextField fx:id="usernameField" layoutX="242.0" layoutY="272.0" prefWidth="320.0" style="-fx-background-color: #ffffff; -fx-border-width: 1px; -fx-border-color: #b3b3b3;" />
     <Label layoutX="242.0" layoutY="320.0" style="-fx-font-size: 14px; -fx-text-fill: #555555;" text="Password" />

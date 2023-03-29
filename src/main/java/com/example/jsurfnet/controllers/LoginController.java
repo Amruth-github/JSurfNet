@@ -76,6 +76,11 @@ public class LoginController implements Initializable {
 
 
     public boolean authenticateUser() throws IOException {
+
+        if (CurrentUser.getInstance() != null) {
+            return true;
+        }
+
         Document user = usersCollection.find(new Document("username", usernameField.getText())).first();
         if (user != null) {
             if (passwordField.getText().strip().equals(user.getString("password"))){
@@ -84,7 +89,6 @@ public class LoginController implements Initializable {
                 SerializeUser su = new SerializeUser();
                 su.Serialize();
                 return true;
-
             }
             else {
                 JOptionPane.showMessageDialog(null, "Wrong Password", "Error", JOptionPane.ERROR_MESSAGE);
@@ -139,12 +143,17 @@ public class LoginController implements Initializable {
                 String filename = file.getName().replace(".ser", "");
                 Button button = new Button(filename);
 
+                button.setStyle("-fx-background-color: #4d90fe; -fx-text-fill: #ffffff;");
+                button.setPrefHeight(36);
+                button.setPrefWidth(320);
+
                 button.setOnAction(event -> {
                     SerializeUser su = new SerializeUser();
                     su.deserialize(filename);
+                    loginButton.fire();
                 });
 
-                button.setLayoutX(450.0);
+                button.setLayoutX(242.0);
                 button.setLayoutY(y);
                 y += 50.0;
                 anchorPane.getChildren().add(button);
