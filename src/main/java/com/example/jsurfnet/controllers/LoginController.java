@@ -19,11 +19,9 @@ import com.mongodb.client.MongoDatabase;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import org.bson.Document;
 
 import javax.print.Doc;
@@ -37,6 +35,11 @@ public class LoginController implements Initializable {
     public Button guestButton;
     @FXML
     public AnchorPane anchorPane;
+
+    @FXML
+    public ScrollPane scrollPane;
+    @FXML
+    public VBox ProfileHolder;
     @FXML
     private TextField usernameField;
 
@@ -78,6 +81,20 @@ public class LoginController implements Initializable {
     public boolean authenticateUser() throws IOException {
 
         if (CurrentUser.getInstance().getUsername()!= null) {
+            Document user = usersCollection.find(new Document("username", usernameField.getText())).first();
+            if (user != null) {
+                if (passwordField.getText().strip().equals(user.getString("password"))){
+                    CurrentUser currentUser = CurrentUser.getInstance();
+                    currentUser.setUsername(usernameField.getText(), passwordField.getText());
+                    SerializeUser su = new SerializeUser();
+                    su.Serialize();
+                    return true;
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Password has been changed. Please login instead.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return false;
+                }
+            }
             return true;
         }
 
@@ -143,7 +160,7 @@ public class LoginController implements Initializable {
                 String filename = file.getName().replace(".ser", "");
                 Button button = new Button(filename);
 
-                button.setStyle("-fx-background-color: #FFC1E3; -fx-text-fill: #555555; -fx-border-width: 1px; -fx-border-color: #b3b3b3");
+                button.setStyle("-fx-background-color: #ADD8E6; -fx-text-fill: #333333; -fx-border-width: 1px; -fx-border-color: #b3b3b3");
                 button.setPrefHeight(36);
                 button.setPrefWidth(320);
 
@@ -156,7 +173,8 @@ public class LoginController implements Initializable {
                 button.setLayoutX(242.0);
                 button.setLayoutY(y);
                 y += 50.0;
-                anchorPane.getChildren().add(button);
+                ProfileHolder.setSpacing(8);
+                ProfileHolder.getChildren().addAll(button);
             }
         }
     }
