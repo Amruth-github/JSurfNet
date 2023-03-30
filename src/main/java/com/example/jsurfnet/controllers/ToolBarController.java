@@ -3,10 +3,12 @@ import com.example.jsurfnet.WebBrowser;
 import com.example.jsurfnet.utils.Icon;
 import com.example.jsurfnet.utils.TabsAndWv;
 import com.example.jsurfnet.utils.ToolBar;
+import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -158,6 +160,7 @@ public class ToolBarController implements Initializable {
 
     }
 
+
 //    public void setLogoutListener(Consumer<ActionEvent> logoutListener) throws IOException {
 //        logoutButton.setOnAction(logoutListener::accept);
 //    }
@@ -175,7 +178,9 @@ public class ToolBarController implements Initializable {
         ToolBarInstance.setNewTabButton(newTabButton);
         ToolBarInstance.setNewBookmarkButton(newBookmarkButton);
         ToolBarInstance.setLogoutButton(logoutButton);
+        logoutButton.setOnAction(actionEvent -> {
 
+        });
 
         addBoookmark();
     }

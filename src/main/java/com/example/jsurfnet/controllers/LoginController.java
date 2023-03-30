@@ -16,6 +16,8 @@ import com.example.jsurfnet.utils.SerializeUser;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -31,6 +33,8 @@ public class LoginController implements Initializable {
 
     @FXML
     public Button signupButton;
+
+    public boolean showUI;
     @FXML
     public Button guestButton;
     @FXML
@@ -151,8 +155,11 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        if (!new File("userprofiles").exists()) {
+            new File("userprofiles").mkdir();
+        }
         File dir = new File("userprofiles");
-
+        scrollPane.setVisible((Objects.requireNonNull(new File("userprofiles").list()).length != 0));
         double y = 100.0;
 
         for (File file : Objects.requireNonNull(dir.listFiles())) {

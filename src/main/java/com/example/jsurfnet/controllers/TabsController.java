@@ -17,7 +17,6 @@ import java.util.ResourceBundle;
 import java.net.MalformedURLException;
 import java.io.File;
 import com.example.jsurfnet.WebBrowser;
-import javafx.stage.Popup;
 
 import javax.swing.*;
 

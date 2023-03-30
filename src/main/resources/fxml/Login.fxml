@@ -10,10 +10,10 @@
 
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #292d36;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.jsurfnet.controllers.LoginController">
     <Label layoutX="275.0" layoutY="14.0" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #f2f2f2;" text="Sign in to JSurfNet" />
-    <Label layoutX="242.0" layoutY="71.0" style="-fx-font-size: 20px; -fx-text-fill: #f2f2f2;" text="Existing Profiles: " />
+    <Label layoutX="242.0" layoutY="71.0" style="-fx-font-size: 20px; -fx-text-fill: #f2f2f2;" text="Existing Profiles: "/>
     <ScrollPane fx:id="scrollPane" layoutX="240.0" layoutY="101.0" prefHeight="126.0" prefWidth="320.0">
         <content>
-            <VBox fx:id="ProfileHolder" prefHeight="127.0" prefWidth="302.0" style="-fx-background-color: #20222b;" />
+            <VBox fx:id="ProfileHolder" prefHeight="127.0" prefWidth="302.0" style="-fx-background-color: #20222b;"/>
         </content>
     </ScrollPane>
     <Label layoutX="390.0" layoutY="241.0" style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #f2f2f2;" text="OR" />
