@@ -33,8 +33,6 @@ public class LoginController implements Initializable {
 
     @FXML
     public Button signupButton;
-
-    public boolean showUI;
     @FXML
     public Button guestButton;
     @FXML
@@ -44,6 +42,9 @@ public class LoginController implements Initializable {
     public ScrollPane scrollPane;
     @FXML
     public VBox ProfileHolder;
+    public Label exisitngProfile;
+
+    public Label or;
     @FXML
     private TextField usernameField;
 
@@ -57,7 +58,6 @@ public class LoginController implements Initializable {
     private Label errorLabel;
 
     private MongoCollection<Document> usersCollection;
-    private MongoClient mongoClient;
 
 
     public LoginController() {
@@ -159,7 +159,12 @@ public class LoginController implements Initializable {
             new File("userprofiles").mkdir();
         }
         File dir = new File("userprofiles");
-        scrollPane.setVisible((Objects.requireNonNull(new File("userprofiles").list()).length != 0));
+        boolean showUI = Objects.requireNonNull(new File("userprofiles").list()).length != 0;
+        or.setVisible(showUI);
+        exisitngProfile.setVisible(showUI);
+        scrollPane.setVisible(showUI);
+
+
         double y = 100.0;
 
         for (File file : Objects.requireNonNull(dir.listFiles())) {
