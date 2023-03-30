@@ -39,22 +39,41 @@ public class WebBrowser extends Application {
         LoginController loginController = loginLoader.getController();
 
         loginController.setSignupListener(event -> {
-            if (loginController.signup()) {
-                goToBrowser();
+            try {
+                if (loginController.signup()) {
+                    goToBrowser();
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         });
 
         loginController.setLoginListener(event -> {
-            if (loginController.authenticateUser()) {
-                goToBrowser();
+            try {
+                if (loginController.authenticateUser()) {
+                    goToBrowser();
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         });
 
         loginController.setGuestListener(event->{
             CurrentUser currentUser = CurrentUser.getInstance();
-            currentUser.setUsername("guest");
+            currentUser.setUsername("guest", "");
             goToBrowser();
         });
+
+//        loginController.setLocalUser(event -> {
+//            try {
+//                if (loginController.authenticateUser()) {
+//                    goToBrowser();
+//                }
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//        });
+
     }
 
     public static  Scene getScene() {
@@ -70,7 +89,7 @@ public class WebBrowser extends Application {
             throw new RuntimeException(e);
         }
         Scene browserScene = new Scene(browserRoot);
-        browserScene.getStylesheets().add(getClass().getResource("/css/style.css").toExternalForm());
+        browserScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
         scene = browserScene;
         stage = primaryStage;
         primaryStage.setScene(browserScene);
