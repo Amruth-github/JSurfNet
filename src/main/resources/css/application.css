@@ -1,26 +1,28 @@
 #backButton,#forwardButton, #reloadButton, #searchButton, #newTabButton, #newBookmarkButton{
-    -fx-background-color: #FFF;
+    -fx-background-color: #424242;
     -fx-background-radius: 5px;
     -fx-border-radius: 5px;
-    -fx-border-color: #AAA;
+    -fx-border-color: #333;
     -fx-border-width: 1px;
     -fx-padding: 5px 10px;
     -fx-cursor: hand;
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 5, 0, 0, 0);
     -fx-font-weight: bold;
     -fx-font-size: 12px;
-    -fx-text-fill: #333;
+    -fx-text-fill: #EEE;
     -fx-background-insets: 0 0 0 5px, 0 0 2px 0;
     -fx-border-insets: 0 0 0 5px, 0 0 2px 0;
 }
 
-#backButton:hover,#forwardButton:hover, #reloadButton:hover, #searchButton:hover, #newTabButton:hover{
-    -fx-background-color: #EEE;
+#backButton:hover,#forwardButton:hover, #reloadButton:hover, #searchButton:hover, #newTabButton:hover, #newBookmarkButton:hover{
+    -fx-background-color: #555;
 }
 
-#backButton:pressed,#forwardButton:pressed #reloadButton:pressed, #searchButton:pressed, #newTabButton:pressed, #newBookmarkButton:pressed{
-    -fx-background-color: #DDD;
+#backButton:pressed,#forwardButton:pressed, #reloadButton:pressed, #searchButton:pressed, #newTabButton:pressed, #newBookmarkButton:pressed{
+    -fx-background-color: #333;
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 3, 0, 0, 0);
+}
+
 }
 
 #root {
@@ -34,7 +36,7 @@
 .tab {
     -fx-background-color: #141414;
     -fx-background-insets: 0 0 -1 0, 0, 1, 2;
-    -fx-background-radius: 0px;
+    -fx-background-radius: 15px 15px 0 0;
     -fx-padding: 0.75em 1em 0.75em 1em;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
@@ -48,6 +50,7 @@
 
 .tab:selected {
     -fx-background-color: #ADD8E6;
+    -fx-background-radius: 15px 15px 0 0;
 }
 
 .tab:disabled {
@@ -83,7 +86,9 @@
 .tab-pane .tab:selected {
     -fx-background-color: #2196F3;
     -fx-text-fill: white;
+    -fx-background-radius: 15px 15px 0 0;
 }
+
 
 /* Styles for the toolbar */
 .tool-bar {
@@ -91,49 +96,75 @@
 }
 
 /* Styles for the buttons in the toolbar */
+.tool-bar {
+    -fx-background-color: #141414;
+}
+
+/* Styles for the buttons in the toolbar */
 .tool-bar .button {
-    -fx-background-color: #f2f2f2;
+    -fx-background-color: #141414;
     -fx-background-radius: 0;
     -fx-border-width: 0;
     -fx-padding: 0.5em;
     -fx-font-size: 1.5em;
-    -fx-text-fill: #444;
+    -fx-text-fill: white;
 }
 
 /* Styles for the selected button in the toolbar */
 .tool-bar .button:pressed {
-    -fx-background-color: #ddd;
-    -fx-text-fill: #222;
+    -fx-background-color: #4b4b4b;
 }
 
 /* Styles for the text field in the toolbar */
 .tool-bar .text-field {
-    -fx-background-color: #ffffff;
-        -fx-background-radius: 3;
-        -fx-border-color: #cccccc;
-        -fx-border-radius: 3;
-        -fx-border-width: 1;
-        -fx-padding: 5;
+    -fx-background-color: #2e2e2e;
+    -fx-background-radius: 3;
+    -fx-border-color: transparent;
+    -fx-border-radius: 3;
+    -fx-border-width: 0;
+    -fx-padding: 5;
+    -fx-text-fill: white;
 }
 
 /* Styles for the logout button in the toolbar */
 .tool-bar .button#logoutButton {
-    -fx-background-color: #d11;
+    -fx-background-color: #ff4b4b;
     -fx-background-radius: 0;
     -fx-border-width: 0;
     -fx-padding: 0.5em;
     -fx-font-size: 1.5em;
-    -fx-text-fill: #fff;
+    -fx-text-fill: white;
 }
 
 /* Styles for the new bookmark button in the toolbar */
 .tool-bar .button#newBookmarkButton {
-    -fx-background-color: #666;
+    -fx-background-color: #3498db;
     -fx-background-radius: 0;
     -fx-border-width: 0;
     -fx-padding: 0.5em;
     -fx-font-size: 1.5em;
-    -fx-text-fill: #fff;
+    -fx-text-fill: white;
+}
+
+/* Styles for the search field in the toolbar */
+.tool-bar .text-field#searchField {
+    -fx-background-color: #2e2e2e;
+    -fx-background-radius: 3;
+    -fx-border-color: transparent;
+    -fx-border-radius: 3;
+    -fx-border-width: 0;
+    -fx-padding: 5;
+    -fx-text-fill: white;
+}
+
+/* Styles for the navigation buttons in the toolbar */
+.tool-bar .button#navigationButton {
+    -fx-background-color: #141414;
+    -fx-background-radius: 0;
+    -fx-border-width: 0;
+    -fx-padding: 0.5em;
+    -fx-font-size: 1.5em;
+    -fx-text-fill: white;
 }
 
 
