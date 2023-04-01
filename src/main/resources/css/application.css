@@ -1,4 +1,4 @@
-#backButton,#forwardButton, #reloadButton, #searchButton, #newTabButton, #newBookmarkButton{
+/*#backButton,#forwardButton, #reloadButton, #searchButton, #newTabButton, #newBookmarkButton{
     -fx-background-color: #424242;
     -fx-background-radius: 5px;
     -fx-border-radius: 5px;
@@ -21,20 +21,19 @@
 #backButton:pressed,#forwardButton:pressed, #reloadButton:pressed, #searchButton:pressed, #newTabButton:pressed, #newBookmarkButton:pressed{
     -fx-background-color: #333;
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 3, 0, 0, 0);
-}
+} */
 
-}
 
 #root {
     -fx-background-color: #1c1c1c;
 }
 
 .tab-header-area {
-    -fx-background-color: #141414;
+    -fx-background-color: #202020;
 }
 
 .tab {
-    -fx-background-color: #141414;
+    -fx-background-color: #2b2b2b;
     -fx-background-insets: 0 0 -1 0, 0, 1, 2;
     -fx-background-radius: 15px 15px 0 0;
     -fx-padding: 0.75em 1em 0.75em 1em;
@@ -45,11 +44,11 @@
 }
 
 .tab:hover {
-    -fx-background-color: #2e2e2e;
+    -fx-background-color: #383838;
 }
 
 .tab:selected {
-    -fx-background-color: #ADD8E6;
+    -fx-background-color: #4d4d4d;
     -fx-background-radius: 15px 15px 0 0;
 }
 
@@ -62,32 +61,34 @@
 }
 
 .tab-close-button:hover {
-    -fx-background-color: #333333;
+    -fx-background-color: #666666;
 }
 
 .tab-close-button:selected:hover {
-    -fx-background-color: #b22222;
+    -fx-background-color: #ff6666;
 }
 
 .tab-close-button:selected {
-    -fx-background-color: #ff0000;
+    -fx-background-color: #ff3333;
 }
 
 .tab-pane *.tab:selected .tab-label {
     -fx-font-weight: bold;
     -fx-text-fill: black;
 }
+
 .tab-pane .tab {
-    -fx-background-color: #BBDEFB;
-    -fx-border-color: #2196F3;
+    -fx-background-color: #333333;
+    -fx-border-color: #666666;
     -fx-border-width: 0 0 2 0;
 }
 
 .tab-pane .tab:selected {
-    -fx-background-color: #2196F3;
+    -fx-background-color: #666666;
     -fx-text-fill: white;
     -fx-background-radius: 15px 15px 0 0;
 }
+
 
 
 /* Styles for the toolbar */
@@ -96,76 +97,98 @@
 }
 
 /* Styles for the buttons in the toolbar */
+/* Styles for the toolbar */
 .tool-bar {
-    -fx-background-color: #141414;
+    -fx-background-color: #f5f5f5;
 }
 
 /* Styles for the buttons in the toolbar */
 .tool-bar .button {
-    -fx-background-color: #141414;
+    -fx-background-color: transparent;
     -fx-background-radius: 0;
     -fx-border-width: 0;
     -fx-padding: 0.5em;
-    -fx-font-size: 1.5em;
-    -fx-text-fill: white;
+    -fx-font-size: 1.2em;
+    -fx-text-fill: #737373;
 }
 
 /* Styles for the selected button in the toolbar */
 .tool-bar .button:pressed {
-    -fx-background-color: #4b4b4b;
+    -fx-background-color: #d9d9d9;
 }
 
 /* Styles for the text field in the toolbar */
 .tool-bar .text-field {
-    -fx-background-color: #2e2e2e;
+    -fx-background-color: #fff;
     -fx-background-radius: 3;
-    -fx-border-color: transparent;
+    -fx-border-color: #d9d9d9;
     -fx-border-radius: 3;
-    -fx-border-width: 0;
+    -fx-border-width: 1px;
     -fx-padding: 5;
-    -fx-text-fill: white;
+    -fx-text-fill: #333;
 }
 
 /* Styles for the logout button in the toolbar */
 .tool-bar .button#logoutButton {
-    -fx-background-color: #ff4b4b;
+    -fx-background-color: transparent;
     -fx-background-radius: 0;
     -fx-border-width: 0;
     -fx-padding: 0.5em;
-    -fx-font-size: 1.5em;
-    -fx-text-fill: white;
+    -fx-font-size: 1.2em;
+    -fx-text-fill: #737373;
 }
 
 /* Styles for the new bookmark button in the toolbar */
 .tool-bar .button#newBookmarkButton {
-    -fx-background-color: #3498db;
+    -fx-background-color: transparent;
     -fx-background-radius: 0;
     -fx-border-width: 0;
     -fx-padding: 0.5em;
-    -fx-font-size: 1.5em;
-    -fx-text-fill: white;
+    -fx-font-size: 1.2em;
+    -fx-text-fill: #737373;
 }
 
 /* Styles for the search field in the toolbar */
 .tool-bar .text-field#searchField {
-    -fx-background-color: #2e2e2e;
+    -fx-background-color: #f1f1f1;
     -fx-background-radius: 3;
     -fx-border-color: transparent;
     -fx-border-radius: 3;
-    -fx-border-width: 0;
+    -fx-border-width: 1px;
     -fx-padding: 5;
-    -fx-text-fill: white;
+    -fx-text-fill: #333;
 }
 
 /* Styles for the navigation buttons in the toolbar */
 .tool-bar .button#navigationButton {
-    -fx-background-color: #141414;
+    -fx-background-color: transparent;
     -fx-background-radius: 0;
     -fx-border-width: 0;
     -fx-padding: 0.5em;
-    -fx-font-size: 1.5em;
-    -fx-text-fill: white;
+    -fx-font-size: 1.2em;
+    -fx-text-fill: #737373;
 }
+
+/* Styles for the back and forward buttons in the toolbar */
+.tool-bar .button#backButton, .tool-bar .button#forwardButton, #searchButton, #newTabButton{
+    -fx-background-color: transparent;
+    -fx-background-radius: 0;
+    -fx-border-width: 0;
+    -fx-padding: 0.5em;
+    -fx-font-size: 1.2em;
+    -fx-text-fill: #737373;
+}
+
+/* Styles for the reload button in the toolbar */
+.tool-bar .button#reloadButton {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0;
+    -fx-border-width: 0;
+    -fx-padding: 0.5em;
+    -fx-font-size: 1.2em;
+    -fx-text-fill: #737373;
+}
+
 
 
 
