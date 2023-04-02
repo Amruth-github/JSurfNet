@@ -16,8 +16,9 @@
             <TextField fx:id="urlField" onAction="#loadURL" prefHeight="26.0" prefWidth="571.0" />
             <Button fx:id="searchButton" onAction="#loadURL" text="🔍" />
             <Button fx:id="newTabButton" mnemonicParsing="false" text="+" />
-            <Button fx:id="newBookmarkButton" stylesheets="@../css/application.css" text="🔖" />
+            <Button fx:id="newBookmarkButton" text="🔖" />
             <Button fx:id="logoutButton" mnemonicParsing="false" text="Logout" />
+            <Button fx:id="showPassword" mnemonicParsing="false" text = "🔑"/>
          </items>
       </ToolBar>
    </children>

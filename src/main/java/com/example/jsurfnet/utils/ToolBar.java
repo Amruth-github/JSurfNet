@@ -16,6 +16,8 @@ public final class ToolBar {
 
     private static ToolBar instance = null;
 
+    static private Button showPassword;
+
     private ToolBar(){
     }
 
@@ -74,5 +76,13 @@ public final class ToolBar {
     }
     public void setLogoutButton(Button lb) {
         logoutButton = lb;
+    }
+
+    public Button getShowPassword() {
+        return showPassword;
+    }
+
+    public void setShowPassword(Button showPassword) {
+        this.showPassword = showPassword;
     }
 }

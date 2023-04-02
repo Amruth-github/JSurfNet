@@ -31,6 +31,9 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.7), 8, 0, 0, 3); /* use an even larger and more blurred drop shadow on hover */
 }
 
+.context-menu {
+    -fx-background-color: #292929;
+    }
 
 
 

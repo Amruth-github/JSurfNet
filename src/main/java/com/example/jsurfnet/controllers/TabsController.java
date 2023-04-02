@@ -39,6 +39,12 @@ public class TabsController implements Initializable {
 
     private PasswordManager pwm = null;
 
+    private static boolean hasField = false;
+
+    private PasswordPopup pp = null;
+
+    private Button showPassword = ToolBar.getInstance().getShowPassword();
+
     public TabsController(){
         ToolBar ToolBarInstance;
         ToolBarInstance = ToolBar.getInstance();
@@ -62,10 +68,26 @@ public class TabsController implements Initializable {
         Platform.runLater(newTabButton::fire);
     }
 
+    private void initpopup() {
+        if (pwm.exists(urlField.getText())) {
+            pp = new PasswordPopup(false);
+            pp.setPassword(pwm.getCreds(urlField.getText()).getPassword());
+            pp.setUsername(pwm.getCreds(urlField.getText()).getUsername());
+            pp.show(WebBrowser.getScene().getWindow(), WebBrowser.getScene().getWidth() - pp.getWidth() - 10, 100);
+        } else {
+            pp = new PasswordPopup(true);
+            pp.show(WebBrowser.getScene().getWindow(), WebBrowser.getScene().getWidth() - pp.getWidth() - 10, 100);
+        }
+    }
+
     private void setupListeners(){
 
         TabsAndWv TabsAndWvInstance;
         TabsAndWvInstance = TabsAndWv.getInstance();
+
+        showPassword.setOnAction(actionEvent -> {
+            initpopup();
+        });
 
 
         newTabButton.setOnAction(event -> {
@@ -78,6 +100,10 @@ public class TabsController implements Initializable {
             tab.setGraphic(iv);
 
             webEngine.getLoadWorker().stateProperty().addListener(((observable, oldValue, newValue) -> {
+                showPassword.setVisible(false);
+                if (pp != null) {
+                    pp.hide();
+                }
                 if (newValue == Worker.State.FAILED || newValue == Worker.State.CANCELLED) {
                     webEngine.loadContent("<!DOCTYPE html>\n" +
                             "<html>\n" +
@@ -140,7 +166,7 @@ public class TabsController implements Initializable {
                 }
                 if (newValue == Worker.State.SUCCEEDED) {
                     try {
-                        boolean hasField = (boolean) webEngine.executeScript("function checkFeilds() {" +
+                        hasField = (boolean) webEngine.executeScript("function checkFeilds() {" +
                                 "    var fields = document.querySelectorAll('input');" +
                                 "    for (let i = 0; i < fields.length; i++) {" +
                                 "        if (fields[i].type == 'password' || fields[i].name == 'password' || fields[i].name == 'username') {" +
@@ -152,16 +178,8 @@ public class TabsController implements Initializable {
                                 "" +
                                 "checkFeilds()");
                         if (pwm != null && hasField) {
-                            PasswordPopup pp = null;
-                            if (pwm.exists(urlField.getText())) {
-                                pp = new PasswordPopup(false);
-                                pp.setPassword(pwm.getCreds(urlField.getText()).getPassword());
-                                pp.setUsername(pwm.getCreds(urlField.getText()).getUsername());
-                                pp.show(WebBrowser.getScene().getWindow(), WebBrowser.getScene().getWidth() - pp.getWidth() - 10, 100);
-                            } else {
-                                pp = new PasswordPopup(true);
-                                pp.show(WebBrowser.getScene().getWindow(), WebBrowser.getScene().getWidth() - pp.getWidth() - 10, 100);
-                            }
+                            showPassword.setVisible(true);
+                            initpopup();
                             PasswordPopup finalPp = pp;
                             pp.getSaveButton().setOnAction(actionEvent -> {
                                 pwm.addCreds(urlField.getText(), finalPp.getUsername(), finalPp.getPassword());

@@ -16,6 +16,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebHistory;
 import javafx.scene.web.WebView;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -42,6 +44,8 @@ public class ToolBarController implements Initializable {
     public Button newBookmarkButton;
     @FXML
     public Button logoutButton;
+    @FXML
+    public Button showPassword;
 
     private TabPane tabPane;
 
@@ -142,6 +146,10 @@ public class ToolBarController implements Initializable {
         return u.getHost();
     }
 
+    public void showPassword(boolean shouldShow) {
+        showPassword.setVisible(shouldShow);
+    }
+
     @FXML
     private void loadURL() throws MalformedURLException, IOException {
         String url = urlField.getText();
@@ -178,6 +186,8 @@ public class ToolBarController implements Initializable {
         ToolBarInstance.setNewTabButton(newTabButton);
         ToolBarInstance.setNewBookmarkButton(newBookmarkButton);
         ToolBarInstance.setLogoutButton(logoutButton);
+        ToolBarInstance.setShowPassword(showPassword);
+        showPassword.setVisible(false);
         logoutButton.setOnAction(actionEvent -> {
 
         });
