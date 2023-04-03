@@ -188,6 +188,11 @@ public class ToolBarController implements Initializable {
         ToolBarInstance.setLogoutButton(logoutButton);
         ToolBarInstance.setShowPassword(showPassword);
         showPassword.setVisible(false);
+        
+        urlField.setOnMouseClicked(actionEvent -> {
+            urlField.selectAll();
+        });
+        
         logoutButton.setOnAction(actionEvent -> {
 
         });
