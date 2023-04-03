@@ -44,6 +44,7 @@ public class PasswordPopup extends Popup {
     }
 
     public PasswordPopup(boolean saving) {
+        this.setAutoHide(true);
         BorderPane bp = new BorderPane();
         bp.setStyle("-fx-background-color: #292929; -fx-padding: 20px;");
 

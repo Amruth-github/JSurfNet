@@ -39,7 +39,7 @@ public class TabsController implements Initializable {
 
     private PasswordManager pwm = null;
 
-    private static boolean hasField = false;
+    private boolean hasField = false;
 
     private PasswordPopup pp = null;
 
