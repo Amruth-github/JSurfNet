@@ -10,14 +10,15 @@
    <children>
       <ToolBar prefHeight="40.0" prefWidth="858.0">
          <items>
-            <Button fx:id="backButton" mnemonicParsing="false" onAction="#handleBackButton" stylesheets="@../css/application.css" text="◁" />
+            <Button fx:id="backButton" mnemonicParsing="false" onAction="#handleBackButton" stylesheets="@../css/application.css"  text="◁" />
             <Button fx:id="forwardButton" mnemonicParsing="false" onAction="#handleForwardButton" stylesheets="@../css/application.css" text="▷" />
             <Button fx:id="reloadButton" mnemonicParsing="false" onAction="#handleReloadButton" stylesheets="@../css/application.css" text="⟳" />
+            <Button fx:id = "homeButton" mnemonicParsing="false" onAction="#goHome" stylesheets="@../css/application.css" text = "⌂"/>
             <TextField fx:id="urlField" onAction="#loadURL" prefHeight="26.0" prefWidth="571.0" />
             <Button fx:id="searchButton" onAction="#loadURL" text="🔍" />
             <Button fx:id="newTabButton" mnemonicParsing="false" text="+" />
             <Button fx:id="newBookmarkButton" text="🔖" />
-            <Button fx:id="logoutButton" mnemonicParsing="false" text="Logout" />
+            <Button fx:id="logoutButton" mnemonicParsing="false" text="Logout"/>
             <Button fx:id="showPassword" mnemonicParsing="false" text = "🔑"/>
          </items>
       </ToolBar>

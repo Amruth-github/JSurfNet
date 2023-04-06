@@ -1,4 +1,4 @@
-#backButton,#forwardButton, #reloadButton, #searchButton, #newTabButton, #newBookmarkButton{
+#backButton,#forwardButton, #reloadButton, #searchButton, #newTabButton, #newBookmarkButton, #homeButton{
     -fx-background-color: #424242;
     -fx-background-radius: 5px;
     -fx-border-radius: 5px;
@@ -14,11 +14,11 @@
     -fx-border-insets: 0 0 0 5px, 0 0 2px 0;
 }
 
-#backButton:hover,#forwardButton:hover, #reloadButton:hover, #searchButton:hover, #newTabButton:hover, #newBookmarkButton:hover{
+#backButton:hover,#forwardButton:hover, #reloadButton:hover, #searchButton:hover, #newTabButton:hover, #newBookmarkButton:hover, #homeButton:hover{
     -fx-background-color: #555;
 }
 
-#backButton:pressed,#forwardButton:pressed, #reloadButton:pressed, #searchButton:pressed, #newTabButton:pressed, #newBookmarkButton:pressed{
+#backButton:pressed,#forwardButton:pressed, #reloadButton:pressed, #searchButton:pressed, #newTabButton:pressed, #newBookmarkButton:pressed, #homeButton:pressed{
     -fx-background-color: #333;
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 3, 0, 0, 0);
 }

@@ -1,14 +1,11 @@
 package com.example.jsurfnet.controllers;
-import com.example.jsurfnet.WebBrowser;
 import com.example.jsurfnet.utils.Icon;
 import com.example.jsurfnet.utils.TabsAndWv;
 import com.example.jsurfnet.utils.ToolBar;
-import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -16,16 +13,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebHistory;
 import javafx.scene.web.WebView;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.function.Consumer;
-import javafx.application.Platform;
-import javafx.stage.Stage;
 
 public class ToolBarController implements Initializable {
     @FXML
@@ -46,6 +38,9 @@ public class ToolBarController implements Initializable {
     public Button logoutButton;
     @FXML
     public Button showPassword;
+
+    @FXML
+    public Button homeButton;
 
     private TabPane tabPane;
 
@@ -146,10 +141,6 @@ public class ToolBarController implements Initializable {
         return u.getHost();
     }
 
-    public void showPassword(boolean shouldShow) {
-        showPassword.setVisible(shouldShow);
-    }
-
     @FXML
     private void loadURL() throws MalformedURLException, IOException {
         String url = urlField.getText();
@@ -173,7 +164,6 @@ public class ToolBarController implements Initializable {
 //        logoutButton.setOnAction(logoutListener::accept);
 //    }
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ToolBar ToolBarInstance;
@@ -187,16 +177,18 @@ public class ToolBarController implements Initializable {
         ToolBarInstance.setNewBookmarkButton(newBookmarkButton);
         ToolBarInstance.setLogoutButton(logoutButton);
         ToolBarInstance.setShowPassword(showPassword);
+        ToolBarInstance.setHomeButton(homeButton);
         showPassword.setVisible(false);
         
         urlField.setOnMouseClicked(actionEvent -> {
             urlField.selectAll();
         });
-        
-        logoutButton.setOnAction(actionEvent -> {
-
-        });
-
         addBoookmark();
+    }
+
+    public void goHome() {
+        TabsAndWv instance = TabsAndWv.getInstance();
+        engine = instance.getWebEngine();
+        engine.load("https://www.google.co.in/");
     }
 }

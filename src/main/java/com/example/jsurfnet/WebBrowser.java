@@ -2,6 +2,7 @@ package com.example.jsurfnet;
 import com.example.jsurfnet.controllers.LoginController;
 import com.example.jsurfnet.utils.CurrentUser;
 import com.example.jsurfnet.utils.MongoDriver;
+import com.example.jsurfnet.utils.ToolBar;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -9,9 +10,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
-import java.io.File;
+import javax.swing.*;
 
 
 public class WebBrowser extends Application {
@@ -30,7 +32,7 @@ public class WebBrowser extends Application {
         Scene loginScene = new Scene(loginRoot);
 
         primaryStage.setTitle("JSurfNet");
-        Image i = new Image(new File("./icons/JSurfNet.png").toURI().toString());
+        Image i = new Image(getClass().getResourceAsStream("/icons/JSurfNet.png"));
         primaryStage.getIcons().add(i);
 
         primaryStage.setScene(loginScene);
@@ -47,7 +49,6 @@ public class WebBrowser extends Application {
                 throw new RuntimeException(e);
             }
         });
-
         loginController.setLoginListener(event -> {
             try {
                 if (loginController.authenticateUser()) {
@@ -94,7 +95,18 @@ public class WebBrowser extends Application {
         stage = primaryStage;
         primaryStage.setScene(browserScene);
         primaryStage.show();
+        ToolBar.getInstance().getLogoutButton().setOnAction(actionEvent -> {
+            if (new File("JSurfNet.jar").exists()) {
+                try {
+                    Process p = Runtime.getRuntime().exec("java -jar JSurfNet.jar");
+                    Platform.exit();
+                } catch (IOException e) {
+                    JOptionPane.showMessageDialog(null, e.toString());
+                }
+            }
+        });
         primaryStage.setOnCloseRequest(windowEvent -> {
+            MongoDriver.getClient().close();
             Platform.exit();
         });
     }
@@ -104,6 +116,5 @@ public class WebBrowser extends Application {
     public static void main(String[] args) {
         System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
         launch(args);
-        MongoDriver.getClient().close();
     }
 }
