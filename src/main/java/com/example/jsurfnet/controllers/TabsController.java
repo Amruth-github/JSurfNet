@@ -12,11 +12,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.net.MalformedURLException;
 import java.io.File;
 import com.example.jsurfnet.WebBrowser;
+import javafx.stage.Stage;
 
 import javax.swing.*;
 
@@ -35,7 +38,7 @@ public class TabsController implements Initializable {
 
     private TextField urlField;
 
-    private ImageView iv = new ImageView(new Image(new File("./icons/spinner.gif").toURI().toString()));
+    private ImageView iv = new ImageView(new Image(getClass().getResourceAsStream("/icons/spinner.gif")));
 
     private PasswordManager pwm = null;
 

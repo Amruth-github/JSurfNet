@@ -17,6 +17,7 @@ public final class ToolBar {
     private static ToolBar instance = null;
 
     static private Button showPassword;
+    private static Button homeButton;
 
     private ToolBar(){
     }
@@ -84,5 +85,9 @@ public final class ToolBar {
 
     public void setShowPassword(Button showPassword) {
         this.showPassword = showPassword;
+    }
+
+    public void setHomeButton(Button homeButton) {
+        this.homeButton = homeButton;
     }
 }

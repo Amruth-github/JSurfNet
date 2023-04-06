@@ -22,6 +22,9 @@ public class Icon {
 
 
     public Icon(String u) {
+        if (!new File("icons").exists()) {
+            new File("icons").mkdir();
+        }
         List<BufferedImage> images = null;
         try {
             url = new URL(u);
@@ -45,12 +48,11 @@ public class Icon {
             try {
                 InputStream istr = new URL(path).openStream();
                 images = ICODecoder.read(istr);
-                System.out.println("Request being sent");
                 ImageIO.write(images.get(0), "png", new File("./icons/" + url.getHost() + ".png"));
                 i = new Image(new File("./icons/" + url.getHost() + ".png").toURI().toString());
             }
             catch (Exception e) {
-                i = new Image(new File("./icons/favicon-standard.png").toURI().toString());
+                i = new Image(getClass().getResourceAsStream("/icons/favicon-standard.png"));
             }
         }
         iv = new ImageView(i);
