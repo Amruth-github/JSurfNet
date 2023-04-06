@@ -18,6 +18,8 @@ public final class ToolBar {
 
     static private Button showPassword;
     private static Button homeButton;
+    private webHistory history;
+    private Button showHistory;
 
     private ToolBar(){
     }
@@ -89,5 +91,21 @@ public final class ToolBar {
 
     public void setHomeButton(Button homeButton) {
         this.homeButton = homeButton;
+    }
+
+    public void setHistory(webHistory history) {
+        this.history = history;
+    }
+
+    public webHistory getHistory() {
+        return history;
+    }
+
+    public void setHistoryButton(Button showHistory) {
+        this.showHistory = showHistory;
+    }
+
+    public Button getShowHistory() {
+        return showHistory;
     }
 }

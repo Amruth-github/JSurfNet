@@ -2,6 +2,7 @@ package com.example.jsurfnet.controllers;
 import com.example.jsurfnet.utils.Icon;
 import com.example.jsurfnet.utils.TabsAndWv;
 import com.example.jsurfnet.utils.ToolBar;
+import com.example.jsurfnet.utils.webHistory;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,6 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebHistory;
 import javafx.scene.web.WebView;
@@ -41,12 +44,15 @@ public class ToolBarController implements Initializable {
 
     @FXML
     public Button homeButton;
+    public Button showHistory;
 
     private TabPane tabPane;
 
     private WebEngine engine;
 
     private int curr_index;
+
+    private webHistory history = null;
 
     BookmarksController bc = new BookmarksController();
 
@@ -156,6 +162,7 @@ public class ToolBarController implements Initializable {
         WebView webView = (WebView) selectedTab.getContent();
         WebEngine webEngine = webView.getEngine();
         webEngine.load(url);
+        history.appendHistory(urlField.getText());
 
     }
 
@@ -178,8 +185,19 @@ public class ToolBarController implements Initializable {
         ToolBarInstance.setLogoutButton(logoutButton);
         ToolBarInstance.setShowPassword(showPassword);
         ToolBarInstance.setHomeButton(homeButton);
+        ToolBarInstance.setHistoryButton(showHistory);
+        ImageView iv = new ImageView(new Image(getClass().getResourceAsStream("/icons/history.png")));
+        iv.setFitWidth(16);
+        iv.setFitHeight(16);
+        showHistory.setGraphic(iv);
         showPassword.setVisible(false);
-        
+        try {
+            history = webHistory.getUserHistory();
+            ToolBarInstance.setHistory(history);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
         urlField.setOnMouseClicked(actionEvent -> {
             urlField.selectAll();
         });

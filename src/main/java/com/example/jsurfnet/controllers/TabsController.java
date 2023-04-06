@@ -5,10 +5,12 @@ import com.example.jsurfnet.utils.ToolBar;
 import javafx.application.Platform;
 import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -45,7 +47,6 @@ public class TabsController implements Initializable {
     private boolean hasField = false;
 
     private PasswordPopup pp = null;
-
     private Button showPassword = ToolBar.getInstance().getShowPassword();
 
     public TabsController(){
@@ -90,6 +91,19 @@ public class TabsController implements Initializable {
 
         showPassword.setOnAction(actionEvent -> {
             initpopup();
+        });
+
+        ToolBar.getInstance().getShowHistory().setOnAction(actionEvent -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/webHistory.fxml"));
+                AnchorPane content = loader.load();
+                Tab tab = new Tab("History");
+                tab.setContent(content);
+                tabPane.getTabs().add(tab);
+                tabPane.getSelectionModel().select(tab);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
 
 

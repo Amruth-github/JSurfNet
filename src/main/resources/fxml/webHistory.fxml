@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<AnchorPane id="AnchorPane" prefHeight="400" prefWidth="600" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.jsurfnet.controllers.webHistoryController">
+    <TableView fx:id="historyTable" layoutX="50" layoutY="50" prefHeight="300" prefWidth="500">
+        <columns>
+            <TableColumn text="Date" prefWidth="150">
+                <cellValueFactory>
+                    <PropertyValueFactory property="date"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="URL" prefWidth="350">
+                <cellValueFactory>
+                    <PropertyValueFactory property="url"/>
+                </cellValueFactory>
+            </TableColumn>
+        </columns>
+    </TableView>
+</AnchorPane>
