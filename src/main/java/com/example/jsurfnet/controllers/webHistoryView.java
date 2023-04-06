@@ -20,7 +20,7 @@ import java.util.List;
 
 public class webHistoryView {
 
-    private Tab historyTab = new Tab();
+    private static Tab historyTab = new Tab();
     public void render() {
         if (historyTab == null) {
             historyTab = new Tab();

@@ -140,16 +140,22 @@ public class LoginController implements Initializable {
             Document d = new Document();
             d.append("user", usernameField.getText().strip());
             d.append("passwords", new PasswordManager().getSerialized());
-            MongoDriver.getMongo().getCollection("password").insertOne(d);
-            Document for_history = new Document();
-            for_history.append("user", usernameField.getText().strip());
-            for_history.append("history", new webHistory().getSerialized());
-            MongoDriver.getMongo().getCollection("history").insertOne(for_history);
+            new Thread(() -> {
+                MongoDriver.getMongo().getCollection("password").insertOne(d);
+                Document for_history = new Document();
+                for_history.append("user", usernameField.getText().strip());
+                for_history.append("history", new webHistory().getSerialized());
+                MongoDriver.getMongo().getCollection("history").insertOne(for_history);
+                CurrentUser currentUser = CurrentUser.getInstance();
+                currentUser.setUsername(usernameField.getText(), passwordField.getText());
+                SerializeUser su = new SerializeUser();
+                try {
+                    su.Serialize();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }).start();
             JOptionPane.showMessageDialog(null, "Signup successful!");
-            CurrentUser currentUser = CurrentUser.getInstance();
-            currentUser.setUsername(usernameField.getText(), passwordField.getText());
-            SerializeUser su = new SerializeUser();
-            su.Serialize();
             return true;
         }
     }
