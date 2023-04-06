@@ -135,18 +135,16 @@ public class LoginController implements Initializable {
                 JOptionPane.showMessageDialog(null, "Password field empty!", "Error", JOptionPane.ERROR_MESSAGE);
                 return false;
             }
-            new Thread(() -> {
-                document.append("password", passwordField.getText().strip());
-                usersCollection.insertOne(document);
-                Document d = new Document();
-                d.append("user", usernameField.getText().strip());
-                d.append("passwords", new PasswordManager().getSerialized());
-                MongoDriver.getMongo().getCollection("password").insertOne(d);
-                Document for_history = new Document();
-                for_history.append("user", usernameField.getText().strip());
-                for_history.append("history", new webHistory().getSerialized());
-                MongoDriver.getMongo().getCollection("history").insertOne(for_history);
-            }).start();
+            document.append("password", passwordField.getText().strip());
+            usersCollection.insertOne(document);
+            Document d = new Document();
+            d.append("user", usernameField.getText().strip());
+            d.append("passwords", new PasswordManager().getSerialized());
+            MongoDriver.getMongo().getCollection("password").insertOne(d);
+            Document for_history = new Document();
+            for_history.append("user", usernameField.getText().strip());
+            for_history.append("history", new webHistory().getSerialized());
+            MongoDriver.getMongo().getCollection("history").insertOne(for_history);
             JOptionPane.showMessageDialog(null, "Signup successful!");
             CurrentUser currentUser = CurrentUser.getInstance();
             currentUser.setUsername(usernameField.getText(), passwordField.getText());

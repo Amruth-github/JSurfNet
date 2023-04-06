@@ -1,7 +1,7 @@
 package com.example.jsurfnet;
 import com.example.jsurfnet.controllers.LoginController;
-import com.example.jsurfnet.utils.CurrentUser;
 import com.example.jsurfnet.utils.MongoDriver;
+import com.example.jsurfnet.utils.CurrentUser;
 import com.example.jsurfnet.utils.ToolBar;
 import javafx.application.Application;
 import javafx.application.Platform;

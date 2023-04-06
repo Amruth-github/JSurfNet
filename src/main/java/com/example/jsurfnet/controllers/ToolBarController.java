@@ -162,7 +162,6 @@ public class ToolBarController implements Initializable {
         WebView webView = (WebView) selectedTab.getContent();
         WebEngine webEngine = webView.getEngine();
         webEngine.load(url);
-
     }
 
 
@@ -193,9 +192,14 @@ public class ToolBarController implements Initializable {
         try {
             history = webHistory.getUserHistory();
             ToolBarInstance.setHistory(history);
+            System.out.println(history.getList());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+        showHistory.setOnAction(actionEvent -> {
+            new webHistoryView().render();
+        });
 
         urlField.setOnMouseClicked(actionEvent -> {
             urlField.selectAll();

@@ -1,21 +1,23 @@
 package com.example.jsurfnet.utils;
 
 import java.sql.Time;
+import java.util.Calendar;
+import java.util.Date;
 
 public class History implements java.io.Serializable {
     private String url;
-    private Time time;
+    private String time;
 
-    public History(String url, Time time) {
+    public History(String url) {
         this.url = url;
-        this.time = time;
+        this.time = new Date().toString();
     }
 
     public String toString() {
-        return "[" + url + " " + time.toString() + "]";
+        return "[" + url + " " + time + "]";
     }
 
-    public Time getTime() {
+    public String getTime() {
         return time;
     }
 

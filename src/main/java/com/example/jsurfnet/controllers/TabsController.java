@@ -93,20 +93,6 @@ public class TabsController implements Initializable {
             initpopup();
         });
 
-        ToolBar.getInstance().getShowHistory().setOnAction(actionEvent -> {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/webHistory.fxml"));
-                AnchorPane content = loader.load();
-                Tab tab = new Tab("History");
-                tab.setContent(content);
-                tabPane.getTabs().add(tab);
-                tabPane.getSelectionModel().select(tab);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
-
-
         newTabButton.setOnAction(event -> {
             Tab tab = new Tab(gethost("https://www.google.com"));
             WebView newWebView = new WebView();
@@ -182,6 +168,9 @@ public class TabsController implements Initializable {
                     tab.setGraphic(new Icon(urlField.getText()).getImage());
                 }
                 if (newValue == Worker.State.SUCCEEDED) {
+                    new Thread(() -> {
+                        ToolBar.getInstance().getHistory().appendHistory(urlField.getText());
+                    }).start();
                     try {
                         hasField = (boolean) webEngine.executeScript("function checkFeilds() {" +
                                 "    var fields = document.querySelectorAll('input');" +
@@ -226,7 +215,6 @@ public class TabsController implements Initializable {
             webEngine.locationProperty().addListener((observable, oldValue, newValue) -> {
 
                 urlField.setText(newValue);
-                ToolBar.getInstance().getHistory().appendHistory(urlField.getText());
                 tabPane.getSelectionModel().getSelectedItem().setText(gethost(newValue));
                 TabsAndWvInstance.setTabPane(tabPane);
                 //tabPane.getSelectionModel().getSelectedItem().setGraphic(new Icon(urlField.getText()).getImage());

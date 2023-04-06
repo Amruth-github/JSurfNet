@@ -2,6 +2,7 @@ package com.example.jsurfnet.utils;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
 import org.bson.Document;
 import org.bson.types.Binary;
 
@@ -18,12 +19,11 @@ public class webHistory implements java.io.Serializable {
     private List<History> userHistory = new ArrayList<>();
 
     public void appendHistory(String url) {
-        userHistory.add(new History(url,  new Time(System.currentTimeMillis())));
+        History h = new History(url);
+        userHistory.add(h);
+        System.out.println(userHistory);
         new Thread(() -> {
-           Document d = new Document();
-           d.append("user", CurrentUser.getInstance().getUsername());
-           d.append("history", getSerialized());
-           MongoDriver.getMongo().getCollection("history").insertOne(d);
+            MongoDriver.getMongo().getCollection("history").updateOne(Filters.eq("user", CurrentUser.getInstance().getUsername()), Updates.set("history", this.getSerialized()));
         }).start();
     }
     public byte[] getSerialized() {
@@ -53,5 +53,10 @@ public class webHistory implements java.io.Serializable {
 
     public List<History> getList() {
         return userHistory;
+    }
+
+    public void clear() {
+        userHistory.clear();
+        MongoDriver.getMongo().getCollection("history").updateOne(Filters.eq("user", CurrentUser.getInstance().getUsername()), Updates.set("history", this.getSerialized()));
     }
 }
