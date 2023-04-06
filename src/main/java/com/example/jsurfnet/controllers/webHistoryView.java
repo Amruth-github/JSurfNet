@@ -15,7 +15,11 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+
 import java.awt.*;
+import java.io.IOException;
 import java.util.List;
 
 public class webHistoryView {
@@ -53,6 +57,34 @@ public class webHistoryView {
         TableColumn<History, String> urlColumn = new TableColumn<>("URL");
         urlColumn.setCellValueFactory(new PropertyValueFactory<>("url"));
         urlColumn.setPrefWidth(600);
+        urlColumn.setCellFactory(column -> {
+            TableCell<History, String> cell = new TableCell<History, String>() {
+                @Override
+                protected  void updateItem(String url, boolean empty) {
+                    super.updateItem(url, empty);
+                    if (empty) {
+                        setText(null);
+                    } else {
+                        setText(url);
+                    }
+                }
+            };
+            cell.setOnMouseClicked((event) -> {
+                if (!(cell.isEmpty())) {
+                    Tab newTab = new Tab(TabsController.gethost(cell.getText()));
+                    TabsAndWv.getInstance().getTabPane().getTabs().add(newTab);
+                    TabsAndWv.getInstance().getTabPane().getSelectionModel().select(newTab);
+                    ToolBar.getInstance().getUrlField().setText(cell.getText());
+                    WebView webView = new WebView();
+                    WebEngine webEngine = webView.getEngine();
+                    new TabsController().ListnersForWebView(newTab, webEngine);
+                    webEngine.load(cell.getText());
+                    newTab.setContent(webView);
+
+                }
+            });
+            return cell;
+        });
 
         TableColumn<History, String> timeColumn = new TableColumn<>("Time");
         timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));

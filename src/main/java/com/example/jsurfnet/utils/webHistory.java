@@ -21,7 +21,6 @@ public class webHistory implements java.io.Serializable {
     public void appendHistory(String url) {
         History h = new History(url);
         userHistory.add(h);
-        System.out.println(userHistory);
         new Thread(() -> {
             MongoDriver.getMongo().getCollection("history").updateOne(Filters.eq("user", CurrentUser.getInstance().getUsername()), Updates.set("history", this.getSerialized()));
         }).start();
