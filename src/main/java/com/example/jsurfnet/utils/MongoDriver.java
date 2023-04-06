@@ -7,7 +7,11 @@ import com.mongodb.client.MongoDatabase;
 
 public final class MongoDriver {
 
+<<<<<<< Updated upstream
     private static ConnectionString connectionString = new ConnectionString(""); //Replace this with the connection string
+=======
+    private static final ConnectionString connectionString = new ConnectionString(""); //Replace this with the connection string
+>>>>>>> Stashed changes
 
     private static MongoClientSettings settings = MongoClientSettings.builder()
             .applyConnectionString(connectionString)
