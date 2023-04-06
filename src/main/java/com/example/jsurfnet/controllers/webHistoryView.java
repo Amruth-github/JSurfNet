@@ -24,7 +24,9 @@ import java.util.List;
 
 public class webHistoryView {
 
-    private static Tab historyTab = new Tab();
+    private static Tab historyTab = null;
+
+    private static boolean shouldAdd = true;
     public void render() {
         if (historyTab == null) {
             historyTab = new Tab();
@@ -111,7 +113,11 @@ public class webHistoryView {
         historyTab.setContent(scrollPane);
 
         // Add the history tab to the TabPane
-        TabsAndWv.getInstance().getTabPane().getTabs().add(historyTab);
+        if (shouldAdd) {
+            TabsAndWv.getInstance().getTabPane().getTabs().add(historyTab);
+            shouldAdd = false;
+        }
+
         TabsAndWv.getInstance().getTabPane().getSelectionModel().select(historyTab);
     }
 }

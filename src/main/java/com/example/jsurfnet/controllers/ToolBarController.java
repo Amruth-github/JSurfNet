@@ -52,7 +52,9 @@ public class ToolBarController implements Initializable {
 
     private int curr_index;
 
-    private webHistory history = null;
+    private static webHistory history = null;
+
+    private static webHistoryView view = null;
 
     BookmarksController bc = new BookmarksController();
 
@@ -185,8 +187,8 @@ public class ToolBarController implements Initializable {
         ToolBarInstance.setHomeButton(homeButton);
         ToolBarInstance.setHistoryButton(showHistory);
         ImageView iv = new ImageView(new Image(getClass().getResourceAsStream("/icons/history.png")));
-        iv.setFitWidth(16);
-        iv.setFitHeight(16);
+        iv.setFitWidth(20);
+        iv.setFitHeight(20);
         showHistory.setGraphic(iv);
         showPassword.setVisible(false);
         try {
@@ -198,7 +200,10 @@ public class ToolBarController implements Initializable {
         }
 
         showHistory.setOnAction(actionEvent -> {
-            new webHistoryView().render();
+            if (view == null) {
+                view = new webHistoryView();
+            }
+            view.render();
         });
 
         urlField.setOnMouseClicked(actionEvent -> {
