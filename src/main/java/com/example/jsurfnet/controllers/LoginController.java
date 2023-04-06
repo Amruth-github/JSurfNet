@@ -9,10 +9,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
-import com.example.jsurfnet.utils.CurrentUser;
-import com.example.jsurfnet.utils.MongoDriver;
-import com.example.jsurfnet.utils.PasswordManager;
-import com.example.jsurfnet.utils.SerializeUser;
+import com.example.jsurfnet.utils.*;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -144,6 +141,10 @@ public class LoginController implements Initializable {
             d.append("user", usernameField.getText().strip());
             d.append("passwords", new PasswordManager().getSerialized());
             MongoDriver.getMongo().getCollection("password").insertOne(d);
+            Document for_history = new Document();
+            for_history.append("user", usernameField.getText().strip());
+            for_history.append("history", new webHistory().getSerialized());
+            MongoDriver.getMongo().getCollection("history").insertOne(for_history);
             JOptionPane.showMessageDialog(null, "Signup successful!");
             CurrentUser currentUser = CurrentUser.getInstance();
             currentUser.setUsername(usernameField.getText(), passwordField.getText());
