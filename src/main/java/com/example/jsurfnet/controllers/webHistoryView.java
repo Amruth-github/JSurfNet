@@ -72,14 +72,14 @@ public class webHistoryView {
             cell.setOnMouseClicked((event) -> {
                 if (!(cell.isEmpty())) {
                     Tab newTab = new Tab(TabsController.gethost(cell.getText()));
-                    TabsAndWv.getInstance().getTabPane().getTabs().add(newTab);
-                    TabsAndWv.getInstance().getTabPane().getSelectionModel().select(newTab);
-                    ToolBar.getInstance().getUrlField().setText(cell.getText());
                     WebView webView = new WebView();
                     WebEngine webEngine = webView.getEngine();
                     new TabsController().ListnersForWebView(newTab, webEngine);
                     webEngine.load(cell.getText());
                     newTab.setContent(webView);
+                    TabsAndWv.getInstance().getTabPane().getTabs().add(newTab);
+                    TabsAndWv.getInstance().getTabPane().getSelectionModel().select(newTab);
+                    ToolBar.getInstance().getUrlField().setText(cell.getText());
 
                 }
             });

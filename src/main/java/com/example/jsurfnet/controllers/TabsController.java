@@ -42,9 +42,7 @@ public class TabsController implements Initializable {
 
     private ImageView iv = new ImageView(new Image(getClass().getResourceAsStream("/icons/spinner.gif")));
 
-    private PasswordManager pwm = null;
-
-    private boolean hasField = false;
+    private static PasswordManager pwm = null;
 
     private PasswordPopup pp = null;
     private Button showPassword = ToolBar.getInstance().getShowPassword();
@@ -134,7 +132,7 @@ public class TabsController implements Initializable {
                     ToolBar.getInstance().getHistory().appendHistory(urlField.getText());
                 }).start();
                 try {
-                    hasField = (boolean) webEngine.executeScript("function checkFeilds() {" +
+                    boolean hasField = (boolean) webEngine.executeScript("function checkFeilds() {" +
                             "    var fields = document.querySelectorAll('input');" +
                             "    for (let i = 0; i < fields.length; i++) {" +
                             "        if (fields[i].type == 'password' || fields[i].name == 'password' || fields[i].name == 'username') {" +
