@@ -162,7 +162,6 @@ public class ToolBarController implements Initializable {
         WebView webView = (WebView) selectedTab.getContent();
         WebEngine webEngine = webView.getEngine();
         webEngine.load(url);
-        history.appendHistory(urlField.getText());
 
     }
 

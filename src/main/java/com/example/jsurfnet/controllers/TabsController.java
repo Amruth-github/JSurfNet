@@ -226,6 +226,7 @@ public class TabsController implements Initializable {
             webEngine.locationProperty().addListener((observable, oldValue, newValue) -> {
 
                 urlField.setText(newValue);
+                ToolBar.getInstance().getHistory().appendHistory(urlField.getText());
                 tabPane.getSelectionModel().getSelectedItem().setText(gethost(newValue));
                 TabsAndWvInstance.setTabPane(tabPane);
                 //tabPane.getSelectionModel().getSelectedItem().setGraphic(new Icon(urlField.getText()).getImage());
@@ -233,7 +234,7 @@ public class TabsController implements Initializable {
         });
 
         tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
-            if (newTab != null) {
+            if (newTab != null && !newTab.getText().equals("History")) {
                 WebView webView = (WebView) newTab.getContent();
                 urlField.setText(getURL(webView));
                 currentTab = newTab;
