@@ -39,3 +39,5 @@ build/
 icons/
 /userprofiles/
 hs_err_pid1092.log
+out/artifacts/JSurfNet_jar/JSurfNet.jar
+*.ser

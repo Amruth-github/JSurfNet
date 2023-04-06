@@ -7,8 +7,7 @@ import com.mongodb.client.MongoDatabase;
 
 public final class MongoDriver {
 
-    private static final ConnectionString connectionString = new ConnectionString("mongodb://Amruth:JtgG1r3Z25OlR24D@node-shard-00-00.ls94s.mongodb.net:27017,node-shard-00-01.ls94s.mongodb.net:27017,node-shard-00-02.ls94s.mongodb.net:27017/?ssl=true&replicaSet=atlas-brjk9l-shard-0&authSource=admin&retryWrites=true&w=majority"); //Replace this with the connection string
-
+    private static final ConnectionString connectionString = new ConnectionString(""); //Replace this with the connection string
     private static final MongoClientSettings settings = MongoClientSettings.builder()
             .applyConnectionString(connectionString)
             .build();

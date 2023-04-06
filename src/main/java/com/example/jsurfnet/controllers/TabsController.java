@@ -157,7 +157,7 @@ public class TabsController implements Initializable {
                             "</head>\n" +
                             "<body>\n" +
                             "\t<h1>Oops! You're Offline</h1>\n" +
-                            "\t<img class='offline-icon' src=\"" + new File("./src/main/resources/html/no.png").toURI() +  "\" alt=\"Offline Icon\">\n" +
+                            "\t<img class='offline-icon' src=\"" + getClass().getResource("/html/no.png").getPath() +  "\" alt=\"Offline Icon\">\n" +
                             "\t<p>Sorry, it looks like you're not connected to the internet. Please check your connection and try again.</p>\n" +
                             "</body>\n" +
                             "</html>\n");
