@@ -18,6 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.util.List;
@@ -101,8 +102,10 @@ public class webHistoryView {
         Button clearButton = new Button("Clear History");
         clearButton.setStyle("-fx-background-color: #63D471; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold;");
         clearButton.setOnAction(event -> {
-            ToolBar.getInstance().getHistory().clear();
-            new webHistoryView().render();
+            if (JOptionPane.showConfirmDialog(null, "Confirm delete history?") == 0) {
+                ToolBar.getInstance().getHistory().clear();
+                new webHistoryView().render();
+            }
         });
 
         // Add the clear button to the VBox
