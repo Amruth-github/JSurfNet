@@ -2,6 +2,7 @@ package com.example.jsurfnet.controllers;
 import com.example.jsurfnet.utils.*;
 import com.example.jsurfnet.utils.Icon;
 import com.example.jsurfnet.utils.ToolBar;
+import com.sun.javafx.binding.Subscription;
 import javafx.application.Platform;
 import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
@@ -10,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.web.WebEngine;
@@ -166,6 +168,7 @@ public class TabsController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setupListeners();
         addTab();
+        tabPane.setTabDragPolicy(TabPane.TabDragPolicy.REORDER);
     }
 
 
@@ -189,6 +192,18 @@ public class TabsController implements Initializable {
 
         TabsAndWv TabsAndWvInstance;
         TabsAndWvInstance = TabsAndWv.getInstance();
+
+        tabPane.setOnKeyPressed(actionEvent -> {
+            if (actionEvent.isControlDown() && actionEvent.getCode() == KeyCode.TAB) {
+                tabPane.getSelectionModel().select((tabPane.getSelectionModel().getSelectedIndex()) % (tabPane.getTabs().size()));
+            }
+        });
+
+        tabPane.setOnKeyPressed(actionEvent -> {
+            if (actionEvent.isControlDown() && actionEvent.getCode() == KeyCode.T) {
+                newTabButton.fire();
+            }
+        });
 
         showPassword.setOnAction(actionEvent -> {
             initpopup();

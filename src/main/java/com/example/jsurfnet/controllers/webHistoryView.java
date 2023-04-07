@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -82,7 +83,6 @@ public class webHistoryView {
                     TabsAndWv.getInstance().getTabPane().getTabs().add(newTab);
                     TabsAndWv.getInstance().getTabPane().getSelectionModel().select(newTab);
                     ToolBar.getInstance().getUrlField().setText(cell.getText());
-
                 }
             });
             return cell;
