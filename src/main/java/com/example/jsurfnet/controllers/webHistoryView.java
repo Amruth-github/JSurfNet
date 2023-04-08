@@ -13,6 +13,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
@@ -23,6 +25,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 public class webHistoryView {
 
@@ -31,6 +34,10 @@ public class webHistoryView {
     public void render() {
         if (historyTab == null) {
             historyTab = new Tab();
+            ImageView iv = new ImageView(new Image(getClass().getResourceAsStream("/icons/history.png")));
+            iv.setFitWidth(20);
+            iv.setFitHeight(20);
+            historyTab.setGraphic(iv);
         }
         historyTab.setText("History");
 

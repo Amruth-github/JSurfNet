@@ -194,7 +194,6 @@ public class ToolBarController implements Initializable {
         try {
             history = webHistory.getUserHistory();
             ToolBarInstance.setHistory(history);
-            System.out.println(history.getList());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

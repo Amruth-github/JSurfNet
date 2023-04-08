@@ -194,14 +194,14 @@ public class TabsController implements Initializable {
         TabsAndWvInstance = TabsAndWv.getInstance();
 
         tabPane.setOnKeyPressed(actionEvent -> {
-            if (actionEvent.isControlDown() && actionEvent.getCode() == KeyCode.TAB) {
-                tabPane.getSelectionModel().select((tabPane.getSelectionModel().getSelectedIndex()) % (tabPane.getTabs().size()));
+            if (actionEvent.isControlDown() && actionEvent.getCode() == KeyCode.W) {
+                tabPane.getTabs().remove(tabPane.getSelectionModel().getSelectedItem());
             }
-        });
-
-        tabPane.setOnKeyPressed(actionEvent -> {
             if (actionEvent.isControlDown() && actionEvent.getCode() == KeyCode.T) {
                 newTabButton.fire();
+            }
+            if (actionEvent.isControlDown() && actionEvent.getCode() == KeyCode.TAB) {
+                tabPane.getSelectionModel().select((tabPane.getSelectionModel().getSelectedIndex()) % (tabPane.getTabs().size()));
             }
         });
 
@@ -222,9 +222,6 @@ public class TabsController implements Initializable {
             tab.setContent(newWebView);
             tabPane.getTabs().add(tab);
             tabPane.getSelectionModel().select(tab);
-
-
-            System.out.println(tabPane.getTabs());
             TabsAndWvInstance.setTabPane(tabPane);
 
 
@@ -244,7 +241,6 @@ public class TabsController implements Initializable {
                 urlField.setText(getURL(webView));
                 currentTab = newTab;
                 engine = ((WebView) currentTab.getContent()).getEngine();
-                System.out.println(engine);
                 TabsAndWvInstance.setWebEngine(engine);
                 TabSelection x = new TabSelection(newTab);
             }
