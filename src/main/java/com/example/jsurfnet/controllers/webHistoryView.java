@@ -75,7 +75,10 @@ public class webHistoryView {
                     if (empty) {
                         setText(null);
                     } else {
-                        setText(url);
+                        url = url.strip();
+                        if (!url.isEmpty()) {
+                            setText(url);
+                        }
                     }
                 }
             };

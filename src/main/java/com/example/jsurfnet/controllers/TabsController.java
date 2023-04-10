@@ -203,6 +203,12 @@ public class TabsController implements Initializable {
             if (actionEvent.isControlDown() && actionEvent.getCode() == KeyCode.TAB) {
                 tabPane.getSelectionModel().select((tabPane.getSelectionModel().getSelectedIndex()) % (tabPane.getTabs().size()));
             }
+            if (actionEvent.isControlDown() && actionEvent.getCode() == KeyCode.R) {
+                ToolBar.getInstance().getReloadButton().fire();
+            }
+            if (actionEvent.isControlDown() && actionEvent.getCode() == KeyCode.H) {
+                ToolBar.getInstance().getShowHistory().fire();
+            }
         });
 
         showPassword.setOnAction(actionEvent -> {
