@@ -1,6 +1,7 @@
 package com.example.jsurfnet.controllers;
 
 import com.example.jsurfnet.utils.History;
+import com.example.jsurfnet.utils.Icon;
 import com.example.jsurfnet.utils.TabsAndWv;
 import com.example.jsurfnet.utils.ToolBar;
 import com.example.jsurfnet.utils.webHistory;
@@ -15,17 +16,14 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.paint.Color;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
 import javax.swing.*;
-import java.awt.*;
-import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 
 public class webHistoryView {
 
@@ -78,12 +76,16 @@ public class webHistoryView {
                         url = url.strip();
                         if (!url.isEmpty()) {
                             setText(url);
+                            ImageView iv = new Icon(url).getImage();
+                            iv.setFitHeight(16);
+                            iv.setFitWidth(16);
+                            setGraphic(iv);
                         }
                     }
                 }
             };
             cell.setOnMouseClicked((event) -> {
-                if (!(cell.isEmpty())) {
+                if (!(cell.isEmpty()) && event.getButton().equals(MouseButton.PRIMARY)) {
                     Tab newTab = new Tab(TabsController.gethost(cell.getText()));
                     WebView webView = new WebView();
                     WebEngine webEngine = webView.getEngine();
@@ -98,11 +100,34 @@ public class webHistoryView {
             return cell;
         });
 
+        TableColumn<History, Void> deleteColumn = new TableColumn<>("Delete");
+        deleteColumn.setCellFactory(param -> new TableCell<>() {
+            private final Button deleteButton = new Button("\uD83D\uDDD1");
+
+            {
+                deleteButton.setOnAction(event -> {
+                    History historyItem = getTableView().getItems().get(getIndex());
+                    ToolBar.getInstance().getHistory().getList().remove(historyItem);
+                    new webHistoryView().render();
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(deleteButton);
+                }
+            }
+        });
+
         TableColumn<History, String> timeColumn = new TableColumn<>("Time");
         timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
         timeColumn.setPrefWidth(200);
 
-        historyTable.getColumns().addAll(urlColumn, timeColumn);
+        historyTable.getColumns().addAll(urlColumn, timeColumn, deleteColumn);
         historyTable.getItems().addAll(historyItems);
 
         // Add the TableView to the VBox
