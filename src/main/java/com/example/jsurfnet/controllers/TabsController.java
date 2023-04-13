@@ -2,29 +2,21 @@ package com.example.jsurfnet.controllers;
 import com.example.jsurfnet.utils.*;
 import com.example.jsurfnet.utils.Icon;
 import com.example.jsurfnet.utils.ToolBar;
-import com.sun.javafx.binding.Subscription;
 import javafx.application.Platform;
 import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.net.MalformedURLException;
-import java.io.File;
 import com.example.jsurfnet.WebBrowser;
-import javafx.stage.Stage;
-
 import javax.swing.*;
 
 
@@ -58,6 +50,7 @@ public class TabsController implements Initializable {
         urlField = ToolBarInstance.getUrlField();
         try {
             pwm = PasswordManager.getUserPassword();
+            TabsAndWv.setPasswordManager(pwm);
         } catch (Exception e) {
             pwm = null;
         }
@@ -70,59 +63,7 @@ public class TabsController implements Initializable {
                 pp.hide();
             }
             if (newValue == Worker.State.FAILED || newValue == Worker.State.CANCELLED) {
-                webEngine.loadContent("<!DOCTYPE html>\n" +
-                        "<html>\n" +
-                        "<head>\n" +
-                        "\t<title>Offline</title>\n" +
-                        "\t<style>\n" +
-                        "\t\tbody {\n" +
-                        "\t\t\tbackground-color: #f8f8f8;\n" +
-                        "\t\t\tfont-family: Arial, sans-serif;\n" +
-                        "\t\t\ttext-align: center;\n" +
-                        "\t\t}\n" +
-                        "\n" +
-                        "\t\th1 {\n" +
-                        "\t\t\tcolor: #333;\n" +
-                        "\t\t\tfont-size: 2.5em;\n" +
-                        "\t\t\tmargin-top: 40px;\n" +
-                        "\t\t\tmargin-bottom: 20px;\n" +
-                        "\t\t\tletter-spacing: 2px;\n" +
-                        "\t\t}\n" +
-                        "\n" +
-                        "\t\tp {\n" +
-                        "\t\t\tcolor: #666;\n" +
-                        "\t\t\tfont-size: 1.2em;\n" +
-                        "\t\t\tmargin-bottom: 40px;\n" +
-                        "\t\t\tline-height: 1.5;\n" +
-                        "\t\t}\n" +
-                        "\n" +
-                        "\t\timg {\n" +
-                        "\t\t\tmax-width: 100%;\n" +
-                        "\t\t\theight: auto;\n" +
-                        "\t\t}\n" +
-                        "\n" +
-                        "\t\t@keyframes slide-in {\n" +
-                        "\t\t\tfrom {\n" +
-                        "\t\t\t\topacity: 0;\n" +
-                        "\t\t\t\ttransform: translateX(-50%);\n" +
-                        "\t\t\t}\n" +
-                        "\t\t\tto {\n" +
-                        "\t\t\t\topacity: 1;\n" +
-                        "\t\t\t\ttransform: translateX(0);\n" +
-                        "\t\t\t}\n" +
-                        "\t\t}\n" +
-                        "\n" +
-                        "\t\t.offline-icon {\n" +
-                        "\t\t\tanimation: slide-in 1s ease-out;\n" +
-                        "\t\t}\n" +
-                        "\t</style>\n" +
-                        "</head>\n" +
-                        "<body>\n" +
-                        "\t<h1>Oops! You're Offline</h1>\n" +
-                        "\t<img class='offline-icon' src=\"" + getClass().getResource("/html/no.png").getPath() +  "\" alt=\"Offline Icon\">\n" +
-                        "\t<p>Sorry, it looks like you're not connected to the internet. Please check your connection and try again.</p>\n" +
-                        "</body>\n" +
-                        "</html>\n");
+                webEngine.load(getClass().getResource("/html/nointernet.html").toExternalForm());
             }
             if (newValue == Worker.State.RUNNING) {
                 tab.setGraphic(iv);
@@ -209,6 +150,13 @@ public class TabsController implements Initializable {
             if (actionEvent.isControlDown() && actionEvent.getCode() == KeyCode.H) {
                 ToolBar.getInstance().getShowHistory().fire();
             }
+            if (actionEvent.isControlDown() && actionEvent.getCode() == KeyCode.P) {
+                try {
+                    new PasswordTable().render();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
         });
 
         showPassword.setOnAction(actionEvent -> {
@@ -242,7 +190,7 @@ public class TabsController implements Initializable {
         });
 
         tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
-            if (newTab != null && !newTab.getText().equals("History")) {
+            if (newTab != null && !newTab.getText().equals("History") && !newTab.getText().equals("Passwords")) {
                 WebView webView = (WebView) newTab.getContent();
                 urlField.setText(getURL(webView));
                 currentTab = newTab;

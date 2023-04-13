@@ -52,9 +52,9 @@ public class ToolBarController implements Initializable {
 
     private int curr_index;
 
-    private static webHistory history = null;
-
     private static webHistoryView view = null;
+
+    private static
 
     BookmarksController bc = new BookmarksController();
 
@@ -191,8 +191,12 @@ public class ToolBarController implements Initializable {
         iv.setFitHeight(20);
         showHistory.setGraphic(iv);
         showPassword.setVisible(false);
+        ImageView iv1 = new ImageView(new Image(getClass().getResourceAsStream("/icons/logout.png")));
+        iv1.setFitWidth(16);
+        iv1.setFitHeight(16);
+        logoutButton.setGraphic(iv1);
         try {
-            history = webHistory.getUserHistory();
+            webHistory history = webHistory.getUserHistory();
             ToolBarInstance.setHistory(history);
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -12,6 +12,8 @@ public final class TabsAndWv {
 
     private static TabsAndWv instance = null;
 
+    private static PasswordManager pp = null;
+
     private TabsAndWv(){}
 
     public static synchronized TabsAndWv getInstance() {
@@ -42,6 +44,14 @@ public final class TabsAndWv {
     }
     public void setTabPane(TabPane tp){
         tabPane = tp;
+    }
+
+    public static void setPasswordManager(PasswordManager pp) {
+        TabsAndWv.pp = pp;
+    }
+
+    public PasswordManager getPasswordManager() {
+        return pp;
     }
 
 
