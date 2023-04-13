@@ -19,7 +19,7 @@
             <Button fx:id="newTabButton" mnemonicParsing="false" text="+" />
             <Button fx:id="newBookmarkButton" text="🔖" />
             <Button fx:id="showHistory" mnemonicParsing="false"/>
-            <Button fx:id="logoutButton" mnemonicParsing="false" text="Logout"/>
+            <Button fx:id="logoutButton" mnemonicParsing="false"/>
             <Button fx:id="showPassword" mnemonicParsing="false" text = "🔑"/>
          </items>
       </ToolBar>

@@ -24,7 +24,6 @@ public class WebBrowser extends Application {
     private static Stage stage;
     @Override
     public void start(Stage primaryStage) throws IOException {
-
         this.primaryStage = primaryStage;
 
         FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("/fxml/Login.fxml"));

@@ -47,6 +47,8 @@ public class PasswordManager implements java.io.Serializable {
         return pm;
     }
 
+    public HashMap<String, Credential> getHash() {return url_to_passwords;}
+
     public byte[] getSerialized() {
         try {
             // Serialize the PasswordManager object to a byte array

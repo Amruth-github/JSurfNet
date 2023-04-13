@@ -66,11 +66,13 @@ public class BookmarksController implements Initializable {
                 loadBookmark(url);
             });
             if (from_ui && !CurrentUser.getInstance().getUsername().equals("guest")) {
-                Document document = new Document()
-                        .append("user", username)
-                        .append("name", bookmark.getName())
-                        .append("url", bookmark.getUrl());
-                collection.insertOne(document);
+                new Thread(() -> {
+                    Document document = new Document()
+                            .append("user", username)
+                            .append("name", bookmark.getName())
+                            .append("url", bookmark.getUrl());
+                    collection.insertOne(document);
+                }).start();
             }
 
         }
@@ -111,10 +113,13 @@ public class BookmarksController implements Initializable {
             return button.getText().equals(bookmark.getName());
         });
         if (!CurrentUser.getInstance().getUsername().equals("guest")) {
-            collection.deleteOne(Filters.and(
-                    Filters.eq("user", username),
-                    Filters.eq("url", bookmark.getUrl())
-            ));
+            new Thread(() -> {
+                collection.deleteOne(Filters.and(
+                        Filters.eq("user", username),
+                        Filters.eq("url", bookmark.getUrl())
+                ));
+            }).start();
+
         }
     }
 
@@ -136,10 +141,12 @@ public class BookmarksController implements Initializable {
                         textField.setOnAction(actionEvent -> {
                             newBookmarkButton.setText(textField.getText());
                             if (!CurrentUser.getInstance().getUsername().equals("guest")) {
-                                collection.updateOne(Filters.and(
-                                        Filters.eq("user", username),
-                                        Filters.eq("name", oldbookmark_name)
-                                ), Updates.set("name", newBookmarkButton.getText()));
+                                new Thread(() -> {
+                                    collection.updateOne(Filters.and(
+                                            Filters.eq("user", username),
+                                            Filters.eq("name", oldbookmark_name)
+                                    ), Updates.set("name", newBookmarkButton.getText()));
+                                }).start();
                             }
                             popup.hide();
                         });

@@ -13,7 +13,7 @@
 /* Set the background color and text color of all buttons */
 .button {
     -fx-background-color: linear-gradient(to bottom right, #3498db, #1e90ff); /* use a gradient background */
-    -fx-text-fill: white;
+    -fx-text-fill: black;
     -fx-background-radius: 20px;
     -fx-border-radius: 20px;
     -fx-font-size: 14px;
