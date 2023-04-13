@@ -27,6 +27,10 @@ public class PasswordManager implements java.io.Serializable {
         MongoDriver.getMongo().getCollection("password").updateOne(Filters.eq("user", CurrentUser.getInstance().getUsername()), Updates.set("passwords", this.getSerialized()));
     }
 
+    public void updateCreds(String url, String username, String password) {
+        url_to_passwords.put(url.strip(), new Credential(username, password));
+    }
+
     public boolean exists(String url) {
         Credential pwd = url_to_passwords.get(TabsController.gethost(url));
         return pwd != null;
@@ -47,7 +51,9 @@ public class PasswordManager implements java.io.Serializable {
         return pm;
     }
 
-    public HashMap<String, Credential> getHash() {return url_to_passwords;}
+    public HashMap<String, Credential> getHash() {
+        return url_to_passwords;
+    }
 
     public byte[] getSerialized() {
         try {

@@ -150,6 +150,13 @@ public class TabsController implements Initializable {
             if (actionEvent.isControlDown() && actionEvent.getCode() == KeyCode.H) {
                 ToolBar.getInstance().getShowHistory().fire();
             }
+            if (actionEvent.isControlDown() && actionEvent.getCode() == KeyCode.P) {
+                try {
+                    new PasswordTable().render();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
         });
 
         showPassword.setOnAction(actionEvent -> {
@@ -183,7 +190,7 @@ public class TabsController implements Initializable {
         });
 
         tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
-            if (newTab != null && !newTab.getText().equals("History")) {
+            if (newTab != null && !newTab.getText().equals("History") && !newTab.getText().equals("Passwords")) {
                 WebView webView = (WebView) newTab.getContent();
                 urlField.setText(getURL(webView));
                 currentTab = newTab;
