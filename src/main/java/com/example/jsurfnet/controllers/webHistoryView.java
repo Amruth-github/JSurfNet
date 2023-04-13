@@ -73,10 +73,7 @@ public class webHistoryView {
                         url = url.strip();
                         if (!url.isEmpty()) {
                             setText(url);
-                            ImageView iv = new Icon(url).getImage();
-                            iv.setFitHeight(16);
-                            iv.setFitWidth(16);
-                            setGraphic(iv);
+                            setGraphic(new Icon(url).getImage());
                         }
                     }
                 }

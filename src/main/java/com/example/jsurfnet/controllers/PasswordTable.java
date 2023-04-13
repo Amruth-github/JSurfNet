@@ -101,7 +101,9 @@ public class PasswordTable {
                 });
                 passwordField.setOnAction(e -> {
                     String url = urlColumn.getCellData(getIndex());
-                    passwordManager.updateCreds(url, passwordManager.getHash().get(url).getUsername(), passwordField.getText());
+                    if (!passwordField.getText().equals("***")) {
+                        passwordManager.updateCreds(url, passwordManager.getHash().get(url).getUsername(), passwordField.getText());
+                    }
                     passwordField.setText("***");
                     try {
                         new PasswordTable().render();
