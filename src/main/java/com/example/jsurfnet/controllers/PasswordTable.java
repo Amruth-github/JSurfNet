@@ -13,6 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
 import javafx.stage.Popup;
 
 import java.util.HashMap;
@@ -38,6 +39,7 @@ public class PasswordTable {
         }
 
         TableView<Credential> tableView = new TableView<>();
+        tableView.setPlaceholder(new Label("No Passwords!"));
         TableColumn<Credential, String> urlColumn = new TableColumn<>("URL");
         urlColumn.setCellValueFactory(data -> {
             String url = null;
@@ -81,12 +83,14 @@ public class PasswordTable {
             @Override
             protected void updateItem(String item, boolean empty) {
                 TextField passwordField = new TextField();
+                passwordField.setFont(new Font(10));
                 super.updateItem(item, empty);
                 if (empty) {
                     setGraphic(null);
                 } else {
                     HBox hBox = new HBox();
                     passwordField.setText("***");
+                    hBox.setSpacing(10);
                     hBox.getChildren().addAll(passwordField, showButton);
                     setGraphic(hBox);
                 }
@@ -127,8 +131,10 @@ public class PasswordTable {
         ScrollPane scrollPane = new ScrollPane(tableView);
         scrollPane.setFitToWidth(true);
         scrollPane.setFitToHeight(true);
+        scrollPane.setStyle("-fx-background-color: #1C1C1C;");
 
         passwordTab.setContent(scrollPane);
+        tableView.setStyle("-fx-font-size: 14; -fx-font-family: 'Arial'; -fx-background-color: #1C1C1C; -fx-text-fill: white;");
 
         if (!TabsAndWv.getInstance().getTabPane().getTabs().contains(passwordTab)) {
             TabsAndWv.getInstance().getTabPane().getTabs().add(passwordTab);
