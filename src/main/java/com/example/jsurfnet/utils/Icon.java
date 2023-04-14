@@ -31,7 +31,7 @@ public class Icon {
         }
         catch (MalformedURLException e) {
             try {
-                url =  new URL("https://google.com/search?q=" + u);
+                url =  new URL("https://www.google.com/search?q=" + u);
             } catch (MalformedURLException ex) {
                 throw new RuntimeException(ex);
             }

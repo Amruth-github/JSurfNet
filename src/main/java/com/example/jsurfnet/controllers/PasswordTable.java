@@ -57,7 +57,7 @@ public class PasswordTable {
                     setGraphic(null);
                 } else {
                     setText(item);
-                    setGraphic(new Icon(item).getImage());
+                    setGraphic(new Icon("https://" + item).getImage());
                 }
             }
         });
