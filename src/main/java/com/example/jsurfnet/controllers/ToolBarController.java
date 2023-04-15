@@ -1,8 +1,5 @@
 package com.example.jsurfnet.controllers;
-import com.example.jsurfnet.utils.Icon;
-import com.example.jsurfnet.utils.TabsAndWv;
-import com.example.jsurfnet.utils.ToolBar;
-import com.example.jsurfnet.utils.webHistory;
+import com.example.jsurfnet.utils.*;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -195,6 +192,12 @@ public class ToolBarController implements Initializable {
         iv1.setFitWidth(16);
         iv1.setFitHeight(16);
         logoutButton.setGraphic(iv1);
+        logoutButton.setOnMouseEntered(actionEvent -> {
+            logoutButton.setText(CurrentUser.getInstance().getUsername());
+        });
+        logoutButton.setOnMouseExited(actionEvent -> {
+            logoutButton.setText("");
+        });
         try {
             webHistory history = webHistory.getUserHistory();
             ToolBarInstance.setHistory(history);
