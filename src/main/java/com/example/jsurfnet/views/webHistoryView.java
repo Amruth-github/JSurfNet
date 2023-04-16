@@ -22,6 +22,7 @@ import javafx.scene.web.WebView;
 
 import javax.swing.*;
 import java.util.List;
+import java.util.Objects;
 
 public class webHistoryView {
 
@@ -30,7 +31,7 @@ public class webHistoryView {
     public void render() {
         if (historyTab == null) {
             historyTab = new Tab();
-            ImageView iv = new ImageView(new Image(getClass().getResourceAsStream("/icons/history.png")));
+            ImageView iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/icons/history.png"))));
             iv.setFitWidth(20);
             iv.setFitHeight(20);
             historyTab.setGraphic(iv);
