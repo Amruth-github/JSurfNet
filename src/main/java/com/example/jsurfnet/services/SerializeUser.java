@@ -1,11 +1,13 @@
-package com.example.jsurfnet.utils;
+package com.example.jsurfnet.services;
+
+import com.example.jsurfnet.singleton.CurrentUser;
 
 import java.io.*;
 
 public class SerializeUser {
     public void Serialize() throws IOException {
 
-        String Filename = "userprofiles/"+CurrentUser.getInstance().getUsername() + ".ser";
+        String Filename = "userprofiles/"+ CurrentUser.getInstance().getUsername() + ".ser";
         FileOutputStream fileout = new FileOutputStream(Filename);
         ObjectOutputStream out = new ObjectOutputStream(fileout);
         out.writeObject(CurrentUser.getInstance());

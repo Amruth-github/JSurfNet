@@ -1,4 +1,4 @@
-package com.example.jsurfnet.utils;
+package com.example.jsurfnet.views;
 import javafx.animation.ParallelTransition;
 import javafx.animation.ScaleTransition;
 import javafx.geometry.Insets;

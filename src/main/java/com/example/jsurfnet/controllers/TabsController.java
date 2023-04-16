@@ -1,7 +1,10 @@
 package com.example.jsurfnet.controllers;
-import com.example.jsurfnet.utils.*;
-import com.example.jsurfnet.utils.Icon;
-import com.example.jsurfnet.utils.ToolBar;
+import com.example.jsurfnet.singleton.TabSelection;
+import com.example.jsurfnet.singleton.TabsAndWv;
+import com.example.jsurfnet.services.*;
+import com.example.jsurfnet.services.Icon;
+import com.example.jsurfnet.singleton.ToolBar;
+import com.example.jsurfnet.views.PasswordPopup;
 import javafx.application.Platform;
 import javafx.concurrent.Worker;
 import javafx.fxml.FXML;

@@ -1,5 +1,6 @@
-package com.example.jsurfnet.utils;
+package com.example.jsurfnet.singleton;
 
+import com.example.jsurfnet.controllers.webHistory;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 

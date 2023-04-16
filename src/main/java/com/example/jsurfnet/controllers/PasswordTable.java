@@ -1,20 +1,18 @@
 package com.example.jsurfnet.controllers;
 
-import com.example.jsurfnet.utils.Credential;
-import com.example.jsurfnet.utils.Icon;
-import com.example.jsurfnet.utils.PasswordManager;
-import com.example.jsurfnet.utils.TabsAndWv;
+import com.example.jsurfnet.models.Credential;
+import com.example.jsurfnet.services.Icon;
+import com.example.jsurfnet.services.PasswordManager;
+import com.example.jsurfnet.singleton.TabsAndWv;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
-import javafx.stage.Popup;
 
 import java.util.HashMap;
 

@@ -2,19 +2,16 @@
 package com.example.jsurfnet.controllers;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
-import com.example.jsurfnet.utils.*;
-import com.mongodb.MongoClient;
+import com.example.jsurfnet.singleton.CurrentUser;
+import com.example.jsurfnet.services.*;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,7 +20,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import org.bson.Document;
 
-import javax.print.Doc;
 import javax.swing.JOptionPane;
 
 public class LoginController implements Initializable {

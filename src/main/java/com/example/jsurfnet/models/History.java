@@ -1,4 +1,4 @@
-package com.example.jsurfnet.utils;
+package com.example.jsurfnet.models;
 
 import java.sql.Time;
 import java.util.Calendar;

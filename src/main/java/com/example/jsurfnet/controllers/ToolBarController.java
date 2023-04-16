@@ -1,7 +1,10 @@
 package com.example.jsurfnet.controllers;
-import com.example.jsurfnet.utils.*;
+import com.example.jsurfnet.singleton.CurrentUser;
+import com.example.jsurfnet.singleton.TabsAndWv;
+import com.example.jsurfnet.singleton.ToolBar;
+import com.example.jsurfnet.services.*;
+import com.example.jsurfnet.views.webHistoryView;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;

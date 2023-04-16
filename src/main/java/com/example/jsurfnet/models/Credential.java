@@ -1,8 +1,8 @@
-package com.example.jsurfnet.utils;
+package com.example.jsurfnet.models;
 
 public class Credential implements java.io.Serializable{
 
-    Credential(String username, String password) {
+    public Credential(String username, String password) {
         this.username = username;
         this.password = password;
     }

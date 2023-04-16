@@ -1,4 +1,4 @@
-package com.example.jsurfnet.utils;
+package com.example.jsurfnet.singleton;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;

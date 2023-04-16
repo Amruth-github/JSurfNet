@@ -1,10 +1,11 @@
-package com.example.jsurfnet.controllers;
+package com.example.jsurfnet.views;
 
-import com.example.jsurfnet.utils.History;
-import com.example.jsurfnet.utils.Icon;
-import com.example.jsurfnet.utils.TabsAndWv;
-import com.example.jsurfnet.utils.ToolBar;
-import com.example.jsurfnet.utils.webHistory;
+import com.example.jsurfnet.controllers.TabsController;
+import com.example.jsurfnet.models.History;
+import com.example.jsurfnet.services.Icon;
+import com.example.jsurfnet.singleton.TabsAndWv;
+import com.example.jsurfnet.singleton.ToolBar;
+import com.example.jsurfnet.controllers.webHistory;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
