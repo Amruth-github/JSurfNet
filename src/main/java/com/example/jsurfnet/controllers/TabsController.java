@@ -17,6 +17,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.net.MalformedURLException;
 import com.example.jsurfnet.WebBrowser;
@@ -155,7 +156,7 @@ public class TabsController implements Initializable {
             }
             if (actionEvent.isControlDown() && actionEvent.getCode() == KeyCode.P) {
                 try {
-                    new PasswordTable().render();
+                    Objects.requireNonNull(TableFactory.getTable("PasswordTable")).render();
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }

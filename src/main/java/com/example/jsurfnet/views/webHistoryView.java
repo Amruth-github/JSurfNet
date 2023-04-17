@@ -3,6 +3,7 @@ package com.example.jsurfnet.views;
 import com.example.jsurfnet.controllers.TabsController;
 import com.example.jsurfnet.models.History;
 import com.example.jsurfnet.services.Icon;
+import com.example.jsurfnet.services.TableFactory;
 import com.example.jsurfnet.singleton.TabsAndWv;
 import com.example.jsurfnet.singleton.ToolBar;
 import com.example.jsurfnet.controllers.webHistory;
@@ -24,10 +25,11 @@ import javax.swing.*;
 import java.util.List;
 import java.util.Objects;
 
-public class webHistoryView {
+public class webHistoryView extends TableFactory {
 
     private static Tab historyTab = null;
 
+    @Override
     public void render() {
         if (historyTab == null) {
             historyTab = new Tab();

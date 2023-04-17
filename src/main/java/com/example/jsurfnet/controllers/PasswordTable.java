@@ -3,6 +3,7 @@ package com.example.jsurfnet.controllers;
 import com.example.jsurfnet.models.Credential;
 import com.example.jsurfnet.services.Icon;
 import com.example.jsurfnet.services.PasswordManager;
+import com.example.jsurfnet.services.TableFactory;
 import com.example.jsurfnet.singleton.TabsAndWv;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -16,7 +17,7 @@ import javafx.scene.text.Font;
 
 import java.util.HashMap;
 
-public class PasswordTable {
+public class PasswordTable extends TableFactory {
 
     private PasswordManager passwordManager = TabsAndWv.getInstance().getPasswordManager();
 
@@ -26,6 +27,7 @@ public class PasswordTable {
     public PasswordTable() throws Exception {
     }
 
+    @Override
     public void render() {
         if (passwordTab == null) {
             passwordTab = new Tab();

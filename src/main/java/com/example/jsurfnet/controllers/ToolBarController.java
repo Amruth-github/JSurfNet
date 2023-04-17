@@ -203,10 +203,11 @@ public class ToolBarController implements Initializable {
         }
 
         showHistory.setOnAction(actionEvent -> {
-            if (view == null) {
-                view = new webHistoryView();
+            try {
+                Objects.requireNonNull(TableFactory.getTable("HistoryTable")).render();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
-            view.render();
         });
 
         urlField.setOnMouseClicked(actionEvent -> {
