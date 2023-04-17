@@ -1,5 +1,6 @@
-package com.example.jsurfnet.utils;
+package com.example.jsurfnet.singleton;
 
+import com.example.jsurfnet.services.PasswordManager;
 import javafx.scene.control.TabPane;
 import  javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;

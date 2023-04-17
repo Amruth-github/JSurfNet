@@ -1,7 +1,10 @@
 package com.example.jsurfnet.controllers;
-import com.example.jsurfnet.utils.*;
+import com.example.jsurfnet.singleton.CurrentUser;
+import com.example.jsurfnet.singleton.TabsAndWv;
+import com.example.jsurfnet.singleton.ToolBar;
+import com.example.jsurfnet.services.*;
+import com.example.jsurfnet.views.webHistoryView;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -17,6 +20,7 @@ import javafx.scene.web.WebView;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ToolBarController implements Initializable {
@@ -90,18 +94,11 @@ public class ToolBarController implements Initializable {
         TabsAndWv TabsAndWvInstance;
         TabsAndWvInstance = TabsAndWv.getInstance();
         engine = TabsAndWvInstance.getWebEngine();
-        //ObservableList<WebHistory.Entry> history = engine.getHistory().getEntries();
-        //int currentIndex = engine.getHistory().getCurrentIndex();
-        //System.out.println(history);
-        //if (currentIndex < history.size() - 1) {
-            //engine.load(history.get(currentIndex + 1).getUrl());
-        //}
         WebHistory webHistory;
         webHistory = engine.getHistory();
         int currentIndex = webHistory.getCurrentIndex();
         int maxIndex = webHistory.getEntries().size() - 1;
         if (currentIndex < maxIndex) {
-            // Go forward
             webHistory.go(1);
         }
 
@@ -183,12 +180,12 @@ public class ToolBarController implements Initializable {
         ToolBarInstance.setShowPassword(showPassword);
         ToolBarInstance.setHomeButton(homeButton);
         ToolBarInstance.setHistoryButton(showHistory);
-        ImageView iv = new ImageView(new Image(getClass().getResourceAsStream("/icons/history.png")));
+        ImageView iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/icons/history.png"))));
         iv.setFitWidth(20);
         iv.setFitHeight(20);
         showHistory.setGraphic(iv);
         showPassword.setVisible(false);
-        ImageView iv1 = new ImageView(new Image(getClass().getResourceAsStream("/icons/logout.png")));
+        ImageView iv1 = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/icons/logout.png"))));
         iv1.setFitWidth(16);
         iv1.setFitHeight(16);
         logoutButton.setGraphic(iv1);

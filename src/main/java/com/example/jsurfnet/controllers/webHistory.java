@@ -1,4 +1,7 @@
-package com.example.jsurfnet.utils;
+package com.example.jsurfnet.controllers;
+import com.example.jsurfnet.singleton.CurrentUser;
+import com.example.jsurfnet.models.History;
+import com.example.jsurfnet.services.MongoDriver;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;

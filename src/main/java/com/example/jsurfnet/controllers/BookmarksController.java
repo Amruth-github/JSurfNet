@@ -1,5 +1,8 @@
 package com.example.jsurfnet.controllers;
-import com.example.jsurfnet.utils.*;
+import com.example.jsurfnet.models.Bookmark;
+import com.example.jsurfnet.singleton.CurrentUser;
+import com.example.jsurfnet.singleton.TabSelection;
+import com.example.jsurfnet.services.*;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import javafx.collections.*;

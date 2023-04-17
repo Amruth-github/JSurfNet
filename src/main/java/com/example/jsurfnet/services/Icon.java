@@ -1,4 +1,4 @@
-package com.example.jsurfnet.utils;
+package com.example.jsurfnet.services;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

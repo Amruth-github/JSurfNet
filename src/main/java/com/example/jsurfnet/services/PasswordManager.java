@@ -1,11 +1,10 @@
-package com.example.jsurfnet.utils;
+package com.example.jsurfnet.services;
 
 import com.example.jsurfnet.controllers.TabsController;
-import com.example.jsurfnet.utils.MongoDriver;
-import com.mongodb.MongoClient;
+import com.example.jsurfnet.models.Credential;
+import com.example.jsurfnet.singleton.CurrentUser;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import org.bson.Document;

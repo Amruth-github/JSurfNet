@@ -1,4 +1,4 @@
-package com.example.jsurfnet.utils;
+package com.example.jsurfnet.services;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
 
