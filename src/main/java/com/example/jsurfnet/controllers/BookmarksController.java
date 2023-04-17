@@ -89,7 +89,7 @@ public class BookmarksController implements Initializable {
         }
         return true;
     }
-    public void loadBookmark(String url)
+    public void loadBookmark(String url)    
     {
         Tab tab = TabSelection.getSelectedTab();
         ToolBarController tbc = new ToolBarController();
