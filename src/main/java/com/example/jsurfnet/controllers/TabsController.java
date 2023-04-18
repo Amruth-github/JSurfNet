@@ -1,4 +1,6 @@
 package com.example.jsurfnet.controllers;
+import com.example.jsurfnet.Prototype.TabImpl;
+import com.example.jsurfnet.Prototype.TabPrototype;
 import com.example.jsurfnet.singleton.TabSelection;
 import com.example.jsurfnet.singleton.TabsAndWv;
 import com.example.jsurfnet.services.*;
@@ -189,8 +191,21 @@ public class TabsController implements Initializable {
                 urlField.setText(newValue);
                 tabPane.getSelectionModel().getSelectedItem().setText(gethost(newValue));
                 TabsAndWvInstance.setTabPane(tabPane);
-                //tabPane.getSelectionModel().getSelectedItem().setGraphic(new Icon(urlField.getText()).getImage());
             });
+
+            ContextMenu contextMenu = new ContextMenu();
+            MenuItem duplicateItem = new MenuItem("Duplicate");
+
+            // Prototype Pattern
+            duplicateItem.setOnAction(actionEvent -> {
+                Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
+                TabPrototype prototype = new TabImpl(selectedTab);
+                Tab newTab = prototype.clone();
+                tabPane.getTabs().add(newTab);
+            });
+            contextMenu.getItems().add(duplicateItem);
+            tab.setContextMenu(contextMenu);
+            TabsAndWvInstance.setTabPane(tabPane);
         });
 
         tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
