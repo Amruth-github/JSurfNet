@@ -1,5 +1,6 @@
 package com.example.jsurfnet.services;
 
+import net.sf.image4j.codec.ico.ICODecoder;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -8,7 +9,6 @@ import java.net.URL;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.awt.image.BufferedImage;
-import net.sf.image4j.codec.ico.ICODecoder;
 import java.util.List;
 import javax.imageio.ImageIO;
 import java.io.File;

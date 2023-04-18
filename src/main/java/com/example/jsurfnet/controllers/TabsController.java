@@ -40,7 +40,7 @@ public class TabsController implements Initializable {
 
     private TextField urlField;
 
-    private ImageView iv = new ImageView(new Image(getClass().getResourceAsStream("/icons/spinner.gif")));
+    private ImageView iv = new IconBuilder("/icons/spinner.gif", 16, 16).getIcon();
 
     private static PasswordManager pwm = null;
 
@@ -51,8 +51,6 @@ public class TabsController implements Initializable {
         ToolBar ToolBarInstance;
         ToolBarInstance = ToolBar.getInstance();
         newTabButton = ToolBarInstance.getNewTabButton();
-        iv.setFitHeight(16);
-        iv.setFitWidth(16);
         urlField = ToolBarInstance.getUrlField();
         try {
             pwm = PasswordManager.getUserPassword();

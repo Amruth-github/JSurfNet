@@ -180,15 +180,9 @@ public class ToolBarController implements Initializable {
         ToolBarInstance.setShowPassword(showPassword);
         ToolBarInstance.setHomeButton(homeButton);
         ToolBarInstance.setHistoryButton(showHistory);
-        ImageView iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/icons/history.png"))));
-        iv.setFitWidth(20);
-        iv.setFitHeight(20);
-        showHistory.setGraphic(iv);
+        showHistory.setGraphic(new IconBuilder("/icons/history.png", 20, 20).getIcon());
         showPassword.setVisible(false);
-        ImageView iv1 = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/icons/logout.png"))));
-        iv1.setFitWidth(16);
-        iv1.setFitHeight(16);
-        logoutButton.setGraphic(iv1);
+        logoutButton.setGraphic(new IconBuilder("/icons/logout.png", 16, 16).getIcon());
         logoutButton.setOnMouseEntered(actionEvent -> {
             logoutButton.setText(CurrentUser.getInstance().getUsername());
         });

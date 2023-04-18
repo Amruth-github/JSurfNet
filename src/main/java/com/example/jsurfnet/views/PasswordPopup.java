@@ -1,4 +1,5 @@
 package com.example.jsurfnet.views;
+import com.example.jsurfnet.services.IconBuilder;
 import javafx.animation.ParallelTransition;
 import javafx.animation.ScaleTransition;
 import javafx.geometry.Insets;
@@ -51,19 +52,11 @@ public class PasswordPopup extends Popup {
         username_txt.setStyle("-fx-text-fill: white; -fx-font-size: 14px;");
         password_txt.setStyle("-fx-text-fill: white; -fx-font-size: 14px;");
 
-        ImageView copyIcon = new ImageView(new Image(getClass().getResourceAsStream("/icons/copy.png")));
-        copyIcon.setFitWidth(16);
-        copyIcon.setFitHeight(16);
-        ImageView copyIcon1 = new ImageView(new Image(getClass().getResourceAsStream("/icons/copy.png")));
-        copyIcon1.setFitWidth(16);
-        copyIcon1.setFitHeight(16);
-
-
         Button copyItemUsername = new Button();
         Button copyItemPassword = new Button();
 
-        copyItemUsername.setGraphic(copyIcon1);
-        copyItemPassword.setGraphic(copyIcon);
+        copyItemUsername.setGraphic( new IconBuilder("/icons/copy.png", 16, 16).getIcon());
+        copyItemPassword.setGraphic(new IconBuilder("/icons/copy.png", 16, 16).getIcon());
 
         copyItemUsername.setOnAction(e -> {
             Clipboard clipboard = Clipboard.getSystemClipboard();

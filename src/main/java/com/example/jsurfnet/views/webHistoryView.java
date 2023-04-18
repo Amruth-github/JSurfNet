@@ -1,8 +1,11 @@
 package com.example.jsurfnet.views;
 
+import com.example.jsurfnet.Prototype.TabImpl;
+import com.example.jsurfnet.Prototype.TabPrototype;
 import com.example.jsurfnet.controllers.TabsController;
 import com.example.jsurfnet.models.History;
 import com.example.jsurfnet.services.Icon;
+import com.example.jsurfnet.services.IconBuilder;
 import com.example.jsurfnet.services.TableFactory;
 import com.example.jsurfnet.singleton.TabsAndWv;
 import com.example.jsurfnet.singleton.ToolBar;
@@ -33,10 +36,7 @@ public class webHistoryView extends TableFactory {
     public void render() {
         if (historyTab == null) {
             historyTab = new Tab();
-            ImageView iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/icons/history.png"))));
-            iv.setFitWidth(20);
-            iv.setFitHeight(20);
-            historyTab.setGraphic(iv);
+            historyTab.setGraphic(new IconBuilder("/icons/history.png", 20, 20).getIcon());
         }
         historyTab.setText("History");
 
@@ -93,6 +93,19 @@ public class webHistoryView extends TableFactory {
                     TabsAndWv.getInstance().getTabPane().getTabs().add(newTab);
                     TabsAndWv.getInstance().getTabPane().getSelectionModel().select(newTab);
                     ToolBar.getInstance().getUrlField().setText(cell.getText());
+                    ContextMenu contextMenu = new ContextMenu();
+                    MenuItem duplicateItem = new MenuItem("Duplicate");
+                    TabPane tabPane = TabsAndWv.getInstance().getTabPane();
+                    // Prototype Pattern
+                    duplicateItem.setOnAction(actionEvent -> {
+                        Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
+                        TabPrototype prototype = new TabImpl(selectedTab);
+                        Tab nT = prototype.clone();
+                        TabsAndWv.getInstance().getTabPane().getTabs().add(nT);
+                    });
+                    contextMenu.getItems().add(duplicateItem);
+                    newTab.setContextMenu(contextMenu);
+                    TabsAndWv.getInstance().setTabPane(tabPane);
                 }
             });
             return cell;

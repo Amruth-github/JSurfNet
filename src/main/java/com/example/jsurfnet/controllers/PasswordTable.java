@@ -2,6 +2,7 @@ package com.example.jsurfnet.controllers;
 
 import com.example.jsurfnet.models.Credential;
 import com.example.jsurfnet.services.Icon;
+import com.example.jsurfnet.services.IconBuilder;
 import com.example.jsurfnet.services.PasswordManager;
 import com.example.jsurfnet.services.TableFactory;
 import com.example.jsurfnet.singleton.TabsAndWv;
@@ -32,10 +33,7 @@ public class PasswordTable extends TableFactory {
         if (passwordTab == null) {
             passwordTab = new Tab();
             passwordTab.setText("Passwords");
-            ImageView iv = new ImageView(new Image(getClass().getResourceAsStream("/icons/padlock.png")));
-            iv.setFitWidth(16);
-            iv.setFitHeight(16);
-            passwordTab.setGraphic(iv);
+            passwordTab.setGraphic(new IconBuilder("/icons/padlock.png", 16, 16).getIcon());
         }
 
         TableView<Credential> tableView = new TableView<>();
