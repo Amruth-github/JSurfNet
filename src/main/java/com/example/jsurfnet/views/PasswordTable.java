@@ -9,11 +9,14 @@ import com.example.jsurfnet.singleton.TabsAndWv;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 import java.util.HashMap;
@@ -68,15 +71,12 @@ public class PasswordTable extends TableFactory {
         TableColumn<Credential, String> passwordColumn = new TableColumn<>("Password");
 
         passwordColumn.setPrefWidth(100);
-        passwordColumn.setCellFactory(column -> new TableCell<>() {
+        passwordColumn.setCellFactory(column -> new TableCell<Credential, String>() {
             final Button showButton = new Button();
             boolean show = false;
 
             {
-                ImageView iv = new ImageView(new Image(getClass().getResourceAsStream("/icons/show.png")));
-                iv.setFitHeight(16);
-                iv.setFitWidth(16);
-                showButton.setGraphic(iv);
+                showButton.setGraphic(new IconBuilder("/icons/show.png", 16, 16).getIcon());
             }
             @Override
             protected void updateItem(String item, boolean empty) {
@@ -118,6 +118,19 @@ public class PasswordTable extends TableFactory {
             }
         });
 
+
+        VBox passwordList = new VBox();
+        passwordList.setAlignment(Pos.TOP_LEFT);
+        passwordList.setSpacing(10);
+        passwordList.setPadding(new Insets(10));
+        passwordList.setStyle("-fx-background-color: #1C1C1C;");
+
+        passwordList.getChildren().add(tableView);
+
+        ScrollPane scrollPane = new ScrollPane(passwordList);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setStyle("-fx-background-color: #1C1C1C;");
+
         tableView.getColumns().addAll(urlColumn, usernameColumn, passwordColumn);
 
         ObservableList<Credential> credentialList = FXCollections.observableArrayList();
@@ -126,10 +139,8 @@ public class PasswordTable extends TableFactory {
         }
         tableView.setItems(credentialList);
 
-        ScrollPane scrollPane = new ScrollPane(tableView);
-        scrollPane.setFitToWidth(true);
-        scrollPane.setFitToHeight(true);
-        scrollPane.setStyle("-fx-background-color: #1C1C1C;");
+
+        tableView.setStyle("-fx-font-size: 14; -fx-font-family: 'Arial'; -fx-background-color: #1C1C1C; -fx-text-fill: white;");
 
         passwordTab.setContent(scrollPane);
         tableView.setStyle("-fx-font-size: 14; -fx-font-family: 'Arial'; -fx-background-color: #1C1C1C; -fx-text-fill: white;");
