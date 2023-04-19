@@ -28,6 +28,7 @@ public final class CurrentUser implements Serializable {
     }
 
 
+    // set Username means set username and password both
     public void setUsername(String username, String password) {
         this.username = username;
         this.password = password;
