@@ -2,6 +2,7 @@ package com.example.jsurfnet.Prototype;
 
 import com.example.jsurfnet.controllers.TabsController;
 import com.example.jsurfnet.services.IconBuilder;
+import com.example.jsurfnet.singleton.TabsAndWv;
 import javafx.concurrent.Worker;
 import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
@@ -37,7 +38,7 @@ public class TabImpl implements TabPrototype {
 
         newTab.setContent(newWebView);
 
-        new TabsController().ListnersForWebView(newTab, newWebEngine);
+        new TabsController().ListnersForWebView(newTab, newWebEngine, TabsAndWv.getInstance().getTabPane());
 
         return newTab;
     }
