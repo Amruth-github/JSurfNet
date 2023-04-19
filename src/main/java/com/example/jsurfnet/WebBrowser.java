@@ -31,7 +31,7 @@ public class WebBrowser extends Application {
         Scene loginScene = new Scene(loginRoot);
 
         primaryStage.setTitle("JSurfNet");
-        Image i = new Image(getClass().getResourceAsStream("/icons/JSurfNet.png"));
+        Image i = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/icons/JSurfNet.png")));
         primaryStage.getIcons().add(i);
 
         primaryStage.setScene(loginScene);
@@ -63,17 +63,6 @@ public class WebBrowser extends Application {
             currentUser.setUsername("guest", "");
             goToBrowser();
         });
-
-//        loginController.setLocalUser(event -> {
-//            try {
-//                if (loginController.authenticateUser()) {
-//                    goToBrowser();
-//                }
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            }
-//        });
-
     }
 
     public static  Scene getScene() {
