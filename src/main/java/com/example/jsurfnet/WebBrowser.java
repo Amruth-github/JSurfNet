@@ -21,7 +21,6 @@ public class WebBrowser extends Application {
     private Stage primaryStage;
     private static Scene scene;
 
-    private static Stage stage;
     @Override
     public void start(Stage primaryStage) throws IOException {
         this.primaryStage = primaryStage;
@@ -65,11 +64,11 @@ public class WebBrowser extends Application {
         });
     }
 
+    // needed later while creating popup
     public static  Scene getScene() {
         return scene;
     }
 
-    public static  Stage getStage() {return stage;}
     void goToBrowser(){
         Parent browserRoot = null;
         try {
@@ -79,10 +78,13 @@ public class WebBrowser extends Application {
         }
         Scene browserScene = new Scene(browserRoot);
         browserScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
+
+        // needed later while creating popup
         scene = browserScene;
-        stage = primaryStage;
+
         primaryStage.setScene(browserScene);
         primaryStage.show();
+
         ToolBar.getInstance().getLogoutButton().setOnAction(actionEvent -> {
             if (new File("JSurfNet.jar").exists()) {
                 try {
@@ -102,7 +104,6 @@ public class WebBrowser extends Application {
 
 
     public static void main(String[] args) {
-        System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
         launch(args);
     }
 }

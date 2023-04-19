@@ -123,6 +123,10 @@ public class TabsController implements Initializable {
                 TabsAndWv.getInstance().setWebEngine(engine);
                 TabSelection x = new TabSelection(newTab);
             }
+            if (tabPane.getTabs().isEmpty()) {
+                // Close browser when last tab is closed
+                Platform.exit();
+            }
         });
     }
 

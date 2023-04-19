@@ -10,14 +10,10 @@ import java.util.Objects;
 
 public class BrowserController {
 
-    private Pane view;
-
     public Pane getPage(String filename){
+        Pane view;
         try{
             URL fileUrl = Objects.requireNonNull(getClass().getResource("/fxml/"+filename+".fxml"));
-            if(fileUrl == null){
-                throw new java.io.FileNotFoundException("FXML Not Found");
-            }
             view = FXMLLoader.load(fileUrl);
         } catch (IOException e) {
             throw new RuntimeException(e);
