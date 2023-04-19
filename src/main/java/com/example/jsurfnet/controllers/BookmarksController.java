@@ -110,11 +110,17 @@ public class BookmarksController implements Initializable {
     }
 
     public void removeBookmark(Bookmark bookmark) {
+
+        // bookmarks is an observable set for our reference.
         bookmarks.remove(bookmark);
+
+        // UI Updation
         bookmarkPane.getChildren().removeIf(node -> {
             Button button = (Button) node;
             return button.getText().equals(bookmark.getName());
         });
+
+        // Database updation
         if (!CurrentUser.getInstance().getUsername().equals("guest")) {
             new Thread(() -> {
                 collection.deleteOne(Filters.and(
@@ -143,6 +149,8 @@ public class BookmarksController implements Initializable {
                         popup.getContent().add(textField);
                         textField.setOnAction(actionEvent -> {
                             newBookmarkButton.setText(textField.getText());
+
+                            // While renaming, when you enter the new text, it will check if the name already exists for any other bookmark for that user, if not, it will update the name of the current bookmarks to the new bookmark.
                             if (!CurrentUser.getInstance().getUsername().equals("guest")) {
                                 new Thread(() -> {
                                     collection.updateOne(Filters.and(
@@ -153,6 +161,7 @@ public class BookmarksController implements Initializable {
                             }
                             popup.hide();
                         });
+
                         m1.setOnAction(actionEvent -> {
                             renameBookmark(newBookmarkButton,textField,popup);
                         });
@@ -188,6 +197,4 @@ public class BookmarksController implements Initializable {
             throw new RuntimeException(e);
         }
     }
-
-
 }

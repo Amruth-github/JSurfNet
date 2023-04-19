@@ -1,4 +1,4 @@
-package com.example.jsurfnet.controllers;
+package com.example.jsurfnet.views;
 
 import com.example.jsurfnet.models.Credential;
 import com.example.jsurfnet.services.Icon;

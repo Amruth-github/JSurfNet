@@ -1,6 +1,6 @@
 package com.example.jsurfnet.services;
 
-import com.example.jsurfnet.controllers.PasswordTable;
+import com.example.jsurfnet.views.PasswordTable;
 import com.example.jsurfnet.views.webHistoryView;
 
 // Factory Pattern with concrete implementations in webHistoryView and PasswordTable
