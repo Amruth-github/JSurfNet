@@ -4,6 +4,8 @@ import com.example.jsurfnet.controllers.TabsController;
 import com.example.jsurfnet.services.IconBuilder;
 import com.example.jsurfnet.singleton.TabsAndWv;
 import javafx.concurrent.Worker;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -37,6 +39,17 @@ public class TabImpl implements TabPrototype {
         newWebEngine.load(originalWebEngine.getLocation());
 
         newTab.setContent(newWebView);
+
+        ContextMenu cm = new ContextMenu();
+        MenuItem duplicateItem = new MenuItem("Duplicate");
+        cm.getItems().add(duplicateItem);
+        duplicateItem.setOnAction(actionEvent -> {
+            Tab selectedTab = TabsAndWv.getInstance().getTabPane().getSelectionModel().getSelectedItem();
+            TabPrototype prototype = new TabImpl(selectedTab);
+            Tab nT = prototype.clone();
+            TabsAndWv.getInstance().getTabPane().getTabs().add(nT);
+        });
+        newTab.setContextMenu(cm);
 
         new TabsController().ListnersForWebView(newTab, newWebEngine, TabsAndWv.getInstance().getTabPane());
 
