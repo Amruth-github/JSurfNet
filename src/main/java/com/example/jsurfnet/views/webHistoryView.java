@@ -87,12 +87,9 @@ public class webHistoryView extends TableFactory {
                     Tab newTab = new Tab(TabsController.gethost(cell.getText()));
                     WebView webView = new WebView();
                     WebEngine webEngine = webView.getEngine();
-                    new TabsController().ListnersForWebView(newTab, webEngine);
                     webEngine.load(cell.getText());
                     newTab.setContent(webView);
                     TabsAndWv.getInstance().getTabPane().getTabs().add(newTab);
-                    TabsAndWv.getInstance().getTabPane().getSelectionModel().select(newTab);
-                    ToolBar.getInstance().getUrlField().setText(cell.getText());
                     ContextMenu contextMenu = new ContextMenu();
                     MenuItem duplicateItem = new MenuItem("Duplicate");
                     TabPane tabPane = TabsAndWv.getInstance().getTabPane();
@@ -106,6 +103,9 @@ public class webHistoryView extends TableFactory {
                     contextMenu.getItems().add(duplicateItem);
                     newTab.setContextMenu(contextMenu);
                     TabsAndWv.getInstance().setTabPane(tabPane);
+                    new TabsController().ListnersForWebView(newTab, webEngine, TabsAndWv.getInstance().getTabPane());
+                    TabsAndWv.getInstance().getTabPane().getSelectionModel().select(newTab);
+                    ToolBar.getInstance().getUrlField().setText(cell.getText());
                 }
             });
             return cell;

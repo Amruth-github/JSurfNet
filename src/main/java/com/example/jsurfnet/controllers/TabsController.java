@@ -60,7 +60,8 @@ public class TabsController implements Initializable {
         }
     }
 
-    public void ListnersForWebView(Tab tab, WebEngine webEngine) {
+    public void ListnersForWebView(Tab tab, WebEngine webEngine, TabPane tabPane) {
+        tab.setGraphic(iv);
         webEngine.getLoadWorker().stateProperty().addListener(((observable, oldValue, newValue) -> {
             showPassword.setVisible(false);
             if (pp != null) {
@@ -107,6 +108,23 @@ public class TabsController implements Initializable {
                 }
             }
         }));
+        webEngine.locationProperty().addListener((observable, oldValue, newValue) -> {
+            if (!tabPane.getSelectionModel().getSelectedItem().getText().equals("History") || !tabPane.getSelectionModel().getSelectedItem().getText().equals("Passwords")) {
+                urlField.setText(newValue);
+                tabPane.getSelectionModel().getSelectedItem().setText(gethost(newValue));
+                TabsAndWv.getInstance().setTabPane(tabPane);
+            }
+        });
+        tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
+            if (newTab != null && !newTab.getText().equals("History") && !newTab.getText().equals("Passwords")) {
+                WebView webView = (WebView) newTab.getContent();
+                urlField.setText(getURL(webView));
+                currentTab = newTab;
+                engine = ((WebView) currentTab.getContent()).getEngine();
+                TabsAndWv.getInstance().setWebEngine(engine);
+                TabSelection x = new TabSelection(newTab);
+            }
+        });
     }
 
     @Override
@@ -174,22 +192,13 @@ public class TabsController implements Initializable {
             webEngine.load("https://www.google.com");
             tab.setGraphic(iv);
 
-            ListnersForWebView(tab, webEngine);
+            ListnersForWebView(tab, webEngine, tabPane);
 
             newWebView.setPrefSize(800, 600);
             tab.setContent(newWebView);
             tabPane.getTabs().add(tab);
             tabPane.getSelectionModel().select(tab);
             TabsAndWvInstance.setTabPane(tabPane);
-
-
-
-            webEngine.locationProperty().addListener((observable, oldValue, newValue) -> {
-
-                urlField.setText(newValue);
-                tabPane.getSelectionModel().getSelectedItem().setText(gethost(newValue));
-                TabsAndWvInstance.setTabPane(tabPane);
-            });
 
             ContextMenu contextMenu = new ContextMenu();
             MenuItem duplicateItem = new MenuItem("Duplicate");
@@ -205,19 +214,6 @@ public class TabsController implements Initializable {
             tab.setContextMenu(contextMenu);
             TabsAndWvInstance.setTabPane(tabPane);
         });
-
-        tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
-            if (newTab != null && !newTab.getText().equals("History") && !newTab.getText().equals("Passwords")) {
-                WebView webView = (WebView) newTab.getContent();
-                urlField.setText(getURL(webView));
-                currentTab = newTab;
-                engine = ((WebView) currentTab.getContent()).getEngine();
-                TabsAndWvInstance.setWebEngine(engine);
-                TabSelection x = new TabSelection(newTab);
-            }
-        });
-
-
     }
 
     static public  String gethost(String url) {
