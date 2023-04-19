@@ -38,7 +38,7 @@ public class WebBrowser extends Application {
 
         LoginController loginController = loginLoader.getController();
 
-        loginController.setSignupListener(event -> {
+        loginController.signupButton.setOnAction(actionEvent -> {
             try {
                 if (loginController.signup()) {
                     goToBrowser();
@@ -47,7 +47,8 @@ public class WebBrowser extends Application {
                 throw new RuntimeException(e);
             }
         });
-        loginController.setLoginListener(event -> {
+
+        loginController.loginButton.setOnAction(actionEvent -> {
             try {
                 if (loginController.authenticateUser()) {
                     goToBrowser();
@@ -57,7 +58,7 @@ public class WebBrowser extends Application {
             }
         });
 
-        loginController.setGuestListener(event->{
+        loginController.guestButton.setOnAction(actionEvent -> {
             CurrentUser currentUser = CurrentUser.getInstance();
             currentUser.setUsername("guest", "");
             goToBrowser();

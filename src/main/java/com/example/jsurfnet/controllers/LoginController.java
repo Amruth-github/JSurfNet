@@ -6,13 +6,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.function.Consumer;
-
 import com.example.jsurfnet.singleton.CurrentUser;
 import com.example.jsurfnet.services.*;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -45,38 +42,17 @@ public class LoginController implements Initializable {
     private PasswordField passwordField;
 
     @FXML
-    private Button loginButton;
-
-    @FXML
-    private Label errorLabel;
+    public Button loginButton;
 
     private MongoCollection<Document> usersCollection;
-
 
     public LoginController() {
         MongoDatabase database = MongoDriver.getMongo();
         this.usersCollection = database.getCollection("users");
     }
 
-    public void setLoginListener(Consumer<ActionEvent> loginListener) {
-        loginButton.setOnAction(loginListener::accept);
-    }
-
-    public void setSignupListener(Consumer<ActionEvent> signupListener) {
-        signupButton.setOnAction(signupListener::accept);
-    }
-
-    public void setGuestListener(Consumer<ActionEvent> guestListener) {
-        guestButton.setOnAction(guestListener::accept);
-    }
-
-//    public void setLocalUser(Consumer<ActionEvent> loginListener) {
-//        loginButton.setOnAction(loginListener::accept);
-//    }
-
-
     public boolean authenticateUser() throws IOException {
-
+        // clicking profile button is enough to login
         if (CurrentUser.getInstance().getUsername()!= null) {
             Document user = usersCollection.find(new Document("username", usernameField.getText())).first();
             if (user != null) {
@@ -95,10 +71,13 @@ public class LoginController implements Initializable {
             return true;
         }
 
+        // Login button is clicked manually after entering username and passwords
+
         Document user = usersCollection.find(new Document("username", usernameField.getText())).first();
         if (user != null) {
             if (passwordField.getText().strip().equals(user.getString("password"))){
                 CurrentUser currentUser = CurrentUser.getInstance();
+                //set Username means set username and password both
                 currentUser.setUsername(usernameField.getText(), passwordField.getText());
                 SerializeUser su = new SerializeUser();
                 su.Serialize();
@@ -175,7 +154,7 @@ public class LoginController implements Initializable {
 
                 button.setOnAction(event -> {
                     SerializeUser su = new SerializeUser();
-                    su.deserialize(filename);
+                    su.deserialize(filename); // also sets the currentuser instance
                     loginButton.fire();
                 });
 
