@@ -186,7 +186,7 @@ public class TabsController implements Initializable {
         });
 
         newTabButton.setOnAction(event -> {
-            Tab tab = new Tab(gethost("https://www.google.com"));
+            Tab tab = new TabBuilder(new Tab(gethost("https://www.google.com"))).getTab();
             WebView newWebView = new WebView();
             WebEngine webEngine = newWebView.getEngine();
             webEngine.load("https://www.google.com");
@@ -200,18 +200,6 @@ public class TabsController implements Initializable {
             tabPane.getSelectionModel().select(tab);
             TabsAndWvInstance.setTabPane(tabPane);
 
-            ContextMenu contextMenu = new ContextMenu();
-            MenuItem duplicateItem = new MenuItem("Duplicate");
-
-            // Prototype Pattern
-            duplicateItem.setOnAction(actionEvent -> {
-                Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
-                TabPrototype prototype = new TabImpl(selectedTab);
-                Tab newTab = prototype.clone();
-                tabPane.getTabs().add(newTab);
-            });
-            contextMenu.getItems().add(duplicateItem);
-            tab.setContextMenu(contextMenu);
             TabsAndWvInstance.setTabPane(tabPane);
         });
     }

@@ -6,6 +6,7 @@ import com.example.jsurfnet.controllers.TabsController;
 import com.example.jsurfnet.models.History;
 import com.example.jsurfnet.services.Icon;
 import com.example.jsurfnet.services.IconBuilder;
+import com.example.jsurfnet.services.TabBuilder;
 import com.example.jsurfnet.services.TableFactory;
 import com.example.jsurfnet.singleton.TabsAndWv;
 import com.example.jsurfnet.singleton.ToolBar;
@@ -84,24 +85,13 @@ public class webHistoryView extends TableFactory {
             };
             cell.setOnMouseClicked((event) -> {
                 if (!(cell.isEmpty()) && event.getButton().equals(MouseButton.PRIMARY)) {
-                    Tab newTab = new Tab(TabsController.gethost(cell.getText()));
+                    Tab newTab = new TabBuilder(new Tab(TabsController.gethost(cell.getText()))).getTab();
                     WebView webView = new WebView();
                     WebEngine webEngine = webView.getEngine();
                     webEngine.load(cell.getText());
                     newTab.setContent(webView);
                     TabsAndWv.getInstance().getTabPane().getTabs().add(newTab);
-                    ContextMenu contextMenu = new ContextMenu();
-                    MenuItem duplicateItem = new MenuItem("Duplicate");
                     TabPane tabPane = TabsAndWv.getInstance().getTabPane();
-                    // Prototype Pattern
-                    duplicateItem.setOnAction(actionEvent -> {
-                        Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
-                        TabPrototype prototype = new TabImpl(selectedTab);
-                        Tab nT = prototype.clone();
-                        TabsAndWv.getInstance().getTabPane().getTabs().add(nT);
-                    });
-                    contextMenu.getItems().add(duplicateItem);
-                    newTab.setContextMenu(contextMenu);
                     TabsAndWv.getInstance().setTabPane(tabPane);
                     new TabsController().ListnersForWebView(newTab, webEngine, TabsAndWv.getInstance().getTabPane());
                     TabsAndWv.getInstance().getTabPane().getSelectionModel().select(newTab);
