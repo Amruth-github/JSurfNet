@@ -94,10 +94,9 @@ public class TabsController implements Initializable {
                     if (pwm != null && hasField) {
                         showPassword.setVisible(true);
                         initpopup();
-                        PasswordPopup finalPp = pp;
                         pp.getSaveButton().setOnAction(actionEvent -> {
-                            pwm.addCreds(urlField.getText(), finalPp.getUsername(), finalPp.getPassword());
-                            finalPp.hide();
+                            pwm.addCreds(urlField.getText(), pp.getUsername(), pp.getPassword());
+                            pp.hide();
                             JOptionPane.showMessageDialog(null, "Saved!", "Success", JOptionPane.INFORMATION_MESSAGE);
                         });
                     }
