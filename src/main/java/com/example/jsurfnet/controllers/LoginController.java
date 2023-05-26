@@ -163,6 +163,16 @@ public class LoginController implements Initializable {
                 y += 50.0;
                 ProfileHolder.setSpacing(8);
                 ProfileHolder.getChildren().addAll(button);
+
+                ContextMenu cm = new ContextMenu();
+                MenuItem m1 = new MenuItem("Delete Profile");
+                cm.getItems().add(m1);
+                m1.setOnAction(actionEvent -> {
+                    if (file.delete() == true) {
+                        ProfileHolder.getChildren().remove(button);
+                    }
+                });
+                button.setContextMenu(cm);
             }
         }
     }
